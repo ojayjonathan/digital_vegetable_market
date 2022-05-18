@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from passlib import context
 from jose import jwt
-from app.core.config import get_setting
+from app.core.config import Setting, get_setting
 from app import schema
 
 pwd_context = context.CryptContext(schemes=["bcrypt"])
@@ -9,7 +9,7 @@ pwd_context = context.CryptContext(schemes=["bcrypt"])
 
 def create_access_token(
     subject: str,
-    settings=get_setting(),
+    settings: Setting = get_setting(),
 ) -> schema.AccessToken:
     exp = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXP_MINUTES)
     token = jwt.encode(

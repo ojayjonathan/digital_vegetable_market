@@ -1,1 +1,3 @@
-from .user import User
+from .user import User, Driver
+from .vehicle import Vehicle
+from .wallet import Wallet

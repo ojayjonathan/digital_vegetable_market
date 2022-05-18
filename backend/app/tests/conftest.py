@@ -1,20 +1,13 @@
 # content of conftest.py
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
-from app.db.base import Base
+
 from app.routes.deps import get_db
 from app.main import app
+from app.tests.db_session import TestingSessionLocal, init_test_db
 
-TEST_DB_URL = "sqlite:///./test.db"
-
-engine = create_engine(TEST_DB_URL, connect_args={"check_same_thread": False})
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-Base.metadata.create_all(bind=engine)
+init_test_db()
 
 
 def get_db_override():
