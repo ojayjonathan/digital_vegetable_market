@@ -18,11 +18,11 @@ class DriverCreate(BaseModel):
     user_id: int
     dl: str
     national_id: str = Field(..., max_length=10, min_length=7)
-    is_active: Optional[bool] = False
+    is_active: Optional[bool] = True
 
 
 class DriverUpdate(BaseModel):
     user_id: Optional[int]
     dl: Optional[str]
     national_id: Optional[str] = Field(..., max_length=10, min_length=7)
-    is_active: Optional[bool] = False
+    is_active: Optional[bool]

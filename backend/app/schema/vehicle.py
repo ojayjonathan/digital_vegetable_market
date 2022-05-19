@@ -4,16 +4,17 @@ from typing import Optional
 from app import schema
 
 
-class VehicleType(Enum):
-    L = "Lorry"
-    P = "Pickup"
-    B = "MotorBike"
+class VehicleType(str, Enum):
+
+    Lorry = "L"
+    Pickup = "P"
+    MotorBike = "B"
 
 
 class Vehicle(BaseModel):
     id: int
     type: VehicleType
-    vehicle_registration_number: str
+    registration_number: str
     driver: Optional[schema.Driver]
     capacity: float
 
@@ -23,13 +24,13 @@ class Vehicle(BaseModel):
 
 class VehicleCreate(BaseModel):
     type: VehicleType
-    vehicle_registration_number: str
+    registration_number: str
     driver_id: int
     capacity: float
 
 
 class VehicleUpdate(BaseModel):
     type: Optional[VehicleType]
-    vehicle_registration_number: Optional[str]
+    registration_number: Optional[str]
     driver_id: Optional[int]
     capacity: Optional[float]

@@ -1,5 +1,6 @@
+from datetime import datetime
 from app.db.base import Base
-from sqlalchemy import Column, ForeignKey, Integer, String, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import relationship
 
 
@@ -10,9 +11,11 @@ class User(Base):
     phone_number = Column(String(length=10), nullable=False, unique=True)
     password = Column(String(length=150))
     is_admin = Column(Boolean(), default=False)
+    created_at = Column(DateTime(), default=datetime.now())
 
 
 class Driver(Base):
+    id = Column(Integer(), primary_key=True)
     user_id = Column(
         ForeignKey(f"{User.__tablename__}.id", ondelete="CASCADE"),
         nullable=False,
@@ -22,4 +25,4 @@ class Driver(Base):
     national_id = Column(String(10), unique=True)
     is_active = Column(Boolean(), default=True)
 
-    user = relationship(User.__name__, back_populates=User.__tablename__)
+    user: User = relationship(User.__tablename__)

@@ -30,5 +30,12 @@ class BaseRepository(Generic[Model, CreateSchema, UpdateSchema]):
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=e.args)
         return object_in
 
-    def update(self, db: Session, item: UpdateSchema) -> Model:
-        ...
+    def update(self, db: Session, current_item: Model, item_in: UpdateSchema) -> Model:
+        try:
+            for k, v in item_in:
+                if v is not None:
+                    current_item.__setattr__(k, v)
+            db.commit()
+        except IntegrityError as e:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=e.args)
+        return current_item

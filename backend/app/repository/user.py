@@ -11,4 +11,11 @@ class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserU
         return super().create(db, item)
 
 
+class DriverRepository(
+    BaseRepository[models.Driver, schema.DriverCreate, schema.DriverUpdate]
+):
+    pass
+
+
 user_repo = UserRepository(models.User)
+driver_repo = DriverRepository(models.Driver)

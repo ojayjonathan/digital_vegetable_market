@@ -1,6 +1,6 @@
 from app.db.base import Base
 from sqlalchemy import Column, Float, String, Integer, ForeignKey
-from app.db import User
+from .user import User
 
 
 class Wallet(Base):
