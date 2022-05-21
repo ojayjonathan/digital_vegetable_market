@@ -8,7 +8,7 @@ from app.routes.deps import get_db
 from app.main import app
 from app.tests.db_session import TestingSessionLocal, engine
 from app.core.config import Setting, get_setting
-from app.db import Base
+from app.db.base import Base
 
 Base.metadata.create_all(bind=engine)
 

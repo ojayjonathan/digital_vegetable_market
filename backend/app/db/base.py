@@ -1,10 +1,8 @@
-from sqlalchemy.ext.declarative import as_declarative, declared_attr
-
-
-@as_declarative()
-class Base:
-    __name__: str
-
-    @declared_attr
-    def __tablename__(cls) -> str:
-        return cls.__name__
+from .base_class import Base
+from app.models.user import User, Driver, Farmer
+from app.models.vehicle import Vehicle
+from app.models.wallet import Wallet
+from app.models.product import Product
+from app.models.address import Location, Address
+from app.models.order import OrderItem, Order
+from app.models.payment import Payment

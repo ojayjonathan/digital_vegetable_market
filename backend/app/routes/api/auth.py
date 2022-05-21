@@ -1,13 +1,28 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Body, Depends
 from sqlalchemy.orm import Session
-from app.routes.deps import get_db
+from app.core.security import create_access_token
+from app.routes.deps import get_current_user, get_db
 from app import schema
+from app.schema.user import User
+from app.repository import user_repo
 
 router = APIRouter(prefix="/auth")
 
 
-@router.get("/login", response_model=schema.AccessToken)
-def login(
-    db: Session = Depends(get_db),
+@router.post("/login", response_model=schema.AccessToken)
+def login(db: Session = Depends(get_db), credentials: schema.Login = Body(...)):
+    if user := user_repo.authenticate(db, credentials):
+        return create_access_token(user.phone_number)
+
+
+@router.post("/register")
+def register(db: Session = Depends(get_db), user: schema.UserCreate = Body(...)):
+    user_repo.create(db, user)
+    return {"msg": "Account Created Successfuly!"}
+
+
+@router.post("/change-password")
+def change_password(
+    db: Session = Depends(get_db), user: User = Depends(get_current_user)
 ):
-    ...
+    return user

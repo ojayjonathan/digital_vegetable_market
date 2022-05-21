@@ -1,21 +1,21 @@
 from datetime import datetime
-from app.db.base import Base
+from app.db.base_class import Base
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import relationship
 
+from app.utils.utils import tz_now
+
 
 class User(Base):
-    id = Column(Integer(), primary_key=True)
     first_name = Column(String(length=50), nullable=False)
     last_name = Column(String(length=50), nullable=False)
     phone_number = Column(String(length=10), nullable=False, unique=True)
     password = Column(String(length=150))
     is_admin = Column(Boolean(), default=False)
-    created_at = Column(DateTime(), default=datetime.now())
+    created_at = Column(DateTime(), default=tz_now(), nullable=False)
 
 
 class Driver(Base):
-    id = Column(Integer(), primary_key=True)
     user_id = Column(
         ForeignKey(f"{User.__tablename__}.id", ondelete="CASCADE"),
         nullable=False,
@@ -25,4 +25,13 @@ class Driver(Base):
     national_id = Column(String(10), unique=True)
     is_active = Column(Boolean(), default=True)
 
+    user: User = relationship(User.__tablename__)
+
+
+class Farmer(Base):
+    user_id = Column(
+        ForeignKey(f"{User.__tablename__}.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,
+    )
     user: User = relationship(User.__tablename__)

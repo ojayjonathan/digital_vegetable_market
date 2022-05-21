@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import Optional
 
@@ -7,6 +8,7 @@ class User(BaseModel):
     last_name: str
     id: int
     phone_number: str
+    created_at: datetime
 
     class Config:
         orm_mode = True
