@@ -1,5 +1,5 @@
 from .base_class import Base
-from app.models.user import User, Driver, Farmer
+from app.models.user import User, Driver
 from app.models.vehicle import Vehicle
 from app.models.wallet import Wallet
 from app.models.product import Product

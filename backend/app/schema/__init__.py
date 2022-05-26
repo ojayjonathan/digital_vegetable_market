@@ -1,4 +1,4 @@
-from .auth import AccessToken, AccessTokenData, Login
+from .auth import AccessToken, AccessTokenData, Login,ChangePassword
 from .user import User, UserCreate, UserUpdate
 from .driver import DriverCreate, Driver, DriverUpdate
 from .wallet import Wallet

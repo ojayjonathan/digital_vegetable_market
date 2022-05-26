@@ -1,10 +1,10 @@
 from typing import Any, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 
 
 class AccessToken(BaseModel):
-    token_type: Optional[str] = "access_token"
+    bearer: Optional[str] = "Bearer"
     access_token: str
 
 
@@ -16,3 +16,8 @@ class AccessTokenData(BaseModel):
 class Login(BaseModel):
     phone_number: str = Field(..., regex=r"^0(7|1)\d{8}$")
     password: str = Field(..., min_length=6, max_length=30)
+
+
+class ChangePassword(BaseModel):
+    old_password: str = Field(..., min_length=6, max_length=30)
+    new_password: str = Field(..., min_length=6, max_length=30)

@@ -7,16 +7,12 @@ from fastapi import HTTPException, status
 
 class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserUpdate]):
     def create(self, db: Session, item: schema.UserCreate):
-        if item.password:
-            item.password = hash_password(item.password)
+        item.password = hash_password(item.password)
         return super().create(db, item)
 
-    def get_user_by_phone(self, db: Session, phone_number: str) -> models.User:
-        print(phone_number)
+    def get_user_by_phone(self, db: Session, phone_number: str) -> models.User or None:
         return (
-            db.query(self.model)
-            .filter(self.model.phone_number == phone_number)
-            .first()
+            db.query(self.model).filter(self.model.phone_number == phone_number).first()
         )
 
     def authenticate(self, db: Session, credentials: schema.Login) -> models.User:
@@ -26,6 +22,22 @@ class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserU
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail={"msg": "Invalid Login Credentials"},
+        )
+
+    def update_password(
+        self,
+        db: Session,
+        user: models.User,
+        data: schema.ChangePassword,
+    ) -> models.User:
+        if verify_password(data.old_password, user.password):
+            user.password = hash_password(data.new_password)
+            db.commit()
+            return user
+
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={"msg": "Old password provided was not valid"},
         )
 
 

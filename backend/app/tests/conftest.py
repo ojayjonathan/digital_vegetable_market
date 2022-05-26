@@ -30,6 +30,11 @@ def client():
         yield c
 
 
+@pytest.fixture(scope="module")
+def settings() -> Setting:
+    yield get_setting()
+
+
 @pytest.fixture(scope="session")
 def get_test_db():
     try:

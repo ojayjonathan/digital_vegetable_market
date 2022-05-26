@@ -1,4 +1,6 @@
 from pytest import Session
+import pytest
+from fastapi import HTTPException
 from app.repository import user_repo, UserRepository, driver_repo, DriverRepository
 from app import schema
 from app.utils.utils import random_phone, random_string
@@ -15,7 +17,6 @@ def test_create_user(get_test_db: Session, user_repo: UserRepository = user_repo
     )
 
     user = user_repo.create(db=get_test_db, item=user_create)
-
     assert user
     assert user.first_name == f_name
     assert verify_password(password, user.password)
@@ -86,3 +87,23 @@ def test_driver_update(
     assert updated_driver.dl == new_dl
     assert updated_driver.national_id == new_national_id
     assert updated_driver.is_active == driver.is_active
+
+
+def test_change_password(get_test_db: Session, user_repo: UserRepository = user_repo):
+    password = random_string(6)
+    user_create = schema.UserCreate(
+        first_name=random_string(),
+        last_name=random_string(),
+        phone_number=random_phone(),
+        password=password,
+    )
+
+    user = user_repo.create(db=get_test_db, item=user_create)
+    password_update = schema.ChangePassword(
+        old_password=password,
+        new_password=random_string(7),
+    )
+    updated_user = user_repo.update_password(get_test_db, user, password_update)
+    assert verify_password(password_update.new_password, updated_user.password)
+    with pytest.raises(HTTPException):
+        user_repo.update_password(get_test_db, user, password_update)

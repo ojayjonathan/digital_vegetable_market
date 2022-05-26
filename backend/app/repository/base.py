@@ -17,6 +17,9 @@ class BaseRepository(Generic[Model, CreateSchema, UpdateSchema]):
     def get(self, db: Session, id: int) -> Optional[Model]:
         return db.query(self.model).filter(self.model.id == id).first()
 
+    def filter_by(self, db: Session, **kwargs) -> List[Model]:
+        return db.query(self.model).filter_by(kwargs)
+
     def get_all(self, db: Session) -> List[Model]:
         return db.query(self.model).all()
 

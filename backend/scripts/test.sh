@@ -3,4 +3,5 @@ set -x
 
 python app/prepare_tests.py
 
-pytest .
+coverage run -m pytest .
+coverage report -m

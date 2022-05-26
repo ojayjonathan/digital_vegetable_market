@@ -6,6 +6,7 @@ from app.core.security import decode_access_token
 from app.db.db import SessionLocal
 from typing import Generator
 from app.repository import user_repo
+from app import models
 
 auth_token_bearer = HTTPBearer()
 
@@ -22,7 +23,7 @@ def get_current_user(
     credentials: HTTPBasicCredentials = Security(auth_token_bearer),
     db: Session = Depends(get_db),
     settings: Setting = Depends(get_setting),
-):
+) -> models.User:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",

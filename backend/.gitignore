@@ -5,3 +5,4 @@ venv
 *test.db
 *.pytest_cache
 *alembic/versions/*
+.coverage
