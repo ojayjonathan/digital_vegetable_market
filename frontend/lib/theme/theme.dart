@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 
-// extension ThemeDataColorScheme on ThemeData {
-//   ColorScheme get colorScheme => AppTheme.darkColorScheme;
-
-// }
+extension ThemeDataColorScheme on ThemeData {
+  AppColorScheme get getColorscheme => colorScheme as AppColorScheme;
+}
 
 class AppTheme {
-  static ColorScheme lightColorScheme = ColorScheme(
+  static AppColorScheme lightColorScheme = const AppColorScheme.light(
     background: Colors.white,
     primary: Colors.blueAccent,
     accent: Colors.amberAccent,
     text: Colors.black,
   );
-  static ColorScheme darkColorScheme = ColorScheme(
+  static AppColorScheme darkColorScheme = const AppColorScheme.dark(
     background: Colors.white,
     primary: Colors.blueAccent,
     accent: Colors.amberAccent,
     text: Colors.black,
   );
-
-  static ThemeData _themeData(ColorScheme scheme) {
+  static InputDecoration inputDecoration = InputDecoration(
+    contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+    border: OutlineInputBorder(
+      borderRadius: const BorderRadius.all(Radius.circular(5)),
+      borderSide: BorderSide(color: lightTheme.primaryColor, width: 0.0),
+    ),
+  );
+  static ThemeData _themeData(AppColorScheme scheme) {
     return ThemeData(
+      colorScheme: scheme,
       primaryColor: scheme.primary,
       backgroundColor: scheme.background,
       textTheme: TextTheme(
@@ -103,15 +109,20 @@ class AppTheme {
   }
 }
 
-class ColorScheme {
-  final Color background;
-  final Color primary;
+class AppColorScheme extends ColorScheme {
   final Color accent;
   final Color text;
-  ColorScheme({
-    required this.background,
-    required this.primary,
+  const AppColorScheme.light({
+    required background,
+    required primary,
     required this.accent,
-    required this.text,
-  });
+    this.text = Colors.black,
+  }) : super.light(background: background, primary: primary);
+
+  const AppColorScheme.dark({
+    required background,
+    required primary,
+    required this.accent,
+    this.text = Colors.white,
+  }) : super.dark(background: background, primary: primary);
 }

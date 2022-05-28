@@ -1,14 +1,17 @@
 # content of conftest.py
+from typing import Dict
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
-from app.core.security import hash_password
+from app.core.security import create_access_token, hash_password
 from app.models import User
 from app.routes.deps import get_db
 from app.main import app
 from app.tests.db_session import TestingSessionLocal, engine
 from app.core.config import Setting, get_setting
 from app.db.base import Base
+from app import schema
+from app.repository import user_repo
 
 Base.metadata.create_all(bind=engine)
 
@@ -44,7 +47,15 @@ def get_test_db():
         db.close()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
+def test_user_headers(settings: Setting) -> Dict:
+    access_token = create_access_token(settings.TEST_USER_PHONE).access_token
+    return {
+        "Authorization": f"Bearer {access_token}",
+    }
+
+
+@pytest.fixture(scope="module")
 def get_test_user(get_test_db: Session, settings: Setting = get_setting()):
     test_user = (
         get_test_db.query(User)

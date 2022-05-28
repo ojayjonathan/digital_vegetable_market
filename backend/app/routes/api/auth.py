@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, Depends
+from fastapi import APIRouter, Body, Depends, status
 from sqlalchemy.orm import Session
 from app.core.security import create_access_token
 from app.routes.deps import get_current_user, get_db
@@ -21,12 +21,13 @@ async def register(db: Session = Depends(get_db), user: schema.UserCreate = Body
     return {"msg": "Account Created Successfuly!"}
 
 
-@router.post("/change-password//")
+@router.post("/change-password/")
 async def change_password(
     db: Session = Depends(get_db),
     user: models.User = Depends(get_current_user),
     data: schema.ChangePassword = Body(...),
 ):
+    print(user)
     return user_repo.update_password(db, user, data)
 
 

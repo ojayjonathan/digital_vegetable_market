@@ -1,4 +1,8 @@
+from typing import Dict
+from bcrypt import re
+from fastapi import status
 from fastapi.testclient import TestClient
+import pytest
 from sqlalchemy.orm import Session
 from app import schema
 from app.core.config import Setting
@@ -27,6 +31,31 @@ def test_login(settings: Setting, client: TestClient, get_test_user: models.User
     res = client.post(
         f"{settings.BASE_API_URL}/auth/login/",
         json=user_login.dict(),
-    ).json()
+    )
 
-    assert "access_token" in res
+    assert "access_token" in res.json()
+    assert res.status_code == 200
+    # invalid login credentials
+    user_login_invalid = schema.Login(
+        phone_number=settings.TEST_USER_PHONE, password=random_string(10)
+    )
+    res = client.post(
+        f"{settings.BASE_API_URL}/auth/login/",
+        json=user_login_invalid.dict(),
+    )
+    assert "access_token" not in res.json()
+
+
+def test_change_password(
+    settings: Setting, test_user_headers: Dict[str, str], client: TestClient
+):
+    change_password = schema.ChangePassword(
+        new_password=settings.TEST_USER_PASSWORD,
+        old_password=settings.TEST_USER_PASSWORD,
+    )
+    res = client.post(
+        f"{settings.BASE_API_URL}/auth/change-password/",
+        headers=test_user_headers,
+        json=change_password.dict(),
+    )
+    assert res.status_code == 200
