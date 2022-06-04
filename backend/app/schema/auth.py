@@ -18,6 +18,3 @@ class Login(BaseModel):
     password: str = Field(..., min_length=6, max_length=30)
 
 
-class ChangePassword(BaseModel):
-    old_password: str = Field(..., min_length=6, max_length=30)
-    new_password: str = Field(..., min_length=6, max_length=30)

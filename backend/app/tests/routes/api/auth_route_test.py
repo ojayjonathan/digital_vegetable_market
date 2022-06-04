@@ -46,16 +46,3 @@ def test_login(settings: Setting, client: TestClient, get_test_user: models.User
     assert "access_token" not in res.json()
 
 
-def test_change_password(
-    settings: Setting, test_user_headers: Dict[str, str], client: TestClient
-):
-    change_password = schema.ChangePassword(
-        new_password=settings.TEST_USER_PASSWORD,
-        old_password=settings.TEST_USER_PASSWORD,
-    )
-    res = client.post(
-        f"{settings.BASE_API_URL}/auth/change-password/",
-        headers=test_user_headers,
-        json=change_password.dict(),
-    )
-    assert res.status_code == 200

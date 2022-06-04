@@ -8,7 +8,16 @@ from fastapi import HTTPException, status
 class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserUpdate]):
     def create(self, db: Session, item: schema.UserCreate):
         item.password = hash_password(item.password)
-        return super().create(db, item)
+        if user := super().create(db, item):
+            wallet_repo.create(
+                db,
+                schema.WalletCreate(
+                    user_id=user.id,
+                    balance=0,
+                    name=f"{user.first_name[0]} {user.last_name[0]}",
+                ),
+            )
+            return user
 
     def get_user_by_phone(self, db: Session, phone_number: str) -> models.User or None:
         return (
@@ -28,7 +37,7 @@ class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserU
         self,
         db: Session,
         user: models.User,
-        data: schema.ChangePassword,
+        data: schema.PasswordUpdate,
     ) -> models.User:
         if verify_password(data.old_password, user.password):
             user.password = hash_password(data.new_password)
@@ -47,5 +56,12 @@ class DriverRepository(
     pass
 
 
+class WalletRepository(
+    BaseRepository[models.Wallet, schema.Wallet, schema.PasswordUpdate]
+):
+    pass
+
+
 user_repo = UserRepository(models.User)
 driver_repo = DriverRepository(models.Driver)
+wallet_repo = WalletRepository(models.Wallet)

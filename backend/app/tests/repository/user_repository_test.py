@@ -99,7 +99,7 @@ def test_change_password(get_test_db: Session, user_repo: UserRepository = user_
     )
 
     user = user_repo.create(db=get_test_db, item=user_create)
-    password_update = schema.ChangePassword(
+    password_update = schema.PasswordUpdate(
         old_password=password,
         new_password=random_string(7),
     )
