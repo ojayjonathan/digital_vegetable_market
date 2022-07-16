@@ -4,5 +4,5 @@ from .driver import DriverCreate, Driver, DriverUpdate
 from .wallet import Wallet,WalletCreate,WalletUpdate
 from .vehicle import Vehicle, VehicleCreate, VehicleUpdate, VehicleType
 from .address import Location, Address, LocationCreate, AddressCreate
-from .products import Product, ProductCreate, ProductUpdate
+from .products import Product, ProductCreate, ProductUpdate,ProductList
 from .main import MessageResponse

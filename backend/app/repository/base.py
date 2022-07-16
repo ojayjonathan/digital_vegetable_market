@@ -28,7 +28,7 @@ class BaseRepository(Generic[Model, CreateSchema, UpdateSchema]):
             db.rollback()
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=e.args)
 
-    def get_object_or_404(self, db: Session, id: int) -> Model:
+    def get_object_or_404(self, db: Session, id: int, **kwargs) -> Model:
         if obj := self.get(db, id):
             return obj
         raise HTTPException(

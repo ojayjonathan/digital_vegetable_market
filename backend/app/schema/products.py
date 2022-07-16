@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 from .user import User
 
@@ -34,3 +34,9 @@ class ProductUpdate(BaseModel):
     measurement_unit: Optional[str]
     price: Optional[float]
     available_quantity: Optional[float]
+
+
+class ProductList(BaseModel):
+    products: List[Product]
+    pages: Optional[int] = 1
+    current_page: Optional[int] = 1

@@ -19,7 +19,7 @@ def get_db() -> Generator:
         db.close()
 
 
-def get_current_user(
+def current_user(
     credentials: HTTPBasicCredentials = Security(auth_token_bearer),
     db: Session = Depends(get_db),
     settings: Setting = Depends(get_setting),
