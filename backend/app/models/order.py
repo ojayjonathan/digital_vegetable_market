@@ -1,11 +1,19 @@
 from __future__ import annotations
-from sqlalchemy import Column, DateTime, Float, ForeignKey, String
+import enum
+from sqlalchemy import Column, DateTime, Float, ForeignKey, String, Boolean
 from sqlalchemy.orm import relation
 from app.db.base_class import Base
 from app.utils.utils import tz_now
 from .user import User
 from .payment import Payment
 from .product import Product
+
+
+class OrderStatus(str, enum.Enum):
+    DELIVERED = "DELIVERED"
+    CANCELLED = "CANCELLED"
+    PENDING = "PENDING"
+    ACTIVE = "ACTIVE"
 
 
 class Order(Base):
@@ -17,9 +25,11 @@ class Order(Base):
 
     user = relation(User.__tablename__)
     payment = relation(Payment.__tablename__)
-    orders = relation(
+    orders_items = relation(
         "OrderItem",
-        
+    )
+    status: OrderStatus = Column(
+        String(10), nullable=False, default=OrderStatus.PENDING
     )
 
 
@@ -27,4 +37,4 @@ class OrderItem(Base):
     product_id = Column(ForeignKey(f"{Product.__tablename__}.id"))
     order_id = Column(ForeignKey(f"{Order.__tablename__}.id"))
     quantity = Column(Float(precision=2), nullable=False)
-    status = Column(String(2), nullable=False)
+    delivered: bool = Column(Boolean(), nullable=False, default=False)

@@ -30,7 +30,6 @@ def decode_access_token(
 ) -> schema.AccessTokenData:
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
-        print(payload)
         return schema.AccessTokenData(exp=payload["exp"], sub=payload["sub"])
     except:
         return None

@@ -21,7 +21,7 @@ class ProductCreate(BaseModel):
     owner_id: Optional[int]
     image_url: str
     description: Optional[str]
-    expected_available_date: date
+    expected_available_date: datetime
     measurement_unit: str
     price: float
     available_quantity: float

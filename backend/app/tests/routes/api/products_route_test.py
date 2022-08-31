@@ -26,7 +26,7 @@ def test_add_product(
         available_quantity=100,
     )
     res = client.post(
-        f"{settings.BASE_API_URL}/products/add/",
+        f"{settings.BASE_API_URL}/products/",
         headers=test_user_headers,
         json=jsonable_encoder(product.dict()),
     ).json()
@@ -39,7 +39,7 @@ def test_product_list(
     settings: Setting, client: TestClient, test_user_headers: Dict[str, str]
 ):
     res = client.get(
-        f"{settings.BASE_API_URL}/products/list/",
+        f"{settings.BASE_API_URL}/products/",
         headers=test_user_headers,
     )
     assert res.status_code == 200
@@ -63,7 +63,7 @@ def test_update_product(
     product = product_repo.query(get_test_db).first()
 
     res = client.post(
-        f"{settings.BASE_API_URL}/products/update/{product.id}/",
+        f"{settings.BASE_API_URL}/products/{product.id}/",
         headers=test_user_headers,
         json=jsonable_encoder(product_update_schema.dict()),
     )

@@ -3,7 +3,7 @@ from app import schema, models
 
 
 class ProductsRepository(
-    BaseRepository[models.Product, schema.ProductCreate, schema.PasswordUpdate]
+    BaseRepository[models.Product, schema.ProductCreate, schema.ProductUpdate]
 ):
     pass
 

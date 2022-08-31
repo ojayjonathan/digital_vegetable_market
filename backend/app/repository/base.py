@@ -28,8 +28,8 @@ class BaseRepository(Generic[Model, CreateSchema, UpdateSchema]):
             db.rollback()
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=e.args)
 
-    def get_object_or_404(self, db: Session, id: int, **kwargs) -> Model:
-        if obj := self.get(db, id):
+    def get_object_or_404(self, db: Session, **kwargs) -> Model:
+        if obj := self.filter_by(db, **kwargs).first():
             return obj
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail={"msg": "Item not found"}

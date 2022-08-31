@@ -19,13 +19,14 @@ class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserU
             )
             return user
 
-    def get_user_by_phone(self, db: Session, phone_number: str) -> models.User or None:
-        return (
-            db.query(self.model).filter(self.model.phone_number == phone_number).first()
+    def get_user_by_phone(self, db: Session, phone_number: str) -> models.User:
+        return self.get_object_or_404(
+            db,
+            phone_number=phone_number,
         )
 
     def authenticate(self, db: Session, credentials: schema.Login) -> models.User:
-        if user := self.get_user_by_phone(db, credentials.phone_number):
+        if user := self.filter_by(db, phone_number=credentials.phone_number).first():
             if verify_password(credentials.password, user.password):
                 return user
         raise HTTPException(

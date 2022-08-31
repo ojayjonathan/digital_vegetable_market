@@ -15,12 +15,15 @@ async def products_me(
     db: Session = Depends(get_db),
     user: models.User = Depends(current_user),
 ):
+    """
+    Returns current user products
+    """
     return product_repo.filter_by(db, owner_id=user.id).all()
 
 
-@router.get("/list/", response_model=schema.ProductList)
+@router.get("/", response_model=schema.ProductList)
 async def products(
-    page: int  = Query(1, description="Current page", gt=0),
+    page: int = Query(1, description="Current page", gt=0),
     count: int = Query(10, description="No of products per page", gt=0),
     db: Session = Depends(get_db),
     user_id: Optional[int] = Query(
@@ -40,11 +43,10 @@ async def products(
             query = query[count * page : count * page + count]
         else:
             query = query[len(query) - count : len(query)]
-    print(query)
     return schema.ProductList(products=query, current_page=page, pages=pages)
 
 
-@router.post("/add/", response_model=schema.Product)
+@router.post("/", response_model=schema.Product)
 async def add_product(
     user: schema.User = Depends(current_user),
     product: schema.ProductCreate = Body(...),
@@ -56,7 +58,7 @@ async def add_product(
         return product_created
 
 
-@router.post("/update/{id}/", response_model=schema.Product)
+@router.post("/{id}/", response_model=schema.Product)
 async def update_product(
     id: int,
     user: schema.User = Depends(current_user),

@@ -20,8 +20,7 @@ async def update_profile(
     profile_update: schema.UserUpdate = Body(...),
     user: User = Depends(current_user),
 ):
-    if user := user_repo.update(db, user, profile_update):
-        return user
+    return user_repo.update(db, user, profile_update)
 
 
 @router.post("/update-password/", response_model=schema.MessageResponse)

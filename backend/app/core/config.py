@@ -1,13 +1,13 @@
 from datetime import timedelta
 from functools import lru_cache
-from typing import Optional,  Union, Dict
+from typing import Optional, Union, Dict
 from pydantic import BaseSettings, PostgresDsn, validator
 
 
 class Setting(BaseSettings):
     SECRET_KEY: str
-    APP_NAME: str
-    BASE_API_URL: str
+    APP_NAME: str = "Vegetable market"
+    BASE_API_URL: str = ""
     TEST_USER_PHONE: str
     TEST_USER_PASSWORD: str
     ACCESS_TOKEN_EXP_MINUTES: int = 7 * 24 * 60
@@ -21,7 +21,7 @@ class Setting(BaseSettings):
 
     DATABASE_URI: Optional[Union[PostgresDsn, str]] = None
     TIME_ZONE = "UTC+3"
-    
+
     @validator("DATABASE_URI", pre=True)
     def ensemble_database_connection(cls, v: Optional[str], values: Dict[str, any]):
         if isinstance(v, str):
