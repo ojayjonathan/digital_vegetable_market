@@ -1,4 +1,3 @@
-from ctypes import Union
 import math
 from typing import List, Optional
 from fastapi import APIRouter, Depends, Body, HTTPException, Query
@@ -61,22 +60,18 @@ async def add_product(
 @router.post("/{id}/", response_model=schema.Product)
 async def update_product(
     id: int,
-    user: schema.User = Depends(current_user),
-    product_update: schema.ProductCreate = Body(...),
+    _: schema.User = Depends(current_user),
+    product_update: schema.ProductUpdate = Body(...),
     db: Session = Depends(get_db),
 ):
-    if product := product_repo.get_object_or_404(db, id):
-        updated_product = product_repo.update(db, product, product_update)
-        return updated_product
+    if product := product_repo.get_object_or_404(db, id=id):
+        return product_repo.update(db, product, product_update)
 
 
-@router.delete("/{id}/", response_model=schema.MessageResponse)
+@router.delete("/{id}/", response_model=schema.Product)
 async def delete_product(
     id: int,
-    user: schema.User = Depends(current_user),
+    _: schema.User = Depends(current_user),
     db: Session = Depends(get_db),
 ):
-    if product := product_repo.filter_by(db, owner_id=user.id, id=id).first():
-        message = product_repo.delete(db, product)
-        return message
-    raise HTTPException(status_code=404, detail={"msg": "Item to found"})
+    return product_repo.delete(db, id=id)

@@ -26,7 +26,7 @@ def test_user_profile_update(
     profile_update_schema = schema.UserUpdate(
         is_farmer=True, last_name=random_string(15)
     )
-    res = client.post(
+    res = client.put(
         f"{settings.BASE_API_URL}/account/profile/",
         headers=test_user_headers,
         json=profile_update_schema.dict(),

@@ -12,22 +12,25 @@ class OrdersRepository(
         self, db: Session, item: schema.OrderCreate, user_id: int
     ) -> models.Order:
         object_in = models.Order(
-            created_at=item.created_at,
-            user_id=user_id,
-            status=item.status,
-            type=item.type,
-            pick_up_date=item.pick_up_date,
+            user_id=user_id, delivery_address_id=item.delivery_address_id
         )
         try:
             db.add(object_in)
-            for order_item in item.orders_items:
-                db.add(models.OrderItem(**order_item, order_id=object_in.user_id))
+            db.commit()
+            db.refresh(object_in)
+            for order_item in item.order_items:
+                item = models.OrderItem(
+                    order_id=object_in.id,
+                    product_id=order_item.product_id,
+                    quantity=order_item.quantity,
+                )
+                db.add(item)
             db.commit()
             db.refresh(object_in)
         except IntegrityError as e:
             db.rollback()
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=e.args)
-        return super().create(db, item)
+        return object_in
 
 
 order_repo = OrdersRepository(models.Order)

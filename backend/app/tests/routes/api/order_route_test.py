@@ -4,13 +4,14 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 from app import schema
 from app.core.config import Setting
+from app.models.order import OrderStatus
 from app.utils.utils import random_phone, random_string
 from app import models
-from app.repository import product_repo, address_repo
+from app.repository import product_repo, order_repo
 from fastapi.encoders import jsonable_encoder
 
 
-def test_add_product(
+def test_create_order(
     settings: Setting,
     client: TestClient,
     get_test_user: models.User,
@@ -24,7 +25,7 @@ def test_add_product(
         headers=test_user_headers,
         json=jsonable_encoder(address_create.dict()),
     ).json()
-    
+
     product = schema.ProductCreate(
         description=random_string(),
         image_url="/upload/product.png",
@@ -41,43 +42,26 @@ def test_add_product(
         json=jsonable_encoder(product.dict()),
     ).json()
 
-    assert "id" in res
-    assert "price" in res
+    order = client.post(
+        f"{settings.BASE_API_URL}/orders/",
+        headers=test_user_headers,
+        json=jsonable_encoder(
+            {
+                "order_items": [
+                    schema.OrderItemCreate(product_id=res["id"], quantity=10).dict(),
+                ],
+                "delivery_address_id": product.address_id,
+            }
+        ),
+    ).json()
+    assert order
 
 
-def test_product_list(
+def test_order_list(
     settings: Setting, client: TestClient, test_user_headers: Dict[str, str]
 ):
     res = client.get(
-        f"{settings.BASE_API_URL}/products/",
+        f"{settings.BASE_API_URL}/orders/",
         headers=test_user_headers,
     )
     assert res.status_code == 200
-    assert isinstance(res.json()["products"], list)
-
-
-def test_update_product(
-    settings: Setting,
-    client: TestClient,
-    test_user_headers: Dict[str, str],
-    get_test_db: Session,
-):
-    product_update_schema = schema.ProductUpdate(
-        description=random_string(),
-        measurement_unit="Kg",
-        expected_available_date=datetime.now(),
-        price=18872,
-        available_quantity=100,
-    )
-    product = product_repo.query(get_test_db).first()
-
-    res = client.post(
-        f"{settings.BASE_API_URL}/products/{product.id}/",
-        headers=test_user_headers,
-        json=jsonable_encoder(product_update_schema.dict()),
-    )
-
-    product_updated = res.json()
-
-    assert res.status_code == 200
-    assert product_updated["description"] in product_update_schema.description

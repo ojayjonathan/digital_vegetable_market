@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field, validator
 
 
 class AccessToken(BaseModel):
-    bearer: Optional[str] = "Bearer"
+    type: Optional[str] = "Bearer"
     access_token: str
 
 
@@ -18,3 +18,9 @@ class Login(BaseModel):
     password: str = Field(..., min_length=6, max_length=30)
 
 
+class PasswordResetInit(BaseModel):
+    email: str
+
+
+class PasswordResetComplete(BaseModel):
+    reset_code: str

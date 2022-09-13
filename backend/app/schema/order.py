@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, List, Optional
 from pydantic import BaseModel, Field
+from app.schema.address import AddressCreate, Address
 
 from app.schema.payment import Payment
 from .user import User
@@ -16,37 +17,32 @@ class OrderItem(BaseModel):
     delivered: bool
     id: int
 
-    class Meta:
+    class Config:
         orm_mode = True
 
 
 class Order(BaseModel):
     created_at: datetime
-    pick_up_date: datetime
-    type: str
     payment: Optional[Payment]
 
     user: User
-    orders_items: List[OrderItem]
+    order_items: List[OrderItem]
     status: OrderStatus
     id: int
+    delivery_address: Address
 
-    class Meta:
+    class Config:
         orm_mode = True
 
 
 class OrderItemCreate(BaseModel):
     product_id: int
     quantity: float
-    delivered: Optional[bool] = False
 
 
 class OrderCreate(BaseModel):
-    created_at: datetime
-    pick_up_date: datetime
-    type: str
-    user_id: Optional[int]
-    orders_items: List[OrderItemCreate]
+    order_items: List[OrderItemCreate]
+    delivery_address_id: int
 
 
 class OrderItemUpdate(BaseModel):
@@ -56,7 +52,5 @@ class OrderItemUpdate(BaseModel):
 
 
 class OrderUpdate(BaseModel):
-    pick_up_date: Optional[datetime]
-    type: Optional[str]
     payment_id: Optional[int]
     status: Optional[OrderStatus]

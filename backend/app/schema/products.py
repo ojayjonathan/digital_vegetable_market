@@ -1,6 +1,8 @@
 from datetime import datetime, date
 from typing import Optional, List
 from pydantic import BaseModel
+
+from app.schema.address import Address, AddressCreate
 from .user import User
 
 
@@ -12,6 +14,8 @@ class Product(BaseModel):
     expected_available_date: date
     measurement_unit: str
     price: float
+
+    address: Address
 
     class Config:
         orm_mode = True
@@ -26,11 +30,13 @@ class ProductCreate(BaseModel):
     price: float
     available_quantity: float
 
+    address_id: int
+
 
 class ProductUpdate(BaseModel):
     image_url: Optional[str]
     description: Optional[str]
-    expected_available_date: Optional[date]
+    expected_available_date: Optional[datetime]
     measurement_unit: Optional[str]
     price: Optional[float]
     available_quantity: Optional[float]

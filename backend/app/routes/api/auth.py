@@ -15,9 +15,22 @@ async def login(db: Session = Depends(get_db), credentials: schema.Login = Body(
 
 
 @router.post("/register/", response_model=schema.MessageResponse)
-async def register(db: Session = Depends(get_db), user: schema.UserCreate = Body(...)):
-    if user := user_repo.create(db, user):
-        return {"msg": "Account Created Successfuly!"}
+async def register(db: Session = Depends(get_db), data: schema.UserCreate = Body(...)):
+    if user := user_repo.create(db, data):
+        return {"message": "Account Created Successfuly!"}
 
 
-# TODO: implement password reset
+@router.post("/password-reset-init/", response_model=schema.MessageResponse)
+async def password_reset_init(
+    db: Session = Depends(get_db), data: schema.PasswordResetInit = Body(...)
+):
+    if user := user_repo.create(db, data):
+        return {"message": "Password reset code has been send to your email"}
+
+
+@router.post("/password-reset-complete/", response_model=schema.MessageResponse)
+async def password_reset_complete(
+    db: Session = Depends(get_db), data: schema.PasswordResetComplete = Body(...)
+):
+    if user := user_repo.create(db, data):
+        return {"message": "Password reset code has been send to your email"}

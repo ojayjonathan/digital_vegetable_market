@@ -14,10 +14,10 @@ async def orders(
     db: Session = Depends(get_db),
     user: models.User = Depends(current_user),
 ):
-    return order_repo.filter_by(db, user_id=user.id)
+    return order_repo.filter_by(db, user_id=user.id).all()
 
 
-@router.post("/", response_model=schema.Order)
+@router.post("/")
 async def create_order(
     db: Session = Depends(get_db),
     user: models.User = Depends(current_user),
@@ -35,3 +35,12 @@ async def update_order(
 ):
     order = order_repo.get_object_or_404(db, id=id, user_id=user.id)
     return order_repo.update(db, item_in=item, current_item=order)
+
+
+@router.delete("/{id}", response_model=schema.Order)
+async def delete_order(
+    id: int,
+    db: Session = Depends(get_db),
+    _: models.User = Depends(current_user),
+):
+    return order_repo.delete(db, id=id)

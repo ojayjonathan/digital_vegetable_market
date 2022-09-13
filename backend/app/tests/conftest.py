@@ -70,6 +70,7 @@ def get_test_user(get_test_db: Session, settings: Setting = get_setting()):
             password=hash_password(settings.TEST_USER_PASSWORD),
             is_admin=True,
             phone_number=settings.TEST_USER_PHONE,
+            email = settings.TEST_USER_EMAIL
         )
         get_test_db.add(test_user)
         get_test_db.commit()

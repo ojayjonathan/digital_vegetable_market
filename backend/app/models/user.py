@@ -9,6 +9,7 @@ from app.utils.utils import tz_now
 class User(Base):
     first_name = Column(String(length=50), nullable=False)
     last_name = Column(String(length=50), nullable=False)
+    email = Column(String(length=50))
     phone_number = Column(String(length=10), nullable=False, unique=True)
     password = Column(String(length=150))
     is_admin = Column(Boolean(), default=False, nullable=False)

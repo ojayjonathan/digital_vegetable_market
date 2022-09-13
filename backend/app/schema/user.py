@@ -1,11 +1,12 @@
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import Optional
 
 
 class User(BaseModel):
     first_name: str
     last_name: str
+    email: Optional[EmailStr]
     id: int
     phone_number: str
     created_at: datetime
@@ -22,6 +23,12 @@ class UserCreate(BaseModel):
     phone_number: str = Field(..., regex=r"^0(7|1)\d{8}$")
     password: str = Field(..., min_length=6, max_length=30)
     is_farmer: Optional[bool] = False
+    email: Optional[EmailStr]
+
+
+class PasswordUpdate(BaseModel):
+    old_password: str = Field(..., min_length=6, max_length=30)
+    new_password: str = Field(..., min_length=6, max_length=30)
 
 
 class UserUpdate(BaseModel):
@@ -29,8 +36,4 @@ class UserUpdate(BaseModel):
     last_name: Optional[str] = Field(None, max_length=50, min_length=2)
     phone_number: Optional[str] = Field(None, regex=r"^0(7|1)\d{8}$")
     is_farmer: Optional[bool]
-
-
-class PasswordUpdate(BaseModel):
-    old_password: str = Field(..., min_length=6, max_length=30)
-    new_password: str = Field(..., min_length=6, max_length=30)
+    email: Optional[EmailStr]

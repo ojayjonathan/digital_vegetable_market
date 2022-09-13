@@ -9,6 +9,7 @@ class Setting(BaseSettings):
     APP_NAME: str = "Vegetable market"
     BASE_API_URL: str = ""
     TEST_USER_PHONE: str
+    TEST_USER_EMAIL: str
     TEST_USER_PASSWORD: str
     ACCESS_TOKEN_EXP_MINUTES: int = 7 * 24 * 60
     UTC_TIME_DELTA_OFFSET: timedelta = timedelta(hours=3)

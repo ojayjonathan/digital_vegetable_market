@@ -31,7 +31,7 @@ class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserU
                 return user
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail={"msg": "Invalid Login Credentials"},
+            detail={"message": "Invalid Login Credentials"},
         )
 
     def update_password(
@@ -47,7 +47,7 @@ class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserU
 
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail={"msg": "Old password provided was not valid"},
+            detail={"message": "Old password provided was not valid"},
         )
 
 
@@ -63,6 +63,13 @@ class WalletRepository(
     pass
 
 
+class AddressRepository(
+    BaseRepository[models.Address, schema.AddressCreate, schema.AddressUpdate]
+):
+    pass
+
+
+address_repo = AddressRepository(models.Address)
 user_repo = UserRepository(models.User)
 driver_repo = DriverRepository(models.Driver)
 wallet_repo = WalletRepository(models.Wallet)

@@ -19,11 +19,11 @@ class BaseRepository(Generic[Model, CreateSchema, UpdateSchema]):
 
     def delete(self, db: Session, obj: Model = None, id: int = None):
         if not obj:
-            obj = self.get_object_or_404(db, id)
+            obj = self.get_object_or_404(db, id=id)
         try:
             db.delete(obj)
             db.commit()
-            return {"msg": "Item deleted successfuly"}
+            return obj
         except IntegrityError as e:
             db.rollback()
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=e.args)
@@ -32,7 +32,7 @@ class BaseRepository(Generic[Model, CreateSchema, UpdateSchema]):
         if obj := self.filter_by(db, **kwargs).first():
             return obj
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail={"msg": "Item not found"}
+            status_code=status.HTTP_404_NOT_FOUND, detail={"message": "Item not found"}
         )
 
     def filter_by(self, db: Session, **kwargs) -> Query:

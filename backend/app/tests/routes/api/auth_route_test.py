@@ -21,7 +21,7 @@ def test_register(settings: Setting, client: TestClient):
         f"{settings.BASE_API_URL}/auth/register/",
         json=user.dict(),
     ).json()
-    assert "msg" in res
+    assert "message" in res
 
 
 def test_login(settings: Setting, client: TestClient, get_test_user: models.User):
