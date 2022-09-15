@@ -1,0 +1,3 @@
+String AUTH_TOKEN_KEY = "AUTH_KEY";
+String USER_DATA_KEY = "USER_DATA";
+
