@@ -24,12 +24,12 @@ class OrderItem(BaseModel):
 class Order(BaseModel):
     created_at: datetime
     payment: Optional[Payment]
-
     user: User
     order_items: List[OrderItem]
     status: OrderStatus
     id: int
     delivery_address: Address
+    shipment_cost: float
 
     class Config:
         orm_mode = True

@@ -22,6 +22,7 @@ class Setting(BaseSettings):
 
     DATABASE_URI: Optional[Union[PostgresDsn, str]] = None
     TIME_ZONE = "UTC+3"
+    MEDIA_URL = "./media/"
 
     @validator("DATABASE_URI", pre=True)
     def ensemble_database_connection(cls, v: Optional[str], values: Dict[str, any]):

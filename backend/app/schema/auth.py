@@ -24,3 +24,4 @@ class PasswordResetInit(BaseModel):
 
 class PasswordResetComplete(BaseModel):
     reset_code: str
+    new_password: str = Field(..., min_length=6, max_length=30)

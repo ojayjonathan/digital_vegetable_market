@@ -1,7 +1,9 @@
 from datetime import datetime
 from random import randint
 from string import ascii_lowercase
-
+from fastapi import UploadFile, Depends
+import os
+import shutil
 
 from app.core.config import get_setting
 
@@ -18,4 +20,14 @@ def tz_now() -> datetime:
     return datetime.utcnow() + get_setting().UTC_TIME_DELTA_OFFSET
 
 
+def password_reset_mail(email: str, token: str):
+    print(token, email)
+
+
+def upload_image(file: UploadFile, media_url="", settings=get_setting()):
+    url = settings.MEDIA_URL + media_url
+    if not os.path.exists(url):
+        os.makedirs(url)
+    with open(url + file.filename, "wb") as img:
+        shutil.copyfileobj(file.file, img)
 

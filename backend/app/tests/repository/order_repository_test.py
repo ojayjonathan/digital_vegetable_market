@@ -20,12 +20,14 @@ def test_create_order(get_test_db: Session, get_test_user: models.User):
     product_create = schema.ProductCreate(
         owner_id=get_test_user.id,
         price=134,
-        image_url="/upload/product.png",
+        image="/upload/product.png",
         expected_available_date=datetime.now(),
         measurement_unit="Kg",
         description="organic vegetable",
         available_quantity=100,
         address_id=address.id,
+        name=random_string(10),
+        category=schema.ProductCategory.FRUITS,
     )
 
     product = product_repo.create(get_test_db, product_create)

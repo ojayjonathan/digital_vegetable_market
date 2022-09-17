@@ -1,4 +1,5 @@
 from __future__ import annotations
+from email.policy import default
 import enum
 from sqlalchemy import Column, DateTime, Float, ForeignKey, String, Boolean
 from sqlalchemy.orm import relationship
@@ -26,6 +27,8 @@ class Order(Base):
     order_items = relationship(
         "OrderItem",
     )
+    shipment_cost = Column(Float(), default=0, nullable=False)
+    
     status: OrderStatus = Column(
         String(10), nullable=False, default=OrderStatus.PENDING
     )

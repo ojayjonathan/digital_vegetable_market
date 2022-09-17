@@ -8,6 +8,7 @@ class Address(BaseModel):
     longitude: float
     address: Optional[str]
     title: str
+    id: int
 
     class Config:
         orm_mode = True

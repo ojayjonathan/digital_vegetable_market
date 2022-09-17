@@ -44,3 +44,12 @@ async def delete_order(
     _: models.User = Depends(current_user),
 ):
     return order_repo.delete(db, id=id)
+
+
+@router.get("/{id}", response_model=schema.Order)
+async def order_details(
+    id: int,
+    db: Session = Depends(get_db),
+    _: models.User = Depends(current_user),
+):
+    return order_repo.get_object_or_404(db, id=id)

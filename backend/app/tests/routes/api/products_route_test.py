@@ -24,23 +24,34 @@ def test_add_product(
         headers=test_user_headers,
         json=jsonable_encoder(address_create.dict()),
     ).json()
-    
+
     product = schema.ProductCreate(
         description=random_string(),
-        image_url="/upload/product.png",
         owner_id=get_test_user.id,
         measurement_unit="Kg",
         expected_available_date=datetime.now(),
         price=18872,
         available_quantity=100,
         address_id=address["id"],
+        name=random_string(10),
+        category="FRUITS",
+        image=""
+
     )
+    data = product.dict()
+    data["category"]="FRUITS"
     res = client.post(
         f"{settings.BASE_API_URL}/products/",
         headers=test_user_headers,
-        json=jsonable_encoder(product.dict()),
+        files={
+            "image": (
+                "test.png",
+                open("test_image/test.png", "rb"),
+                "image/jpeg",
+            )
+        },
+        data=data,
     ).json()
-
     assert "id" in res
     assert "price" in res
 

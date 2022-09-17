@@ -20,3 +20,5 @@ from .order import (
     OrderUpdate,
     OrderItemCreate,
 )
+
+from app.models.product import ProductCategory

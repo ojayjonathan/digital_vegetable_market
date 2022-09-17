@@ -1,9 +1,12 @@
 from datetime import datetime, date
-from typing import Optional, List
+from enum import Enum
+from typing import Any, Optional, List
 from pydantic import BaseModel
-
-from app.schema.address import Address, AddressCreate
+from app.models.product import ProductCategory
+from app.schema.address import Address
 from .user import User
+
+
 
 
 class Product(BaseModel):
@@ -14,32 +17,37 @@ class Product(BaseModel):
     expected_available_date: date
     measurement_unit: str
     price: float
-
+    name: str
+    category: ProductCategory
     address: Address
 
     class Config:
         orm_mode = True
 
+  
 
 class ProductCreate(BaseModel):
-    owner_id: Optional[int]
-    image_url: str
+    owner_id: int
+    image: str
+    name: str
     description: Optional[str]
     expected_available_date: datetime
     measurement_unit: str
     price: float
     available_quantity: float
-
     address_id: int
+    category: ProductCategory
 
 
 class ProductUpdate(BaseModel):
-    image_url: Optional[str]
+    image: Optional[str]
     description: Optional[str]
     expected_available_date: Optional[datetime]
     measurement_unit: Optional[str]
     price: Optional[float]
     available_quantity: Optional[float]
+    name: Optional[str]
+    category: Optional[ProductCategory]
 
 
 class ProductList(BaseModel):

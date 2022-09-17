@@ -17,7 +17,7 @@ async def address(
     return address_repo.filter_by(db, user_id=user.id).all()
 
 
-@router.post("/")
+@router.post("/",response_model=schema.Address)
 async def create_address(
     db: Session = Depends(get_db),
     user: models.User = Depends(current_user),
@@ -46,3 +46,12 @@ async def delete_address(
     _: models.User = Depends(current_user),
 ):
     return address_repo.delete(db, id=id)
+
+
+@router.get("/{id}", response_model=schema.Address)
+async def get_address(
+    id: int,
+    db: Session = Depends(get_db),
+    _: models.User = Depends(current_user),
+):
+    return address_repo.get_object_or_404(db, id=id)

@@ -3,6 +3,7 @@ from passlib import context
 from jose import jwt
 from app.core.config import Setting, get_setting
 from app import schema
+from app.utils.utils import tz_now
 
 pwd_context = context.CryptContext(schemes=["bcrypt"])
 ALGORITHM = "HS256"
@@ -12,7 +13,7 @@ def create_access_token(
     subject: str,
     settings: Setting = get_setting(),
 ) -> schema.AccessToken:
-    exp = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXP_MINUTES)
+    exp = datetime.utcnow()+ timedelta(minutes=settings.ACCESS_TOKEN_EXP_MINUTES)
     token = jwt.encode(
         {
             "exp": exp,

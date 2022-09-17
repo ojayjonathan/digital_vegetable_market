@@ -1,8 +1,14 @@
-from app.core.security import hash_password, verify_password
+from datetime import datetime, timedelta
+from time import time
+from app.core.config import Setting, get_setting
+from app.core.security import ALGORITHM, hash_password, verify_password
 from app.repository.base import BaseRepository
 from app import models, schema
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
+from jose import jwt
+
+from app.utils.utils import password_reset_mail, tz_now
 
 
 class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserUpdate]):
@@ -49,6 +55,48 @@ class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserU
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={"message": "Old password provided was not valid"},
         )
+
+    def password_reset(
+        self,
+        db: Session,
+        data: schema.PasswordResetInit,
+        settings: Setting = get_setting(),
+    ):
+        if user := self.get_object_or_404(db=db, email=data.email):
+            reset_token = jwt.encode(
+                {
+                    "id": user.id,
+                    "exp": datetime.utcnow() + timedelta(minutes=15),
+                },
+                key=settings.SECRET_KEY,
+                algorithm=ALGORITHM,
+            )
+            password_reset_mail(user.email, reset_token)
+        return schema.MessageResponse(
+            message="Password reset token has been send to your email"
+        )
+
+    def password_reset_complete(
+        self,
+        db: Session,
+        data: schema.PasswordResetComplete,
+        settings: Setting = get_setting(),
+    ):
+        try:
+            token = jwt.decode(
+                data.reset_code,
+                algorithms=[ALGORITHM],
+                key=settings.SECRET_KEY,
+            )
+        except Exception as e:
+            print(e)
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail={"message": "Invalid token or the token has expired"},
+            )
+        if user := self.get_object_or_404(db=db, id=token["id"]):
+            user.password = hash_password(data.new_password)
+        return schema.MessageResponse(message="Password reset successfuly")
 
 
 class DriverRepository(

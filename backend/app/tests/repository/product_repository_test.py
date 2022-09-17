@@ -3,6 +3,8 @@ from app import schema, models
 from sqlalchemy.orm import Session
 from app.repository import product_repo, address_repo
 from app.schema.address import AddressCreate
+from app.schema.products import ProductCategory
+from app.utils.utils import random_string
 
 
 def test_create_product(get_test_db: Session, get_test_user: models.User):
@@ -19,12 +21,14 @@ def test_create_product(get_test_db: Session, get_test_user: models.User):
     product_create = schema.ProductCreate(
         owner_id=get_test_user.id,
         price=134,
-        image_url="/upload/product.png",
+        image="/upload/product.png",
         expected_available_date=datetime.now(),
         measurement_unit="Kg",
         description="organic vegetable",
         available_quantity=100,
         address_id=address.id,
+        name=random_string(10),
+        category=schema.ProductCategory.FRUITS,
     )
 
     product = product_repo.create(get_test_db, product_create)
