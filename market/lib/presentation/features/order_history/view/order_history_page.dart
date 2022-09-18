@@ -51,7 +51,7 @@ class _OrderHistoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<OrderHistoryBloc>().add(OrderHistoryRefreshed());
+        context.read<OrderHistoryBloc>().add(OrderHistoryStarted());
       },
       child: BlocConsumer<OrderHistoryBloc, OrderHistoryState>(
         listener: (context, state) {

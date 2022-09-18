@@ -14,14 +14,6 @@ part 'state.dart';
 class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
   OrderHistoryBloc() : super(const OrderHistoryState()) {
     on<OrderHistoryStarted>(_orderStarted);
-    on<OrderHistoryLoaded>(
-      (event, emit) => emit(
-        state.copyWith(
-          orders: event.order,
-          status: ServiceStatus.loadingSuccess,
-        ),
-      ),
-    );
   }
 
   FutureOr _orderStarted(

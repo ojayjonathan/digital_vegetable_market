@@ -10,6 +10,23 @@ part 'order.freezed.dart';
 
 enum OrderStatus { PENDING, ACTIVE, CANCELLED, DELIVERED, INITIAL }
 
+extension Str on OrderStatus {
+  String toStr() {
+    switch (this) {
+      case OrderStatus.ACTIVE:
+        return "Active";
+      case OrderStatus.PENDING:
+        return "Pending";
+      case OrderStatus.CANCELLED:
+        return "Cancelled";
+      case OrderStatus.DELIVERED:
+        return "Delivered";
+      default:
+        return "Initial";
+    }
+  }
+}
+
 @Freezed(fromJson: true, copyWith: true)
 class Order with _$Order {
   factory Order({
@@ -20,10 +37,14 @@ class Order with _$Order {
     @JsonKey(name: "delivery_address") required Address address,
     @JsonKey(name: "order_items") required List<OrderItem> items,
     Payment? payment,
-    required double cost,
     @JsonKey(name: "shipping_cost", defaultValue: 0)
         required double shippingCost,
+    required List<OrderDetail> detail,
   }) = _Order;
+  Order._();
+  double get cost =>
+      items.fold(0, (prev, item) => prev + item.quantity * item.product.price);
+
   factory Order.fromJson(json) => _$$_OrderFromJson(json);
 }
 
@@ -49,4 +70,14 @@ class OrderItemCreate with _$OrderItemCreate {
         "product_id": productId,
         "quantity": quantity,
       };
+}
+
+@Freezed(fromJson: true, copyWith: true)
+class OrderDetail with _$OrderDetail {
+  factory OrderDetail({
+    @JsonKey(name: "order_item_id") int? orderItemId,
+    required String message,
+    @JsonKey(name: "created_at") required DateTime createdAt,
+  }) = _OrderDetail;
+  factory OrderDetail.fromJson(json) => _$$_OrderDetailFromJson(json);
 }

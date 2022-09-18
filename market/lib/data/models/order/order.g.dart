@@ -19,8 +19,10 @@ _$_Order _$$_OrderFromJson(Map<String, dynamic> json) => _$_Order(
           .toList(),
       payment:
           json['payment'] == null ? null : Payment.fromJson(json['payment']),
-      cost: (json['cost'] as num).toDouble(),
       shippingCost: (json['shipping_cost'] as num?)?.toDouble() ?? 0,
+      detail: (json['detail'] as List<dynamic>)
+          .map((e) => OrderDetail.fromJson(e))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_OrderToJson(_$_Order instance) => <String, dynamic>{
@@ -31,8 +33,8 @@ Map<String, dynamic> _$$_OrderToJson(_$_Order instance) => <String, dynamic>{
       'delivery_address': instance.address,
       'order_items': instance.items,
       'payment': instance.payment,
-      'cost': instance.cost,
       'shipping_cost': instance.shippingCost,
+      'detail': instance.detail,
     };
 
 const _$OrderStatusEnumMap = {
@@ -56,4 +58,18 @@ Map<String, dynamic> _$$_OrderItemToJson(_$_OrderItem instance) =>
       'quantity': instance.quantity,
       'delivered': instance.delivered,
       'id': instance.id,
+    };
+
+_$_OrderDetail _$$_OrderDetailFromJson(Map<String, dynamic> json) =>
+    _$_OrderDetail(
+      orderItemId: json['order_item_id'] as int?,
+      message: json['message'] as String,
+      createdAt: DateTime.parse(json['created_at'] as String),
+    );
+
+Map<String, dynamic> _$$_OrderDetailToJson(_$_OrderDetail instance) =>
+    <String, dynamic>{
+      'order_item_id': instance.orderItemId,
+      'message': instance.message,
+      'created_at': instance.createdAt.toIso8601String(),
     };

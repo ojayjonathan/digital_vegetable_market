@@ -7,11 +7,3 @@ abstract class OrderHistoryEvent extends Equatable {
 
 class OrderHistoryStarted extends OrderHistoryEvent {}
 
-class OrderHistoryLoaded extends OrderHistoryEvent {
-  final List<Order> order;
-  OrderHistoryLoaded(this.order);
-  @override
-  List<Object?> get props => [order];
-}
-
-class OrderHistoryRefreshed extends OrderHistoryEvent {}

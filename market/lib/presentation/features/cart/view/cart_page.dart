@@ -29,12 +29,24 @@ class CartPage extends StatelessWidget {
               return SingleChildScrollView(
                 child: Column(
                   children: [
+                    if (state.cart.items.isEmpty)
+                      Card(
+                        elevation: 5,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 10),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 10),
+                          child: const Text("Your cart is Empty"),
+                        ),
+                      ),
                     Card(
                       elevation: 5,
                       margin: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 10),
                       child: ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         separatorBuilder: (context, index) {
                           return const Divider();
@@ -47,7 +59,7 @@ class CartPage extends StatelessWidget {
                         },
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     _CartSummary(state.cart),
                     const SizedBox(height: 50),
                   ],

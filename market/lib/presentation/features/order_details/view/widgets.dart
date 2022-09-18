@@ -110,7 +110,6 @@ class _OrderShipmentInformation extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 10),
       elevation: 5,
-      shadowColor: Colors.grey.shade300,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         width: MediaQuery.of(context).size.width,
@@ -158,6 +157,42 @@ class _OrderShipmentInformation extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _OrderProducts extends StatelessWidget {
+  const _OrderProducts(this.order, {Key? key}) : super(key: key);
+  final Order order;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 5,
+      child: Column(
+        children: List.generate(
+          order.items.length,
+          (index) {
+            final item = order.items[index];
+            return ListTile(
+              leading:
+                  TextButton(onPressed: () {}, child: Text("${index + 1}")),
+              title: Text(item.product.name),
+              subtitle: Text("${item.product.price} \u00D7  ${item.quantity}"),
+              trailing: TextButton(
+                onPressed: () => {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          OrderItemTrackingPage(order: order, item: item),
+                    ),
+                  )
+                },
+                child: const Text("Track"),
+              ),
+            );
+          },
         ),
       ),
     );

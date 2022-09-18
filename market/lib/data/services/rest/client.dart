@@ -112,9 +112,9 @@ class OrderService {
         },
         deserializer: (json) => Order.fromJson(json),
       );
-  Result<Order> update(int id, OrderStatus status) => Http.post(
+  Result<Order> update(int id) => Http.post(
         "${ApiEndpoints.orders}$id",
-        {"status": status},
+        {"status": "CANCELLED"},
         deserializer: (json) => Order.fromJson(json),
       );
   Result<Order> delete(int id) => Http.delete(

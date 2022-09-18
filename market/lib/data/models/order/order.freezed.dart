@@ -31,9 +31,9 @@ mixin _$Order {
   @JsonKey(name: "order_items")
   List<OrderItem> get items => throw _privateConstructorUsedError;
   Payment? get payment => throw _privateConstructorUsedError;
-  double get cost => throw _privateConstructorUsedError;
   @JsonKey(name: "shipping_cost", defaultValue: 0)
   double get shippingCost => throw _privateConstructorUsedError;
+  List<OrderDetail> get detail => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,8 +52,8 @@ abstract class $OrderCopyWith<$Res> {
       @JsonKey(name: "delivery_address") Address address,
       @JsonKey(name: "order_items") List<OrderItem> items,
       Payment? payment,
-      double cost,
-      @JsonKey(name: "shipping_cost", defaultValue: 0) double shippingCost});
+      @JsonKey(name: "shipping_cost", defaultValue: 0) double shippingCost,
+      List<OrderDetail> detail});
 
   $UserCopyWith<$Res>? get user;
   $AddressCopyWith<$Res> get address;
@@ -77,8 +77,8 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
     Object? address = freezed,
     Object? items = freezed,
     Object? payment = freezed,
-    Object? cost = freezed,
     Object? shippingCost = freezed,
+    Object? detail = freezed,
   }) {
     return _then(_value.copyWith(
       createdAt: createdAt == freezed
@@ -109,14 +109,14 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
           ? _value.payment
           : payment // ignore: cast_nullable_to_non_nullable
               as Payment?,
-      cost: cost == freezed
-          ? _value.cost
-          : cost // ignore: cast_nullable_to_non_nullable
-              as double,
       shippingCost: shippingCost == freezed
           ? _value.shippingCost
           : shippingCost // ignore: cast_nullable_to_non_nullable
               as double,
+      detail: detail == freezed
+          ? _value.detail
+          : detail // ignore: cast_nullable_to_non_nullable
+              as List<OrderDetail>,
     ));
   }
 
@@ -163,8 +163,8 @@ abstract class _$$_OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       @JsonKey(name: "delivery_address") Address address,
       @JsonKey(name: "order_items") List<OrderItem> items,
       Payment? payment,
-      double cost,
-      @JsonKey(name: "shipping_cost", defaultValue: 0) double shippingCost});
+      @JsonKey(name: "shipping_cost", defaultValue: 0) double shippingCost,
+      List<OrderDetail> detail});
 
   @override
   $UserCopyWith<$Res>? get user;
@@ -192,8 +192,8 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
     Object? address = freezed,
     Object? items = freezed,
     Object? payment = freezed,
-    Object? cost = freezed,
     Object? shippingCost = freezed,
+    Object? detail = freezed,
   }) {
     return _then(_$_Order(
       createdAt: createdAt == freezed
@@ -224,21 +224,21 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
           ? _value.payment
           : payment // ignore: cast_nullable_to_non_nullable
               as Payment?,
-      cost: cost == freezed
-          ? _value.cost
-          : cost // ignore: cast_nullable_to_non_nullable
-              as double,
       shippingCost: shippingCost == freezed
           ? _value.shippingCost
           : shippingCost // ignore: cast_nullable_to_non_nullable
               as double,
+      detail: detail == freezed
+          ? _value._detail
+          : detail // ignore: cast_nullable_to_non_nullable
+              as List<OrderDetail>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Order implements _Order {
+class _$_Order extends _Order {
   _$_Order(
       {@JsonKey(name: "created_at")
           required this.createdAt,
@@ -251,10 +251,12 @@ class _$_Order implements _Order {
       @JsonKey(name: "order_items")
           required final List<OrderItem> items,
       this.payment,
-      required this.cost,
       @JsonKey(name: "shipping_cost", defaultValue: 0)
-          required this.shippingCost})
-      : _items = items;
+          required this.shippingCost,
+      required final List<OrderDetail> detail})
+      : _items = items,
+        _detail = detail,
+        super._();
 
   factory _$_Order.fromJson(Map<String, dynamic> json) =>
       _$$_OrderFromJson(json);
@@ -283,14 +285,18 @@ class _$_Order implements _Order {
   @override
   final Payment? payment;
   @override
-  final double cost;
-  @override
   @JsonKey(name: "shipping_cost", defaultValue: 0)
   final double shippingCost;
+  final List<OrderDetail> _detail;
+  @override
+  List<OrderDetail> get detail {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_detail);
+  }
 
   @override
   String toString() {
-    return 'Order(createdAt: $createdAt, id: $id, status: $status, user: $user, address: $address, items: $items, payment: $payment, cost: $cost, shippingCost: $shippingCost)';
+    return 'Order(createdAt: $createdAt, id: $id, status: $status, user: $user, address: $address, items: $items, payment: $payment, shippingCost: $shippingCost, detail: $detail)';
   }
 
   @override
@@ -305,9 +311,9 @@ class _$_Order implements _Order {
             const DeepCollectionEquality().equals(other.address, address) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
             const DeepCollectionEquality().equals(other.payment, payment) &&
-            const DeepCollectionEquality().equals(other.cost, cost) &&
             const DeepCollectionEquality()
-                .equals(other.shippingCost, shippingCost));
+                .equals(other.shippingCost, shippingCost) &&
+            const DeepCollectionEquality().equals(other._detail, _detail));
   }
 
   @JsonKey(ignore: true)
@@ -321,8 +327,8 @@ class _$_Order implements _Order {
       const DeepCollectionEquality().hash(address),
       const DeepCollectionEquality().hash(_items),
       const DeepCollectionEquality().hash(payment),
-      const DeepCollectionEquality().hash(cost),
-      const DeepCollectionEquality().hash(shippingCost));
+      const DeepCollectionEquality().hash(shippingCost),
+      const DeepCollectionEquality().hash(_detail));
 
   @JsonKey(ignore: true)
   @override
@@ -337,7 +343,7 @@ class _$_Order implements _Order {
   }
 }
 
-abstract class _Order implements Order {
+abstract class _Order extends Order {
   factory _Order(
       {@JsonKey(name: "created_at")
           required final DateTime createdAt,
@@ -350,9 +356,10 @@ abstract class _Order implements Order {
       @JsonKey(name: "order_items")
           required final List<OrderItem> items,
       final Payment? payment,
-      required final double cost,
       @JsonKey(name: "shipping_cost", defaultValue: 0)
-          required final double shippingCost}) = _$_Order;
+          required final double shippingCost,
+      required final List<OrderDetail> detail}) = _$_Order;
+  _Order._() : super._();
 
   factory _Order.fromJson(Map<String, dynamic> json) = _$_Order.fromJson;
 
@@ -375,10 +382,10 @@ abstract class _Order implements Order {
   @override
   Payment? get payment;
   @override
-  double get cost;
-  @override
   @JsonKey(name: "shipping_cost", defaultValue: 0)
   double get shippingCost;
+  @override
+  List<OrderDetail> get detail;
   @override
   @JsonKey(ignore: true)
   _$$_OrderCopyWith<_$_Order> get copyWith =>
@@ -732,5 +739,192 @@ abstract class _OrderItemCreate extends OrderItemCreate {
   @override
   @JsonKey(ignore: true)
   _$$_OrderItemCreateCopyWith<_$_OrderItemCreate> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) {
+  return _OrderDetail.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OrderDetail {
+  @JsonKey(name: "order_item_id")
+  int? get orderItemId => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
+  @JsonKey(name: "created_at")
+  DateTime get createdAt => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OrderDetailCopyWith<OrderDetail> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OrderDetailCopyWith<$Res> {
+  factory $OrderDetailCopyWith(
+          OrderDetail value, $Res Function(OrderDetail) then) =
+      _$OrderDetailCopyWithImpl<$Res>;
+  $Res call(
+      {@JsonKey(name: "order_item_id") int? orderItemId,
+      String message,
+      @JsonKey(name: "created_at") DateTime createdAt});
+}
+
+/// @nodoc
+class _$OrderDetailCopyWithImpl<$Res> implements $OrderDetailCopyWith<$Res> {
+  _$OrderDetailCopyWithImpl(this._value, this._then);
+
+  final OrderDetail _value;
+  // ignore: unused_field
+  final $Res Function(OrderDetail) _then;
+
+  @override
+  $Res call({
+    Object? orderItemId = freezed,
+    Object? message = freezed,
+    Object? createdAt = freezed,
+  }) {
+    return _then(_value.copyWith(
+      orderItemId: orderItemId == freezed
+          ? _value.orderItemId
+          : orderItemId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_OrderDetailCopyWith<$Res>
+    implements $OrderDetailCopyWith<$Res> {
+  factory _$$_OrderDetailCopyWith(
+          _$_OrderDetail value, $Res Function(_$_OrderDetail) then) =
+      __$$_OrderDetailCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {@JsonKey(name: "order_item_id") int? orderItemId,
+      String message,
+      @JsonKey(name: "created_at") DateTime createdAt});
+}
+
+/// @nodoc
+class __$$_OrderDetailCopyWithImpl<$Res> extends _$OrderDetailCopyWithImpl<$Res>
+    implements _$$_OrderDetailCopyWith<$Res> {
+  __$$_OrderDetailCopyWithImpl(
+      _$_OrderDetail _value, $Res Function(_$_OrderDetail) _then)
+      : super(_value, (v) => _then(v as _$_OrderDetail));
+
+  @override
+  _$_OrderDetail get _value => super._value as _$_OrderDetail;
+
+  @override
+  $Res call({
+    Object? orderItemId = freezed,
+    Object? message = freezed,
+    Object? createdAt = freezed,
+  }) {
+    return _then(_$_OrderDetail(
+      orderItemId: orderItemId == freezed
+          ? _value.orderItemId
+          : orderItemId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_OrderDetail implements _OrderDetail {
+  _$_OrderDetail(
+      {@JsonKey(name: "order_item_id") this.orderItemId,
+      required this.message,
+      @JsonKey(name: "created_at") required this.createdAt});
+
+  factory _$_OrderDetail.fromJson(Map<String, dynamic> json) =>
+      _$$_OrderDetailFromJson(json);
+
+  @override
+  @JsonKey(name: "order_item_id")
+  final int? orderItemId;
+  @override
+  final String message;
+  @override
+  @JsonKey(name: "created_at")
+  final DateTime createdAt;
+
+  @override
+  String toString() {
+    return 'OrderDetail(orderItemId: $orderItemId, message: $message, createdAt: $createdAt)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_OrderDetail &&
+            const DeepCollectionEquality()
+                .equals(other.orderItemId, orderItemId) &&
+            const DeepCollectionEquality().equals(other.message, message) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(orderItemId),
+      const DeepCollectionEquality().hash(message),
+      const DeepCollectionEquality().hash(createdAt));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_OrderDetailCopyWith<_$_OrderDetail> get copyWith =>
+      __$$_OrderDetailCopyWithImpl<_$_OrderDetail>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_OrderDetailToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OrderDetail implements OrderDetail {
+  factory _OrderDetail(
+          {@JsonKey(name: "order_item_id") final int? orderItemId,
+          required final String message,
+          @JsonKey(name: "created_at") required final DateTime createdAt}) =
+      _$_OrderDetail;
+
+  factory _OrderDetail.fromJson(Map<String, dynamic> json) =
+      _$_OrderDetail.fromJson;
+
+  @override
+  @JsonKey(name: "order_item_id")
+  int? get orderItemId;
+  @override
+  String get message;
+  @override
+  @JsonKey(name: "created_at")
+  DateTime get createdAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$_OrderDetailCopyWith<_$_OrderDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }

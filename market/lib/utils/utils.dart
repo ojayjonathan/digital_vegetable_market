@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:market/constants.dart';
 import 'package:market/data/models/user/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,5 +43,31 @@ String randomString(int len) {
         rand.nextInt(chars.length),
       ),
     ),
+  );
+}
+
+extension DateX on DateTime {
+  String get format => "$year-${month.toString().padLeft(2, "0")}-"
+      "${day.toString().padLeft(2, "0")} "
+      "${hour.toString().padLeft(2, "0")}"
+      ":${minute.toString().padLeft(2, "0")}";
+}
+
+LatLngBounds latLngBounds(LatLng p1, LatLng p2) {
+  // Calculating to check that the position relative
+// to the frame, and pan & zoom the camera accordingly.
+  double miny = (p1.latitude <= p2.latitude) ? p1.latitude : p2.latitude;
+  double minx = (p1.longitude <= p2.longitude) ? p1.longitude : p2.longitude;
+  double maxy = (p1.latitude <= p2.latitude) ? p2.latitude : p1.latitude;
+  double maxx = (p1.longitude <= p2.longitude) ? p2.longitude : p1.longitude;
+
+  double southWestLatitude = miny;
+  double southWestLongitude = minx;
+
+  double northEastLatitude = maxy;
+  double northEastLongitude = maxx;
+  return LatLngBounds(
+    northeast: LatLng(northEastLatitude, northEastLongitude),
+    southwest: LatLng(southWestLatitude, southWestLongitude),
   );
 }
