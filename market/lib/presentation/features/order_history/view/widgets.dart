@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:market/data/models/order/order.dart';
 
-class RideHistoryCard extends StatelessWidget {
+class OrderHistoryCard extends StatelessWidget {
   final Order order;
-  const RideHistoryCard({Key? key, required this.order}) : super(key: key);
+  const OrderHistoryCard({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -7,6 +7,7 @@ import 'package:market/presentation/features/account/view/widgets.dart';
 import 'package:market/presentation/features/address_search/view/map_location_picker.dart';
 import 'package:market/presentation/loading_effect/shimmer.dart';
 import 'package:market/presentation/loading_effect/widgets.dart';
+import 'package:market/presentation/widgets/bottom_navigation_bar.dart';
 import 'package:market/presentation/widgets/button.dart';
 import 'package:market/resources/app_routes.dart';
 import 'package:market/resources/info.dart';
@@ -24,6 +25,7 @@ class AccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<AccountBloc>().add(AccountStarted());
     return Scaffold(
+      bottomNavigationBar: const BottomNavigation(3),
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Account Details"),
@@ -107,7 +109,7 @@ class _FavoriteAddressView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Favorite Destinations",
+              "Favorite Addresse",
               style: Theme.of(context).textTheme.headline4,
             ),
           ),

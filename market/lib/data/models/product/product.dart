@@ -3,15 +3,17 @@ import 'dart:io';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:market/data/models/address/address.dart';
 import 'package:market/data/models/user/user.dart';
+import 'package:market/data/services/rest/client.dart';
 
 part 'product.g.dart';
 part 'product.freezed.dart';
 
 @Freezed(fromJson: true, copyWith: true)
 class Product with _$Product {
+  Product._();
   factory Product({
     required int id,
-    @JsonKey(name: "image_url") required String imageUrl,
+    @JsonKey(name: "image_url") required String image,
     String? description,
     required User owner,
     required String name,
@@ -20,6 +22,8 @@ class Product with _$Product {
     required double price,
     @JsonKey(name: "measurement_unit") required String measurementUnit,
   }) = _Product;
+  
+  String get imageUrl => MEDIA_URL + image;
   factory Product.fromJson(json) => _$$_ProductFromJson(json);
 }
 

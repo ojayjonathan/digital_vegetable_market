@@ -11,6 +11,7 @@ class Address with _$Address {
     required double latitude,
     required double longitude,
     int? id,
+    @JsonKey(defaultValue: false, name: "is_default")  bool? isDefault,
   }) = _Address;
   String get name =>
       title ??

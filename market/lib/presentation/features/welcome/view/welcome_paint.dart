@@ -26,16 +26,18 @@ class _WelcomePagePaint extends StatelessWidget {
     return ClipPath(
       clipper: _WelcomePagePainter(),
       child: Container(
-    height: MediaQuery.of(context).size.height * .25,
-    width: MediaQuery.of(context).size.width,
-    decoration: BoxDecoration(
-        gradient: LinearGradient(
+        height: MediaQuery.of(context).size.height * .25,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-          Theme.of(context).primaryColor,
-          Theme.of(context).primaryColorDark,
-        ])),
+              Theme.of(context).primaryColor,
+              Theme.of(context).primaryColorDark,
+            ],
+          ),
+        ),
       ),
     );
   }

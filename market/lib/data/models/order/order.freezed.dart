@@ -22,14 +22,18 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
 mixin _$Order {
   @JsonKey(name: "created_at")
   DateTime get createdAt => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: OrderStatus.PENDING)
   OrderStatus get status => throw _privateConstructorUsedError;
-  User get user => throw _privateConstructorUsedError;
+  User? get user => throw _privateConstructorUsedError;
   @JsonKey(name: "delivery_address")
   Address get address => throw _privateConstructorUsedError;
   @JsonKey(name: "order_items")
   List<OrderItem> get items => throw _privateConstructorUsedError;
   Payment? get payment => throw _privateConstructorUsedError;
+  double get cost => throw _privateConstructorUsedError;
+  @JsonKey(name: "shipping_cost", defaultValue: 0)
+  double get shippingCost => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,14 +46,16 @@ abstract class $OrderCopyWith<$Res> {
       _$OrderCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: "created_at") DateTime createdAt,
-      int id,
-      OrderStatus status,
-      User user,
+      int? id,
+      @JsonKey(defaultValue: OrderStatus.PENDING) OrderStatus status,
+      User? user,
       @JsonKey(name: "delivery_address") Address address,
       @JsonKey(name: "order_items") List<OrderItem> items,
-      Payment? payment});
+      Payment? payment,
+      double cost,
+      @JsonKey(name: "shipping_cost", defaultValue: 0) double shippingCost});
 
-  $UserCopyWith<$Res> get user;
+  $UserCopyWith<$Res>? get user;
   $AddressCopyWith<$Res> get address;
   $PaymentCopyWith<$Res>? get payment;
 }
@@ -71,6 +77,8 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
     Object? address = freezed,
     Object? items = freezed,
     Object? payment = freezed,
+    Object? cost = freezed,
+    Object? shippingCost = freezed,
   }) {
     return _then(_value.copyWith(
       createdAt: createdAt == freezed
@@ -80,7 +88,7 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -88,7 +96,7 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User,
+              as User?,
       address: address == freezed
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -101,12 +109,24 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
           ? _value.payment
           : payment // ignore: cast_nullable_to_non_nullable
               as Payment?,
+      cost: cost == freezed
+          ? _value.cost
+          : cost // ignore: cast_nullable_to_non_nullable
+              as double,
+      shippingCost: shippingCost == freezed
+          ? _value.shippingCost
+          : shippingCost // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 
   @override
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value));
     });
   }
@@ -137,15 +157,17 @@ abstract class _$$_OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
   @override
   $Res call(
       {@JsonKey(name: "created_at") DateTime createdAt,
-      int id,
-      OrderStatus status,
-      User user,
+      int? id,
+      @JsonKey(defaultValue: OrderStatus.PENDING) OrderStatus status,
+      User? user,
       @JsonKey(name: "delivery_address") Address address,
       @JsonKey(name: "order_items") List<OrderItem> items,
-      Payment? payment});
+      Payment? payment,
+      double cost,
+      @JsonKey(name: "shipping_cost", defaultValue: 0) double shippingCost});
 
   @override
-  $UserCopyWith<$Res> get user;
+  $UserCopyWith<$Res>? get user;
   @override
   $AddressCopyWith<$Res> get address;
   @override
@@ -170,6 +192,8 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
     Object? address = freezed,
     Object? items = freezed,
     Object? payment = freezed,
+    Object? cost = freezed,
+    Object? shippingCost = freezed,
   }) {
     return _then(_$_Order(
       createdAt: createdAt == freezed
@@ -179,7 +203,7 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -187,7 +211,7 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User,
+              as User?,
       address: address == freezed
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -200,6 +224,14 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
           ? _value.payment
           : payment // ignore: cast_nullable_to_non_nullable
               as Payment?,
+      cost: cost == freezed
+          ? _value.cost
+          : cost // ignore: cast_nullable_to_non_nullable
+              as double,
+      shippingCost: shippingCost == freezed
+          ? _value.shippingCost
+          : shippingCost // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -208,13 +240,20 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Order implements _Order {
   _$_Order(
-      {@JsonKey(name: "created_at") required this.createdAt,
-      required this.id,
-      required this.status,
-      required this.user,
-      @JsonKey(name: "delivery_address") required this.address,
-      @JsonKey(name: "order_items") required final List<OrderItem> items,
-      this.payment})
+      {@JsonKey(name: "created_at")
+          required this.createdAt,
+      this.id,
+      @JsonKey(defaultValue: OrderStatus.PENDING)
+          required this.status,
+      this.user,
+      @JsonKey(name: "delivery_address")
+          required this.address,
+      @JsonKey(name: "order_items")
+          required final List<OrderItem> items,
+      this.payment,
+      required this.cost,
+      @JsonKey(name: "shipping_cost", defaultValue: 0)
+          required this.shippingCost})
       : _items = items;
 
   factory _$_Order.fromJson(Map<String, dynamic> json) =>
@@ -224,11 +263,12 @@ class _$_Order implements _Order {
   @JsonKey(name: "created_at")
   final DateTime createdAt;
   @override
-  final int id;
+  final int? id;
   @override
+  @JsonKey(defaultValue: OrderStatus.PENDING)
   final OrderStatus status;
   @override
-  final User user;
+  final User? user;
   @override
   @JsonKey(name: "delivery_address")
   final Address address;
@@ -242,10 +282,15 @@ class _$_Order implements _Order {
 
   @override
   final Payment? payment;
+  @override
+  final double cost;
+  @override
+  @JsonKey(name: "shipping_cost", defaultValue: 0)
+  final double shippingCost;
 
   @override
   String toString() {
-    return 'Order(createdAt: $createdAt, id: $id, status: $status, user: $user, address: $address, items: $items, payment: $payment)';
+    return 'Order(createdAt: $createdAt, id: $id, status: $status, user: $user, address: $address, items: $items, payment: $payment, cost: $cost, shippingCost: $shippingCost)';
   }
 
   @override
@@ -259,7 +304,10 @@ class _$_Order implements _Order {
             const DeepCollectionEquality().equals(other.user, user) &&
             const DeepCollectionEquality().equals(other.address, address) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
-            const DeepCollectionEquality().equals(other.payment, payment));
+            const DeepCollectionEquality().equals(other.payment, payment) &&
+            const DeepCollectionEquality().equals(other.cost, cost) &&
+            const DeepCollectionEquality()
+                .equals(other.shippingCost, shippingCost));
   }
 
   @JsonKey(ignore: true)
@@ -272,7 +320,9 @@ class _$_Order implements _Order {
       const DeepCollectionEquality().hash(user),
       const DeepCollectionEquality().hash(address),
       const DeepCollectionEquality().hash(_items),
-      const DeepCollectionEquality().hash(payment));
+      const DeepCollectionEquality().hash(payment),
+      const DeepCollectionEquality().hash(cost),
+      const DeepCollectionEquality().hash(shippingCost));
 
   @JsonKey(ignore: true)
   @override
@@ -289,13 +339,20 @@ class _$_Order implements _Order {
 
 abstract class _Order implements Order {
   factory _Order(
-      {@JsonKey(name: "created_at") required final DateTime createdAt,
-      required final int id,
-      required final OrderStatus status,
-      required final User user,
-      @JsonKey(name: "delivery_address") required final Address address,
-      @JsonKey(name: "order_items") required final List<OrderItem> items,
-      final Payment? payment}) = _$_Order;
+      {@JsonKey(name: "created_at")
+          required final DateTime createdAt,
+      final int? id,
+      @JsonKey(defaultValue: OrderStatus.PENDING)
+          required final OrderStatus status,
+      final User? user,
+      @JsonKey(name: "delivery_address")
+          required final Address address,
+      @JsonKey(name: "order_items")
+          required final List<OrderItem> items,
+      final Payment? payment,
+      required final double cost,
+      @JsonKey(name: "shipping_cost", defaultValue: 0)
+          required final double shippingCost}) = _$_Order;
 
   factory _Order.fromJson(Map<String, dynamic> json) = _$_Order.fromJson;
 
@@ -303,11 +360,12 @@ abstract class _Order implements Order {
   @JsonKey(name: "created_at")
   DateTime get createdAt;
   @override
-  int get id;
+  int? get id;
   @override
+  @JsonKey(defaultValue: OrderStatus.PENDING)
   OrderStatus get status;
   @override
-  User get user;
+  User? get user;
   @override
   @JsonKey(name: "delivery_address")
   Address get address;
@@ -316,6 +374,11 @@ abstract class _Order implements Order {
   List<OrderItem> get items;
   @override
   Payment? get payment;
+  @override
+  double get cost;
+  @override
+  @JsonKey(name: "shipping_cost", defaultValue: 0)
+  double get shippingCost;
   @override
   @JsonKey(ignore: true)
   _$$_OrderCopyWith<_$_Order> get copyWith =>
@@ -330,8 +393,9 @@ OrderItem _$OrderItemFromJson(Map<String, dynamic> json) {
 mixin _$OrderItem {
   Product get product => throw _privateConstructorUsedError;
   double get quantity => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: false)
   bool get delivered => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -343,7 +407,11 @@ mixin _$OrderItem {
 abstract class $OrderItemCopyWith<$Res> {
   factory $OrderItemCopyWith(OrderItem value, $Res Function(OrderItem) then) =
       _$OrderItemCopyWithImpl<$Res>;
-  $Res call({Product product, double quantity, bool delivered, int id});
+  $Res call(
+      {Product product,
+      double quantity,
+      @JsonKey(defaultValue: false) bool delivered,
+      int? id});
 
   $ProductCopyWith<$Res> get product;
 }
@@ -379,7 +447,7 @@ class _$OrderItemCopyWithImpl<$Res> implements $OrderItemCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 
@@ -397,7 +465,11 @@ abstract class _$$_OrderItemCopyWith<$Res> implements $OrderItemCopyWith<$Res> {
           _$_OrderItem value, $Res Function(_$_OrderItem) then) =
       __$$_OrderItemCopyWithImpl<$Res>;
   @override
-  $Res call({Product product, double quantity, bool delivered, int id});
+  $Res call(
+      {Product product,
+      double quantity,
+      @JsonKey(defaultValue: false) bool delivered,
+      int? id});
 
   @override
   $ProductCopyWith<$Res> get product;
@@ -436,7 +508,7 @@ class __$$_OrderItemCopyWithImpl<$Res> extends _$OrderItemCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -447,8 +519,8 @@ class _$_OrderItem implements _OrderItem {
   _$_OrderItem(
       {required this.product,
       required this.quantity,
-      required this.delivered,
-      required this.id});
+      @JsonKey(defaultValue: false) required this.delivered,
+      this.id});
 
   factory _$_OrderItem.fromJson(Map<String, dynamic> json) =>
       _$$_OrderItemFromJson(json);
@@ -458,9 +530,10 @@ class _$_OrderItem implements _OrderItem {
   @override
   final double quantity;
   @override
+  @JsonKey(defaultValue: false)
   final bool delivered;
   @override
-  final int id;
+  final int? id;
 
   @override
   String toString() {
@@ -504,8 +577,8 @@ abstract class _OrderItem implements OrderItem {
   factory _OrderItem(
       {required final Product product,
       required final double quantity,
-      required final bool delivered,
-      required final int id}) = _$_OrderItem;
+      @JsonKey(defaultValue: false) required final bool delivered,
+      final int? id}) = _$_OrderItem;
 
   factory _OrderItem.fromJson(Map<String, dynamic> json) =
       _$_OrderItem.fromJson;
@@ -515,9 +588,10 @@ abstract class _OrderItem implements OrderItem {
   @override
   double get quantity;
   @override
+  @JsonKey(defaultValue: false)
   bool get delivered;
   @override
-  int get id;
+  int? get id;
   @override
   @JsonKey(ignore: true)
   _$$_OrderItemCopyWith<_$_OrderItem> get copyWith =>

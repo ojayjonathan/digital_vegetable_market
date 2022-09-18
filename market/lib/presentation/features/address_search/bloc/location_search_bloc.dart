@@ -61,6 +61,9 @@ class SearchBloc extends Cubit<SearchState> {
         location: Address(
           latitude: _position!.latitude,
           longitude: _position!.longitude,
+          title: "Unnamed Address",
+          address:
+              "lat: ${_position!.latitude.toStringAsFixed(3)} lng: ${_position!.longitude.toStringAsFixed(3)} ",
         ),
       ),
     );
@@ -74,10 +77,6 @@ class SearchBloc extends Cubit<SearchState> {
           state.copyWith(
             status: ServiceStatus.loadingFailure,
             query: "",
-            location: Address(
-              latitude: _position!.latitude,
-              longitude: _position!.longitude,
-            ),
           ),
         );
       },

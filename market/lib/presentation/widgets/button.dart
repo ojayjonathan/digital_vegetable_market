@@ -82,17 +82,19 @@ class AppButtonOutlined extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor:
               MaterialStateProperty.all(Theme.of(context).backgroundColor),
-          side: MaterialStateProperty.all(BorderSide(
-            color: Theme.of(context).primaryColor,
-            width: 2,
-          )),
+          side: MaterialStateProperty.all(
+            BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 2,
+            ),
+          ),
         ),
         child: Text(
           text,
           style: Theme.of(context)
               .textTheme
               .headline4!
-              .copyWith(color: Colors.white),
+              .copyWith(color: Theme.of(context).primaryColor),
         ),
       ),
     );

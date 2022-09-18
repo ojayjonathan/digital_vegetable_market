@@ -1,7 +1,9 @@
+// ignore_for_file: constant_identifier_names
+
 part of 'client.dart';
 
-// ignore: constant_identifier_names
 const BASE_URL = "http://192.168.43.232:8000";
+const MEDIA_URL = "$BASE_URL/media";
 
 class ApiEndpoints {
   static String login = "/auth/login/";

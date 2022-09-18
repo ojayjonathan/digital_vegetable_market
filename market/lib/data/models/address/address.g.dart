@@ -12,6 +12,7 @@ _$_Address _$$_AddressFromJson(Map<String, dynamic> json) => _$_Address(
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
       id: json['id'] as int?,
+      isDefault: json['is_default'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_AddressToJson(_$_Address instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$$_AddressToJson(_$_Address instance) =>
       'latitude': instance.latitude,
       'longitude': instance.longitude,
       'id': instance.id,
+      'is_default': instance.isDefault,
     };

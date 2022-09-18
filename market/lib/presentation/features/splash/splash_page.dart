@@ -23,6 +23,7 @@ class SplashPageState extends State<SplashPage> {
     final token = await getAuthToken();
     if (token != null && mounted) {
       context.read<AppRepository>().login(token);
+      context.goNamed(RouteNames.home);
     } else if (mounted) {
       GoRouter.of(context).goNamed(RouteNames.welcome);
     }

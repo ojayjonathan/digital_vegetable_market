@@ -24,22 +24,19 @@ class _WelcomePageState extends State<WelcomePage> {
             children: <Widget>[
               Stack(
                 children: <Widget>[
-                  SizedBox(height: height * 0.6, child: _WelcomePagePaint()),
                   SizedBox(
                     height: height * 0.6,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Align(
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              "assets/logo-light.png",
-                              width: width * 0.75,
-                            ))
-                      ],
-                    ),
+                    child: _WelcomePagePaint(),
                   ),
+                  SizedBox(
+                    height: height * 0.6,
+                    child: Center(
+                      child: Image.asset(
+                        "assets/logo-light.png",
+                        width: width * 0.75,
+                      ),
+                    ),
+                  )
                 ],
               ),
               const SizedBox(
@@ -47,9 +44,12 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: AppButton(
-                  handlePress: () => context.goNamed(RouteNames.login),
-                  text: "Login",
+                child: SizedBox(
+                  width: double.infinity,
+                  child: AppButton(
+                    handlePress: () => context.goNamed(RouteNames.login),
+                    text: "Login",
+                  ),
                 ),
               ),
               const SizedBox(
@@ -57,9 +57,12 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: AppButtonOutlined(
-                    handlePress: () => context.goNamed(RouteNames.register),
-                    text: "Register"),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: AppButtonOutlined(
+                      handlePress: () => context.goNamed(RouteNames.register),
+                      text: "Register"),
+                ),
               ),
               const SizedBox(
                 height: 20,

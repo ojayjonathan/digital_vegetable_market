@@ -22,9 +22,9 @@ class PhoneNumber extends FormzInput<String, String> {
   const PhoneNumber.dirty([value = ""]) : super.dirty(value);
   const PhoneNumber.pure([value = ""]) : super.pure(value);
 
-  static final phoneRegex = RegExp(r"^\+\d{12}$");
+  static final phoneRegex = RegExp(r"^0(1|7)\d{8}$");
   @override
-  String? validator(String value) => validator(value);
+  String? validator(String value) => valueValidator(value);
 
   static String? valueValidator(String? value) {
     if (value == null) return "Required";
@@ -32,7 +32,7 @@ class PhoneNumber extends FormzInput<String, String> {
       return "Required";
     }
     if (!phoneRegex.hasMatch(value)) {
-      return "Provide valid phone number eg +254742446921";
+      return "Provide valid phone number eg 0742446921";
     }
     return null;
   }

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:market/data/error/error_format.dart';
 import 'package:market/data/models/address/address.dart';
@@ -27,7 +26,7 @@ class UserAccount {
       );
   Result<String> login({required String phone, required String password}) =>
       Http.post(
-        ApiEndpoints.register,
+        ApiEndpoints.login,
         {"password": password, "phone_number": phone},
         deserializer: (data) => data["access_token"],
       );
@@ -109,7 +108,7 @@ class OrderService {
         ApiEndpoints.orders,
         {
           "delivery_address_id": addressId,
-          "order_items": items.map((e) => e.toJson())
+          "order_items": items.map((e) => e.toJson()).toList()
         },
         deserializer: (json) => Order.fromJson(json),
       );
@@ -131,15 +130,30 @@ class ProductService {
           data.map((json) => Product.fromJson(data)),
         ),
       );
-  Result<ProductsPage> all({int? page, int? count, int? userId}) => Http.get(
-        ApiEndpoints.products,
-        queryParams: {"page": page ?? 1, "count": count, "user_id": userId},
-        deserializer: (data) => ProductsPage.fromJson(data),
-      );
+  Result<ProductsPage> all({int? page, int? count, int? userId}) {
+    final queryParams = {"page": page ?? 1};
+    if (count != null) queryParams["count"] = count;
+    if (userId != null) queryParams["user_id"] = userId;
+    return Http.get(
+      ApiEndpoints.products,
+      queryParams: queryParams,
+      deserializer: (data) => ProductsPage.fromJson(data),
+    );
+  }
+
+  Result<ProductsPage> search(String q) {
+    return Http.get(
+      ApiEndpoints.products,
+      queryParams: {"q": q},
+      deserializer: (data) => ProductsPage.fromJson(data),
+    );
+  }
+
   Result<Product> one(int id) => Http.get(
         "${ApiEndpoints.products}$id",
         deserializer: (json) => Product.fromJson(json),
       );
+
   Result<Product> create(ProductCreate product, File image) async {
     final data = product.toJson();
     data["image"] = await MultipartFile.fromFile(

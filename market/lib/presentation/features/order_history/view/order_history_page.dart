@@ -1,20 +1,21 @@
-import 'package:market/presentation/features/booking_history/bloc/bloc.dart';
-import 'package:market/presentation/features/booking_history/view/widgets.dart';
+import 'package:market/presentation/features/order_history/bloc/bloc.dart';
+import 'package:market/presentation/features/order_history/view/widgets.dart';
+import 'package:market/presentation/widgets/bottom_navigation_bar.dart';
 import 'package:market/resources/info.dart';
 import 'package:market/data/services/status.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RideHistory extends StatelessWidget {
-  const RideHistory({Key? key}) : super(key: key);
+class OrderHistory extends StatelessWidget {
+  const OrderHistory({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      bottomNavigationBar: const BottomNavigation(2),
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Ride History'),
+        title: const Text('Order History'),
       ),
       body: SafeArea(
         child: BlocProvider(
@@ -28,7 +29,7 @@ class RideHistory extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Showing Recent Rides',
+                  'Showing Recent Orders',
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 18,
@@ -77,7 +78,7 @@ class _OrderHistoryView extends StatelessWidget {
             itemCount: state.orders.length,
             shrinkWrap: true,
             itemBuilder: (context, index) =>
-                RideHistoryCard(order: state.orders[index]),
+                OrderHistoryCard(order: state.orders[index]),
           );
         },
       ),

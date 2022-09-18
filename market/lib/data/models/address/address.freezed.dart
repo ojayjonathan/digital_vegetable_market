@@ -25,6 +25,8 @@ mixin _$Address {
   double get latitude => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: false, name: "is_default")
+  bool? get isDefault => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,7 +42,8 @@ abstract class $AddressCopyWith<$Res> {
       String? address,
       double latitude,
       double longitude,
-      int? id});
+      int? id,
+      @JsonKey(defaultValue: false, name: "is_default") bool? isDefault});
 }
 
 /// @nodoc
@@ -58,6 +61,7 @@ class _$AddressCopyWithImpl<$Res> implements $AddressCopyWith<$Res> {
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? id = freezed,
+    Object? isDefault = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed
@@ -80,6 +84,10 @@ class _$AddressCopyWithImpl<$Res> implements $AddressCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      isDefault: isDefault == freezed
+          ? _value.isDefault
+          : isDefault // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -95,7 +103,8 @@ abstract class _$$_AddressCopyWith<$Res> implements $AddressCopyWith<$Res> {
       String? address,
       double latitude,
       double longitude,
-      int? id});
+      int? id,
+      @JsonKey(defaultValue: false, name: "is_default") bool? isDefault});
 }
 
 /// @nodoc
@@ -114,6 +123,7 @@ class __$$_AddressCopyWithImpl<$Res> extends _$AddressCopyWithImpl<$Res>
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? id = freezed,
+    Object? isDefault = freezed,
   }) {
     return _then(_$_Address(
       title: title == freezed
@@ -136,6 +146,10 @@ class __$$_AddressCopyWithImpl<$Res> extends _$AddressCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      isDefault: isDefault == freezed
+          ? _value.isDefault
+          : isDefault // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -148,7 +162,8 @@ class _$_Address extends _Address {
       this.address,
       required this.latitude,
       required this.longitude,
-      this.id})
+      this.id,
+      @JsonKey(defaultValue: false, name: "is_default") this.isDefault})
       : super._();
 
   factory _$_Address.fromJson(Map<String, dynamic> json) =>
@@ -164,10 +179,13 @@ class _$_Address extends _Address {
   final double longitude;
   @override
   final int? id;
+  @override
+  @JsonKey(defaultValue: false, name: "is_default")
+  final bool? isDefault;
 
   @override
   String toString() {
-    return 'Address(title: $title, address: $address, latitude: $latitude, longitude: $longitude, id: $id)';
+    return 'Address(title: $title, address: $address, latitude: $latitude, longitude: $longitude, id: $id, isDefault: $isDefault)';
   }
 
   @override
@@ -179,7 +197,8 @@ class _$_Address extends _Address {
             const DeepCollectionEquality().equals(other.address, address) &&
             const DeepCollectionEquality().equals(other.latitude, latitude) &&
             const DeepCollectionEquality().equals(other.longitude, longitude) &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.isDefault, isDefault));
   }
 
   @JsonKey(ignore: true)
@@ -190,7 +209,8 @@ class _$_Address extends _Address {
       const DeepCollectionEquality().hash(address),
       const DeepCollectionEquality().hash(latitude),
       const DeepCollectionEquality().hash(longitude),
-      const DeepCollectionEquality().hash(id));
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(isDefault));
 
   @JsonKey(ignore: true)
   @override
@@ -211,7 +231,9 @@ abstract class _Address extends Address {
       final String? address,
       required final double latitude,
       required final double longitude,
-      final int? id}) = _$_Address;
+      final int? id,
+      @JsonKey(defaultValue: false, name: "is_default")
+          final bool? isDefault}) = _$_Address;
   _Address._() : super._();
 
   factory _Address.fromJson(Map<String, dynamic> json) = _$_Address.fromJson;
@@ -226,6 +248,9 @@ abstract class _Address extends Address {
   double get longitude;
   @override
   int? get id;
+  @override
+  @JsonKey(defaultValue: false, name: "is_default")
+  bool? get isDefault;
   @override
   @JsonKey(ignore: true)
   _$$_AddressCopyWith<_$_Address> get copyWith =>

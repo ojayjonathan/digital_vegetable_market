@@ -8,18 +8,21 @@ import 'package:market/data/models/user/user.dart';
 part 'order.g.dart';
 part 'order.freezed.dart';
 
-enum OrderStatus { PENDING, ACTIVE, CANCELLED, DELIVERED }
+enum OrderStatus { PENDING, ACTIVE, CANCELLED, DELIVERED, INITIAL }
 
 @Freezed(fromJson: true, copyWith: true)
 class Order with _$Order {
   factory Order({
     @JsonKey(name: "created_at") required DateTime createdAt,
-    required int id,
-    required OrderStatus status,
-    required User user,
+    int? id,
+    @JsonKey(defaultValue: OrderStatus.PENDING) required OrderStatus status,
+    User? user,
     @JsonKey(name: "delivery_address") required Address address,
     @JsonKey(name: "order_items") required List<OrderItem> items,
     Payment? payment,
+    required double cost,
+    @JsonKey(name: "shipping_cost", defaultValue: 0)
+        required double shippingCost,
   }) = _Order;
   factory Order.fromJson(json) => _$$_OrderFromJson(json);
 }
@@ -29,8 +32,8 @@ class OrderItem with _$OrderItem {
   factory OrderItem({
     required Product product,
     required double quantity,
-    required bool delivered,
-    required int id,
+    @JsonKey(defaultValue: false) required bool delivered,
+    int? id,
   }) = _OrderItem;
   factory OrderItem.fromJson(json) => _$$_OrderItemFromJson(json);
 }

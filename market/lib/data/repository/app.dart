@@ -19,6 +19,7 @@ class AppRepository {
   String? authToken;
   User? _user;
   User? get user => _user;
+  List<Address> addresses = [];
 
   Stream<AuthenticationStatus> get stream async* {
     yield _status;
@@ -26,8 +27,6 @@ class AppRepository {
   }
 
   AuthenticationStatus get status => _status;
-
-  get addresss => null;
 
   Future<void> login(String authToken) async {
     this.authToken = authToken;
@@ -75,7 +74,30 @@ class AppRepository {
     return res;
   }
 
+  Future<HttpResult<List<Address>>> getAddresses() async {
+    if (addresses.isNotEmpty) {
+      return HttpResult.onSuccess(data: addresses);
+    }
+    final res = await service<AddressService>().all();
+    res.when(onError: (error) {}, onSuccess: (data) => addresses = data);
+    return res;
+  }
+
   addressUpdate(Address address, String id) {}
 
-  addressCreate(Address address) {}
+  Future<HttpResult<Address>> addressCreate(Address address) async {
+    final res = await service<AddressService>().create(address);
+    res.when(onError: (error) {}, onSuccess: (data) => addresses.add(data));
+    return res;
+  }
+
+  Future<HttpResult<Address>> addressDelete(Address address) async {
+    final res = await service<AddressService>().delete(address.id!);
+    res.when(
+      onError: (error) {},
+      onSuccess: (data) => addresses =
+          addresses.where((address) => address.id != data.id).toList(),
+    );
+    return res;
+  }
 }

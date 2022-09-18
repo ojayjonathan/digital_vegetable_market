@@ -13,11 +13,12 @@ class RegisterForm extends StatelessWidget {
     return Form(
       child: Column(
         children: <Widget>[
+          _PhoneNumber(),
           _FirstName(),
           _LastName(),
           _Email(),
           _Password(),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           BlocBuilder<RegisterCupit, RegisterState>(
             buildWhen: (previous, current) => previous.status != current.status,
             builder: (context, state) {
@@ -135,6 +136,33 @@ class _LastName extends StatelessWidget {
             label: const Text("Last name"),
             prefixIcon: const Icon(Icons.person),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PhoneNumber extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: BlocBuilder<RegisterCupit, RegisterState>(
+        buildWhen: (previous, current) =>
+            previous.phone != current.phone ||
+            current.status != previous.status ||
+            current.fieldError != previous.fieldError,
+        builder: (context, state) => TextFormField(
+          onChanged: (value) =>
+              context.read<RegisterCupit>().phoneChanged(value),
+          decoration: AppTheme.inputDecoration.copyWith(
+            errorText: state.status == FormzStatus.pure
+                ? null
+                : (state.fieldError["phoneNumber"] ?? state.phone.error),
+            label: const Text("Phone Number"),
+            prefixIcon: const Icon(Icons.call),
+          ),
+          keyboardType: TextInputType.number,
         ),
       ),
     );

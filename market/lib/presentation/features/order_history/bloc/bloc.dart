@@ -52,12 +52,14 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
                     phoneNumber: ""),
                 status: OrderStatus.ACTIVE,
                 address: Address(
+                  isDefault: true,
                   latitude: 0,
                   longitude: 0,
                   address: "Njoro, Nairobi, Kenya",
                   title: "Home",
                 ),
-                id: 100000,
+                cost: 0,
+                shippingCost: 0,
                 items: [
                   OrderItem(
                     product: Product(
@@ -65,6 +67,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
                       description: "",
                       name: "Product",
                       address: Address(
+                        isDefault: true,
                         latitude: 0,
                         longitude: 0,
                         address: "Njoro, Nairobi, Kenya",
@@ -72,7 +75,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
                       ),
                       availableDate: DateTime.now(),
                       id: 10,
-                      imageUrl: "",
+                      image: "",
                       measurementUnit: "kg",
                       owner: User(
                           createdAt: DateTime.now(),

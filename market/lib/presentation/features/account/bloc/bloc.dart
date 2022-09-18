@@ -140,7 +140,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   }
 
   Address? _filter(String key) {
-    for (var address in repository.addresss) {
+    for (var address in repository.addresses) {
       if (address.title?.toUpperCase() == key.toUpperCase()) {
         return address;
       }

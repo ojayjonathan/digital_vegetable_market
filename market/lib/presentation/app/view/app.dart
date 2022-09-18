@@ -1,10 +1,15 @@
 import 'package:market/data/repository/app.dart';
+import 'package:market/data/repository/shopping.dart';
+import 'package:market/presentation/app/bloc/bloc.dart';
+import 'package:market/presentation/features/account/bloc/bloc.dart';
 import 'package:market/presentation/features/account/view/account_page.dart';
 import 'package:market/presentation/features/account_update/view/profile_page.dart';
-import 'package:market/presentation/features/booking_history/view/booking_history.dart';
+import 'package:market/presentation/features/cart/view/cart_page.dart';
+import 'package:market/presentation/features/checkout/view/checkout_page.dart';
 import 'package:market/presentation/features/feedback/feedback.dart';
 import 'package:market/presentation/features/home/view/home_page.dart';
 import 'package:market/presentation/features/login/view/login_page.dart';
+import 'package:market/presentation/features/order_history/view/order_history_page.dart';
 import 'package:market/presentation/features/register/view/register_page.dart';
 import 'package:market/presentation/features/reset_password/view/reset_password.dart';
 import 'package:market/presentation/features/splash/splash_page.dart';
@@ -31,6 +36,9 @@ class MarketApp extends StatelessWidget {
         //Redirect unauthenticated user to login
         if (!isAuthenticated && loc.startsWith("/app")) {
           return state.namedLocation(RouteNames.login);
+        }
+        if (isAuthenticated && !loc.startsWith("/app")) {
+          return state.namedLocation(RouteNames.home);
         }
       },
       routes: [
@@ -75,14 +83,26 @@ class MarketApp extends StatelessWidget {
               routes: [],
             ),
             GoRoute(
+              path: RouteNames.checkout,
+              name: RouteNames.checkout,
+              builder: (context, state) => const CheckoutPage(),
+              routes: [],
+            ),
+            GoRoute(
+              path: RouteNames.cart,
+              name: RouteNames.cart,
+              builder: (context, state) => const CartPage(),
+              routes: [],
+            ),
+            GoRoute(
               name: RouteNames.feedback,
               path: RouteNames.feedback,
               builder: (context, state) => const FeedBackPage(),
             ),
             GoRoute(
-              name: RouteNames.rideHistory,
-              path: RouteNames.rideHistory,
-              builder: (context, state) => const RideHistory(),
+              name: RouteNames.orderHistory,
+              path: RouteNames.orderHistory,
+              builder: (context, state) => const OrderHistory(),
             ),
             GoRoute(
               name: RouteNames.profileUpdate,
@@ -95,13 +115,24 @@ class MarketApp extends StatelessWidget {
       ],
       initialLocation: "/",
     );
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerDelegate: router.routerDelegate,
-      title: 'Fruits and vegetable market',
-      theme: AppTheme.lightTheme,
-      routeInformationParser: router.routeInformationParser,
-      routeInformationProvider: router.routeInformationProvider,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => AccountBloc(context.read<AppRepository>())),
+        BlocProvider(
+          create: (context) => AppBloc(
+            context.read<ShoppingRepository>(),
+            context.read<AppRepository>(),
+          ),
+        )
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerDelegate: router.routerDelegate,
+        title: 'Fruits and vegetable market',
+        theme: AppTheme.lightTheme,
+        routeInformationParser: router.routeInformationParser,
+        routeInformationProvider: router.routeInformationProvider,
+      ),
     );
   }
 }

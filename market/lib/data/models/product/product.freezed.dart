@@ -22,7 +22,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
 mixin _$Product {
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: "image_url")
-  String get imageUrl => throw _privateConstructorUsedError;
+  String get image => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   User get owner => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $ProductCopyWith<$Res> {
       _$ProductCopyWithImpl<$Res>;
   $Res call(
       {int id,
-      @JsonKey(name: "image_url") String imageUrl,
+      @JsonKey(name: "image_url") String image,
       String? description,
       User owner,
       String name,
@@ -68,7 +68,7 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? imageUrl = freezed,
+    Object? image = freezed,
     Object? description = freezed,
     Object? owner = freezed,
     Object? name = freezed,
@@ -82,9 +82,9 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      imageUrl: imageUrl == freezed
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String,
       description: description == freezed
           ? _value.description
@@ -140,7 +140,7 @@ abstract class _$$_ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
   @override
   $Res call(
       {int id,
-      @JsonKey(name: "image_url") String imageUrl,
+      @JsonKey(name: "image_url") String image,
       String? description,
       User owner,
       String name,
@@ -167,7 +167,7 @@ class __$$_ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? imageUrl = freezed,
+    Object? image = freezed,
     Object? description = freezed,
     Object? owner = freezed,
     Object? name = freezed,
@@ -181,9 +181,9 @@ class __$$_ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      imageUrl: imageUrl == freezed
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String,
       description: description == freezed
           ? _value.description
@@ -219,17 +219,18 @@ class __$$_ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Product implements _Product {
+class _$_Product extends _Product {
   _$_Product(
       {required this.id,
-      @JsonKey(name: "image_url") required this.imageUrl,
+      @JsonKey(name: "image_url") required this.image,
       this.description,
       required this.owner,
       required this.name,
       required this.address,
       @JsonKey(name: "expected_available_date") required this.availableDate,
       required this.price,
-      @JsonKey(name: "measurement_unit") required this.measurementUnit});
+      @JsonKey(name: "measurement_unit") required this.measurementUnit})
+      : super._();
 
   factory _$_Product.fromJson(Map<String, dynamic> json) =>
       _$$_ProductFromJson(json);
@@ -238,7 +239,7 @@ class _$_Product implements _Product {
   final int id;
   @override
   @JsonKey(name: "image_url")
-  final String imageUrl;
+  final String image;
   @override
   final String? description;
   @override
@@ -258,7 +259,7 @@ class _$_Product implements _Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, imageUrl: $imageUrl, description: $description, owner: $owner, name: $name, address: $address, availableDate: $availableDate, price: $price, measurementUnit: $measurementUnit)';
+    return 'Product(id: $id, image: $image, description: $description, owner: $owner, name: $name, address: $address, availableDate: $availableDate, price: $price, measurementUnit: $measurementUnit)';
   }
 
   @override
@@ -267,7 +268,7 @@ class _$_Product implements _Product {
         (other.runtimeType == runtimeType &&
             other is _$_Product &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
+            const DeepCollectionEquality().equals(other.image, image) &&
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
             const DeepCollectionEquality().equals(other.owner, owner) &&
@@ -285,7 +286,7 @@ class _$_Product implements _Product {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(imageUrl),
+      const DeepCollectionEquality().hash(image),
       const DeepCollectionEquality().hash(description),
       const DeepCollectionEquality().hash(owner),
       const DeepCollectionEquality().hash(name),
@@ -307,11 +308,11 @@ class _$_Product implements _Product {
   }
 }
 
-abstract class _Product implements Product {
+abstract class _Product extends Product {
   factory _Product(
       {required final int id,
       @JsonKey(name: "image_url")
-          required final String imageUrl,
+          required final String image,
       final String? description,
       required final User owner,
       required final String name,
@@ -321,6 +322,7 @@ abstract class _Product implements Product {
       required final double price,
       @JsonKey(name: "measurement_unit")
           required final String measurementUnit}) = _$_Product;
+  _Product._() : super._();
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$_Product.fromJson;
 
@@ -328,7 +330,7 @@ abstract class _Product implements Product {
   int get id;
   @override
   @JsonKey(name: "image_url")
-  String get imageUrl;
+  String get image;
   @override
   String? get description;
   @override
