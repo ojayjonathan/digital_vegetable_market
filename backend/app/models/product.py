@@ -15,7 +15,7 @@ class Product(Base):
     image = Column(String(150), nullable=False)
     name = Column(String(100), nullable=False)
     category: ProductCategory = Column(String(20), nullable=False)
-    description = Column(String(200))
+    description = Column(String(1000))
     expected_available_date = Column(Date(), nullable=False)
     measurement_unit = Column(String(30), nullable=False)
     price = Column(Float(), nullable=False)
@@ -27,4 +27,4 @@ class Product(Base):
 
     @property
     def image_url(self):
-        return f"{self.owner_id}/{self.id}/{self.image}"
+        return f"/{self.owner_id}/{self.id}/{self.image}"
