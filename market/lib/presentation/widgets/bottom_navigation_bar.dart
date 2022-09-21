@@ -11,13 +11,13 @@ class BottomNavigation extends StatelessWidget {
     0: RouteNames.home,
     1: RouteNames.cart,
     2: RouteNames.orderHistory,
-    3: RouteNames.account
+    3: RouteNames.userProducts,
+    4: RouteNames.account
   };
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       elevation: 10,
-
       currentIndex: index,
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Theme.of(context).primaryColor,
@@ -34,6 +34,10 @@ class BottomNavigation extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.shopping_cart_outlined),
           label: "Orders",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.view_list),
+          label: "Assets",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle_outlined),

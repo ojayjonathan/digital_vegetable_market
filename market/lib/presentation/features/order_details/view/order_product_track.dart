@@ -164,7 +164,7 @@ class _SlideUpPannel extends StatelessWidget {
                 padding: EdgeInsets.all(6),
               ),
               endChild: _RightChild(
-                asset: "assets/hint.png",
+                asset: detail.icon,
                 title: detail.createdAt.format,
                 message: detail.message,
               ),

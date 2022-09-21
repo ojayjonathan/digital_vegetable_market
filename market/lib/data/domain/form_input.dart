@@ -61,13 +61,33 @@ class Email extends FormzInput<String, String> {
 class TextInput extends FormzInput<String, String> {
   const TextInput.dirty([value = ""]) : super.dirty(value);
   const TextInput.pure([value = ""]) : super.pure(value);
-
   @override
   String? validator(String value) {
     if (value.isEmpty) {
       return "Required";
     }
 
+    return null;
+  }
+}
+
+class RequiredInput<T> extends FormzInput<T?, String> {
+  const RequiredInput.dirty({T? value}) : super.dirty(value);
+  const RequiredInput.pure({T? value}) : super.pure(value);
+  @override
+  String? validator(T? value) {
+    if (value == null) {
+      return "Required";
+    }
+    return null;
+  }
+}
+
+class OptionalInput<T> extends FormzInput<T?, String> {
+  const OptionalInput.dirty({T? value}) : super.dirty(value);
+  const OptionalInput.pure({T? value}) : super.pure(value);
+  @override
+  String? validator(T? value) {
     return null;
   }
 }

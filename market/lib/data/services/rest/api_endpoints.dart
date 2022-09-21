@@ -2,7 +2,9 @@
 
 part of 'client.dart';
 
+
 const BASE_URL = "http://192.168.43.232:8000";
+
 const MEDIA_URL = "$BASE_URL/media";
 
 class ApiEndpoints {

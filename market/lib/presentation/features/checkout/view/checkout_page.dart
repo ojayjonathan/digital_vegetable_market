@@ -93,7 +93,7 @@ class _ShipmentAddress extends StatelessWidget {
                     state.selectedAddress == null ? "Select" : "Edit",
                   ),
                   onPressed: () async {
-                    final address = await _showSelectAddress(context);
+                    final address = await showSelectAddress(context);
                     if (address != null) {
                       // ignore: use_build_context_synchronously
                       context.read<AppBloc>().add(AddressSelected(address));
@@ -173,7 +173,7 @@ class _OrderSummary extends StatelessWidget {
   }
 }
 
-Future<Address?> _showSelectAddress(
+Future<Address?> showSelectAddress(
   BuildContext context,
 ) =>
     showGeneralDialog(
@@ -189,6 +189,13 @@ Future<Address?> _showSelectAddress(
             elevation: 0,
             centerTitle: true,
             title: const Text("Shipment Address"),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context)
+                    .pop(context.read<AppBloc>().state.selectedAddress);
+              },
+            ),
           ),
           body: Stack(
             children: [
@@ -208,6 +215,9 @@ Future<Address?> _showSelectAddress(
                     final address = state.address[index];
                     return Card(
                       child: ListTile(
+                        onTap: () {
+                          Navigator.of(context).pop(address);
+                        },
                         leading: InkWell(
                           onTap: () => context.read<AppBloc>().add(
                                 AddressDeleted(address),
@@ -218,7 +228,9 @@ Future<Address?> _showSelectAddress(
                         subtitle: Text(address.address ?? address.name),
                         trailing: Checkbox(
                           onChanged: (value) {
-                            Navigator.of(context).pop(address);
+                            if (value == true) {
+                              Navigator.of(context).pop(address);
+                            }
                           },
                           value: address == state.selectedAddress,
                         ),

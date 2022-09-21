@@ -27,6 +27,8 @@ mixin _$Product {
   User get owner => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   Address get address => throw _privateConstructorUsedError;
+  @JsonKey(name: "available_quantity")
+  double get availableQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "expected_available_date")
   DateTime get availableDate => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
@@ -49,6 +51,7 @@ abstract class $ProductCopyWith<$Res> {
       User owner,
       String name,
       Address address,
+      @JsonKey(name: "available_quantity") double availableQuantity,
       @JsonKey(name: "expected_available_date") DateTime availableDate,
       double price,
       @JsonKey(name: "measurement_unit") String measurementUnit});
@@ -73,6 +76,7 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
     Object? owner = freezed,
     Object? name = freezed,
     Object? address = freezed,
+    Object? availableQuantity = freezed,
     Object? availableDate = freezed,
     Object? price = freezed,
     Object? measurementUnit = freezed,
@@ -102,6 +106,10 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
+      availableQuantity: availableQuantity == freezed
+          ? _value.availableQuantity
+          : availableQuantity // ignore: cast_nullable_to_non_nullable
+              as double,
       availableDate: availableDate == freezed
           ? _value.availableDate
           : availableDate // ignore: cast_nullable_to_non_nullable
@@ -145,6 +153,7 @@ abstract class _$$_ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
       User owner,
       String name,
       Address address,
+      @JsonKey(name: "available_quantity") double availableQuantity,
       @JsonKey(name: "expected_available_date") DateTime availableDate,
       double price,
       @JsonKey(name: "measurement_unit") String measurementUnit});
@@ -172,6 +181,7 @@ class __$$_ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
     Object? owner = freezed,
     Object? name = freezed,
     Object? address = freezed,
+    Object? availableQuantity = freezed,
     Object? availableDate = freezed,
     Object? price = freezed,
     Object? measurementUnit = freezed,
@@ -201,6 +211,10 @@ class __$$_ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
+      availableQuantity: availableQuantity == freezed
+          ? _value.availableQuantity
+          : availableQuantity // ignore: cast_nullable_to_non_nullable
+              as double,
       availableDate: availableDate == freezed
           ? _value.availableDate
           : availableDate // ignore: cast_nullable_to_non_nullable
@@ -227,6 +241,7 @@ class _$_Product extends _Product {
       required this.owner,
       required this.name,
       required this.address,
+      @JsonKey(name: "available_quantity") required this.availableQuantity,
       @JsonKey(name: "expected_available_date") required this.availableDate,
       required this.price,
       @JsonKey(name: "measurement_unit") required this.measurementUnit})
@@ -249,6 +264,9 @@ class _$_Product extends _Product {
   @override
   final Address address;
   @override
+  @JsonKey(name: "available_quantity")
+  final double availableQuantity;
+  @override
   @JsonKey(name: "expected_available_date")
   final DateTime availableDate;
   @override
@@ -259,7 +277,7 @@ class _$_Product extends _Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, image: $image, description: $description, owner: $owner, name: $name, address: $address, availableDate: $availableDate, price: $price, measurementUnit: $measurementUnit)';
+    return 'Product(id: $id, image: $image, description: $description, owner: $owner, name: $name, address: $address, availableQuantity: $availableQuantity, availableDate: $availableDate, price: $price, measurementUnit: $measurementUnit)';
   }
 
   @override
@@ -274,6 +292,8 @@ class _$_Product extends _Product {
             const DeepCollectionEquality().equals(other.owner, owner) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.address, address) &&
+            const DeepCollectionEquality()
+                .equals(other.availableQuantity, availableQuantity) &&
             const DeepCollectionEquality()
                 .equals(other.availableDate, availableDate) &&
             const DeepCollectionEquality().equals(other.price, price) &&
@@ -291,6 +311,7 @@ class _$_Product extends _Product {
       const DeepCollectionEquality().hash(owner),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(address),
+      const DeepCollectionEquality().hash(availableQuantity),
       const DeepCollectionEquality().hash(availableDate),
       const DeepCollectionEquality().hash(price),
       const DeepCollectionEquality().hash(measurementUnit));
@@ -317,6 +338,8 @@ abstract class _Product extends Product {
       required final User owner,
       required final String name,
       required final Address address,
+      @JsonKey(name: "available_quantity")
+          required final double availableQuantity,
       @JsonKey(name: "expected_available_date")
           required final DateTime availableDate,
       required final double price,
@@ -339,6 +362,9 @@ abstract class _Product extends Product {
   String get name;
   @override
   Address get address;
+  @override
+  @JsonKey(name: "available_quantity")
+  double get availableQuantity;
   @override
   @JsonKey(name: "expected_available_date")
   DateTime get availableDate;
@@ -547,8 +573,6 @@ abstract class _ProductsPage implements ProductsPage {
 /// @nodoc
 mixin _$ProductCreate {
   String get description => throw _privateConstructorUsedError;
-  @JsonKey(name: "owner_id")
-  String get ownerId => throw _privateConstructorUsedError;
   @JsonKey(name: "expected_available_date")
   DateTime get availableDate => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
@@ -573,7 +597,6 @@ abstract class $ProductCreateCopyWith<$Res> {
       _$ProductCreateCopyWithImpl<$Res>;
   $Res call(
       {String description,
-      @JsonKey(name: "owner_id") String ownerId,
       @JsonKey(name: "expected_available_date") DateTime availableDate,
       double price,
       String name,
@@ -594,7 +617,6 @@ class _$ProductCreateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? description = freezed,
-    Object? ownerId = freezed,
     Object? availableDate = freezed,
     Object? price = freezed,
     Object? name = freezed,
@@ -606,10 +628,6 @@ class _$ProductCreateCopyWithImpl<$Res>
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      ownerId: ownerId == freezed
-          ? _value.ownerId
-          : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
       availableDate: availableDate == freezed
           ? _value.availableDate
@@ -648,7 +666,6 @@ abstract class _$$_ProductCreateCopyWith<$Res>
   @override
   $Res call(
       {String description,
-      @JsonKey(name: "owner_id") String ownerId,
       @JsonKey(name: "expected_available_date") DateTime availableDate,
       double price,
       String name,
@@ -671,7 +688,6 @@ class __$$_ProductCreateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? description = freezed,
-    Object? ownerId = freezed,
     Object? availableDate = freezed,
     Object? price = freezed,
     Object? name = freezed,
@@ -683,10 +699,6 @@ class __$$_ProductCreateCopyWithImpl<$Res>
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      ownerId: ownerId == freezed
-          ? _value.ownerId
-          : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
       availableDate: availableDate == freezed
           ? _value.availableDate
@@ -721,7 +733,6 @@ class __$$_ProductCreateCopyWithImpl<$Res>
 class _$_ProductCreate implements _ProductCreate {
   _$_ProductCreate(
       {this.description = "",
-      @JsonKey(name: "owner_id") required this.ownerId,
       @JsonKey(name: "expected_available_date") required this.availableDate,
       required this.price,
       required this.name,
@@ -732,9 +743,6 @@ class _$_ProductCreate implements _ProductCreate {
   @override
   @JsonKey()
   final String description;
-  @override
-  @JsonKey(name: "owner_id")
-  final String ownerId;
   @override
   @JsonKey(name: "expected_available_date")
   final DateTime availableDate;
@@ -754,7 +762,7 @@ class _$_ProductCreate implements _ProductCreate {
 
   @override
   String toString() {
-    return 'ProductCreate(description: $description, ownerId: $ownerId, availableDate: $availableDate, price: $price, name: $name, addressId: $addressId, availableQuantity: $availableQuantity, measurementUnit: $measurementUnit)';
+    return 'ProductCreate(description: $description, availableDate: $availableDate, price: $price, name: $name, addressId: $addressId, availableQuantity: $availableQuantity, measurementUnit: $measurementUnit)';
   }
 
   @override
@@ -764,7 +772,6 @@ class _$_ProductCreate implements _ProductCreate {
             other is _$_ProductCreate &&
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.ownerId, ownerId) &&
             const DeepCollectionEquality()
                 .equals(other.availableDate, availableDate) &&
             const DeepCollectionEquality().equals(other.price, price) &&
@@ -781,7 +788,6 @@ class _$_ProductCreate implements _ProductCreate {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(ownerId),
       const DeepCollectionEquality().hash(availableDate),
       const DeepCollectionEquality().hash(price),
       const DeepCollectionEquality().hash(name),
@@ -805,8 +811,6 @@ class _$_ProductCreate implements _ProductCreate {
 abstract class _ProductCreate implements ProductCreate {
   factory _ProductCreate(
       {final String description,
-      @JsonKey(name: "owner_id")
-          required final String ownerId,
       @JsonKey(name: "expected_available_date")
           required final DateTime availableDate,
       required final double price,
@@ -820,9 +824,6 @@ abstract class _ProductCreate implements ProductCreate {
 
   @override
   String get description;
-  @override
-  @JsonKey(name: "owner_id")
-  String get ownerId;
   @override
   @JsonKey(name: "expected_available_date")
   DateTime get availableDate;

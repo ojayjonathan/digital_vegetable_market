@@ -65,6 +65,7 @@ _$_OrderDetail _$$_OrderDetailFromJson(Map<String, dynamic> json) =>
       orderItemId: json['order_item_id'] as int?,
       message: json['message'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
+      event: $enumDecode(_$OrderDetailEventEnumMap, json['event']),
     );
 
 Map<String, dynamic> _$$_OrderDetailToJson(_$_OrderDetail instance) =>
@@ -72,4 +73,14 @@ Map<String, dynamic> _$$_OrderDetailToJson(_$_OrderDetail instance) =>
       'order_item_id': instance.orderItemId,
       'message': instance.message,
       'created_at': instance.createdAt.toIso8601String(),
+      'event': _$OrderDetailEventEnumMap[instance.event]!,
     };
+
+const _$OrderDetailEventEnumMap = {
+  OrderDetailEvent.CREATED: 'CREATED',
+  OrderDetailEvent.CANCELLED: 'CANCELLED',
+  OrderDetailEvent.CONFIRMED: 'CONFIRMED',
+  OrderDetailEvent.DELIVERED: 'DELIVERED',
+  OrderDetailEvent.OTHER: 'OTHER',
+  OrderDetailEvent.PROCESSED: 'PROCESSED',
+};

@@ -13,6 +13,7 @@ _$_Product _$$_ProductFromJson(Map<String, dynamic> json) => _$_Product(
       owner: User.fromJson(json['owner']),
       name: json['name'] as String,
       address: Address.fromJson(json['address'] as Map<String, dynamic>),
+      availableQuantity: (json['available_quantity'] as num).toDouble(),
       availableDate: DateTime.parse(json['expected_available_date'] as String),
       price: (json['price'] as num).toDouble(),
       measurementUnit: json['measurement_unit'] as String,
@@ -26,6 +27,7 @@ Map<String, dynamic> _$$_ProductToJson(_$_Product instance) =>
       'owner': instance.owner,
       'name': instance.name,
       'address': instance.address,
+      'available_quantity': instance.availableQuantity,
       'expected_available_date': instance.availableDate.toIso8601String(),
       'price': instance.price,
       'measurement_unit': instance.measurementUnit,
@@ -50,7 +52,6 @@ Map<String, dynamic> _$$_ProductsPageToJson(_$_ProductsPage instance) =>
 Map<String, dynamic> _$$_ProductCreateToJson(_$_ProductCreate instance) =>
     <String, dynamic>{
       'description': instance.description,
-      'owner_id': instance.ownerId,
       'expected_available_date': instance.availableDate.toIso8601String(),
       'price': instance.price,
       'name': instance.name,

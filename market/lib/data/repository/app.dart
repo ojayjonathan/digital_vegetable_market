@@ -33,6 +33,7 @@ class AppRepository {
     _status = AuthenticationStatus.authenticated;
     _controller.add(_status);
     await getUser();
+    await getAddresses();
   }
 
   void logout() async {

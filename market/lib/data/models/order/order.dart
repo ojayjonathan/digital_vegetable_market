@@ -10,6 +10,15 @@ part 'order.freezed.dart';
 
 enum OrderStatus { PENDING, ACTIVE, CANCELLED, DELIVERED, INITIAL }
 
+enum OrderDetailEvent {
+  CREATED,
+  CANCELLED,
+  CONFIRMED,
+  DELIVERED,
+  OTHER,
+  PROCESSED
+}
+
 extension Str on OrderStatus {
   String toStr() {
     switch (this) {
@@ -78,6 +87,26 @@ class OrderDetail with _$OrderDetail {
     @JsonKey(name: "order_item_id") int? orderItemId,
     required String message,
     @JsonKey(name: "created_at") required DateTime createdAt,
+    required OrderDetailEvent event,
   }) = _OrderDetail;
   factory OrderDetail.fromJson(json) => _$$_OrderDetailFromJson(json);
+}
+
+extension Ex on OrderDetail {
+  String get icon {
+    switch (event) {
+      case OrderDetailEvent.CONFIRMED:
+        return "assets/confirmed.png";
+      case OrderDetailEvent.CREATED:
+        return "assets/placed.png";
+      case OrderDetailEvent.CANCELLED:
+        return "assets/cancel.png";
+      case OrderDetailEvent.PROCESSED:
+        return "assets/processes.png";
+      case OrderDetailEvent.DELIVERED:
+        return "assets/ready_to_pickup.png";
+      default:
+        return "assets/hint.png";
+    }
+  }
 }

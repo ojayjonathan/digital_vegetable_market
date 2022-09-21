@@ -78,21 +78,19 @@ class _HomeView extends StatelessWidget {
               );
             }
 
-            return Expanded(
-              child: GridView.count(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                shrinkWrap: true,
-                physics: const AlwaysScrollableScrollPhysics(),
-                childAspectRatio: .8,
-                children: state.productsPage.products
-                    .map(
-                      (product) => _ProductCard(product: product),
-                    )
-                    .toList(),
-              ),
+            return GridView.count(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              shrinkWrap: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              childAspectRatio: .8,
+              children: state.productsPage.products
+                  .map(
+                    (product) => _ProductCard(product: product),
+                  )
+                  .toList(),
             );
           },
         )

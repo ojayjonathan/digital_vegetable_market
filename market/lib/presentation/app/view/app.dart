@@ -13,6 +13,8 @@ import 'package:market/presentation/features/order_history/view/order_history_pa
 import 'package:market/presentation/features/register/view/register_page.dart';
 import 'package:market/presentation/features/reset_password/view/reset_password.dart';
 import 'package:market/presentation/features/splash/splash_page.dart';
+import 'package:market/presentation/features/user_products/view/user_product_page.dart';
+import 'package:market/presentation/features/wallet/view/wallet_page.dart';
 import 'package:market/presentation/features/welcome/view/welcome_page.dart';
 import 'package:market/resources/theme.dart';
 import 'package:market/resources/app_routes.dart';
@@ -40,6 +42,7 @@ class MarketApp extends StatelessWidget {
         if (isAuthenticated && !loc.startsWith("/app")) {
           return state.namedLocation(RouteNames.home);
         }
+        return null;
       },
       routes: [
         GoRoute(
@@ -80,6 +83,20 @@ class MarketApp extends StatelessWidget {
               path: RouteNames.account,
               name: RouteNames.account,
               builder: (context, state) => const AccountPage(),
+              routes: [
+                GoRoute(
+              path: RouteNames.wallet,
+              name: RouteNames.wallet,
+              builder: (context, state) =>  WalletPage(),
+              routes: [],
+            ),
+              ],
+            ),
+
+             GoRoute(
+              path: RouteNames.userProducts,
+              name: RouteNames.userProducts,
+              builder: (context, state) => const UserProductsPage(),
               routes: [],
             ),
             GoRoute(

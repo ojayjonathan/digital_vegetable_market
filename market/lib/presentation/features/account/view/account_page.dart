@@ -25,7 +25,7 @@ class AccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<AccountBloc>().add(AccountStarted());
     return Scaffold(
-      bottomNavigationBar: const BottomNavigation(3),
+      bottomNavigationBar: const BottomNavigation(4),
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Account Details"),
@@ -71,7 +71,7 @@ class _ProfileView extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             Text(
-              state.user!.email ,
+              state.user!.email,
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ],
@@ -193,6 +193,16 @@ class _AccountView extends StatelessWidget {
             height: 20,
           ),
           TextButton(
+            onPressed: () => context.goNamed(RouteNames.wallet),
+            child: Row(
+              children: const [
+                Icon(Icons.monetization_on_rounded),
+                SizedBox(width: 10),
+                Text("Wallet")
+              ],
+            ),
+          ),
+          TextButton(
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => _PasswordChange(),
@@ -203,6 +213,16 @@ class _AccountView extends StatelessWidget {
                 Icon(Icons.edit),
                 SizedBox(width: 10),
                 Text("Change Password")
+              ],
+            ),
+          ),
+          TextButton(
+            onPressed: () => context.read<AppRepository>().logout(),
+            child: Row(
+              children: const [
+                Icon(Icons.exit_to_app),
+                SizedBox(width: 10),
+                Text("Logout")
               ],
             ),
           ),

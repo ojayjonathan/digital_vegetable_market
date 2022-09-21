@@ -64,6 +64,15 @@ class UserAccount {
         {"subject": subject, "description": description},
         deserializer: (data) => MessageResponse.fromJson(data),
       );
+  Result<Wallet> wallet() => Http.get(
+        ApiEndpoints.wallet,
+        deserializer: (json) => Wallet.fromJson(json),
+      );
+  Result<MessageResponse> walletWidthdraw(double amount) => Http.post(
+        ApiEndpoints.wallet,
+        {"amount": amount},
+        deserializer: (json) => MessageResponse.fromJson(json),
+      );
 }
 
 class AddressService {

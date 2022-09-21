@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:market/constants.dart';
 import 'package:market/data/models/user/user.dart';
@@ -70,4 +71,14 @@ LatLngBounds latLngBounds(LatLng p1, LatLng p2) {
     northeast: LatLng(northEastLatitude, northEastLongitude),
     southwest: LatLng(southWestLatitude, southWestLongitude),
   );
+}
+
+final ImagePicker _imagePicker = ImagePicker();
+
+Future<File?> uploadImage() async {
+  var pickedImage = await _imagePicker.pickImage(source: ImageSource.gallery);
+  if (pickedImage != null) {
+    return File(pickedImage.path);
+  }
+  return null;
 }

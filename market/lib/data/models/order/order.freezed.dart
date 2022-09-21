@@ -753,6 +753,7 @@ mixin _$OrderDetail {
   String get message => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   DateTime get createdAt => throw _privateConstructorUsedError;
+  OrderDetailEvent get event => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -768,7 +769,8 @@ abstract class $OrderDetailCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "order_item_id") int? orderItemId,
       String message,
-      @JsonKey(name: "created_at") DateTime createdAt});
+      @JsonKey(name: "created_at") DateTime createdAt,
+      OrderDetailEvent event});
 }
 
 /// @nodoc
@@ -784,6 +786,7 @@ class _$OrderDetailCopyWithImpl<$Res> implements $OrderDetailCopyWith<$Res> {
     Object? orderItemId = freezed,
     Object? message = freezed,
     Object? createdAt = freezed,
+    Object? event = freezed,
   }) {
     return _then(_value.copyWith(
       orderItemId: orderItemId == freezed
@@ -798,6 +801,10 @@ class _$OrderDetailCopyWithImpl<$Res> implements $OrderDetailCopyWith<$Res> {
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      event: event == freezed
+          ? _value.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as OrderDetailEvent,
     ));
   }
 }
@@ -812,7 +819,8 @@ abstract class _$$_OrderDetailCopyWith<$Res>
   $Res call(
       {@JsonKey(name: "order_item_id") int? orderItemId,
       String message,
-      @JsonKey(name: "created_at") DateTime createdAt});
+      @JsonKey(name: "created_at") DateTime createdAt,
+      OrderDetailEvent event});
 }
 
 /// @nodoc
@@ -830,6 +838,7 @@ class __$$_OrderDetailCopyWithImpl<$Res> extends _$OrderDetailCopyWithImpl<$Res>
     Object? orderItemId = freezed,
     Object? message = freezed,
     Object? createdAt = freezed,
+    Object? event = freezed,
   }) {
     return _then(_$_OrderDetail(
       orderItemId: orderItemId == freezed
@@ -844,6 +853,10 @@ class __$$_OrderDetailCopyWithImpl<$Res> extends _$OrderDetailCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      event: event == freezed
+          ? _value.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as OrderDetailEvent,
     ));
   }
 }
@@ -854,7 +867,8 @@ class _$_OrderDetail implements _OrderDetail {
   _$_OrderDetail(
       {@JsonKey(name: "order_item_id") this.orderItemId,
       required this.message,
-      @JsonKey(name: "created_at") required this.createdAt});
+      @JsonKey(name: "created_at") required this.createdAt,
+      required this.event});
 
   factory _$_OrderDetail.fromJson(Map<String, dynamic> json) =>
       _$$_OrderDetailFromJson(json);
@@ -867,10 +881,12 @@ class _$_OrderDetail implements _OrderDetail {
   @override
   @JsonKey(name: "created_at")
   final DateTime createdAt;
+  @override
+  final OrderDetailEvent event;
 
   @override
   String toString() {
-    return 'OrderDetail(orderItemId: $orderItemId, message: $message, createdAt: $createdAt)';
+    return 'OrderDetail(orderItemId: $orderItemId, message: $message, createdAt: $createdAt, event: $event)';
   }
 
   @override
@@ -881,7 +897,8 @@ class _$_OrderDetail implements _OrderDetail {
             const DeepCollectionEquality()
                 .equals(other.orderItemId, orderItemId) &&
             const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt));
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other.event, event));
   }
 
   @JsonKey(ignore: true)
@@ -890,7 +907,8 @@ class _$_OrderDetail implements _OrderDetail {
       runtimeType,
       const DeepCollectionEquality().hash(orderItemId),
       const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(createdAt));
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(event));
 
   @JsonKey(ignore: true)
   @override
@@ -907,10 +925,10 @@ class _$_OrderDetail implements _OrderDetail {
 
 abstract class _OrderDetail implements OrderDetail {
   factory _OrderDetail(
-          {@JsonKey(name: "order_item_id") final int? orderItemId,
-          required final String message,
-          @JsonKey(name: "created_at") required final DateTime createdAt}) =
-      _$_OrderDetail;
+      {@JsonKey(name: "order_item_id") final int? orderItemId,
+      required final String message,
+      @JsonKey(name: "created_at") required final DateTime createdAt,
+      required final OrderDetailEvent event}) = _$_OrderDetail;
 
   factory _OrderDetail.fromJson(Map<String, dynamic> json) =
       _$_OrderDetail.fromJson;
@@ -923,6 +941,8 @@ abstract class _OrderDetail implements OrderDetail {
   @override
   @JsonKey(name: "created_at")
   DateTime get createdAt;
+  @override
+  OrderDetailEvent get event;
   @override
   @JsonKey(ignore: true)
   _$$_OrderDetailCopyWith<_$_OrderDetail> get copyWith =>

@@ -28,9 +28,9 @@ class RequestInterceptor extends Interceptor {
 Dio _httpClient = Dio(
   BaseOptions(
     baseUrl: BASE_URL,
-    sendTimeout: 10000000,
-    receiveTimeout: 10000000,
-    connectTimeout: 10000000,
+    // sendTimeout: 10000000,
+    // receiveTimeout: 10000000,
+    // connectTimeout: 10000000,
   ),
 );
 
@@ -58,7 +58,6 @@ class Http {
         data: deserializer != null ? deserializer(res.data) : res.data,
       );
     } catch (error, s) {
-      print(s);
       return HttpResult.onError(
         error: getException(error),
       );
@@ -73,15 +72,12 @@ class Http {
     Map<String, dynamic>? queryParams,
   }) async {
     try {
-      print(data);
       final res = await dio.post(url,
           data: data, options: options, queryParameters: queryParams);
-      print(res.data);
       return HttpResult.onSuccess(
         data: deserializer != null ? deserializer(res.data) : res.data,
       );
     } catch (error) {
-      print(error);
       return HttpResult.onError(error: getException(error));
     }
   }
