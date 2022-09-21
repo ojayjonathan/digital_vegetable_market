@@ -108,7 +108,18 @@ class DriverRepository(
 class WalletRepository(
     BaseRepository[models.Wallet, schema.Wallet, schema.PasswordUpdate]
 ):
-    pass
+    def withdraw(self, db: Session, user_id: int, amount: float):
+        wallet = self.get_object_or_404(db, user_id=user_id)
+        if wallet.balance > amount:
+            raise HTTPException(
+                status.HTTP_400_BAD_REQUEST,
+                detail={
+                    "message": "Your balance is not enough to complete this transaction"
+                },
+            )
+        wallet.balance -= amount
+        db.commit()
+        return schema.MessageResponse("Withdrawal request has been received")
 
 
 class AddressRepository(

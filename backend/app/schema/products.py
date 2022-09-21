@@ -20,6 +20,7 @@ class Product(BaseModel):
     name: str
     category: ProductCategory
     address: Address
+    available_quantity:float
 
     class Config:
         orm_mode = True

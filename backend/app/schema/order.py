@@ -4,15 +4,29 @@ from datetime import datetime
 from typing import Any, List, Optional
 from pydantic import BaseModel, Field
 from app.schema.address import AddressCreate, Address
+from app.schema.products import Product
 
 from app.schema.payment import Payment
+from app.utils.utils import tz_now
 from .user import User
-from app.models.order import OrderStatus
+from app.models.order import OrderStatus, OrderStatusEvent
+
+
+class OrderDetail(BaseModel):
+    order_id: int
+    message: str
+    created_at: datetime = Field(default=tz_now())
+    order_item_id: Optional[int]
+    event: OrderStatusEvent = Field(OrderStatusEvent.OTHER)
+
+    class Config:
+        orm_mode = True
 
 
 class OrderItem(BaseModel):
     product_id: int
     order_id: int
+    product: Product
     quantity: float
     delivered: bool
     id: int
@@ -26,6 +40,7 @@ class Order(BaseModel):
     payment: Optional[Payment]
     user: User
     order_items: List[OrderItem]
+    detail: List[OrderDetail]
     status: OrderStatus
     id: int
     delivery_address: Address

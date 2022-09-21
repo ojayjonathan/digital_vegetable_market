@@ -1,6 +1,7 @@
 from __future__ import annotations
 from email.policy import default
 import enum
+from http.client import CREATED
 from sqlalchemy import Column, DateTime, Float, ForeignKey, String, Boolean
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
@@ -18,6 +19,15 @@ class OrderStatus(str, enum.Enum):
     ACTIVE = "ACTIVE"
 
 
+class OrderStatusEvent(str, enum.Enum):
+    CREATED = "CREATED"
+    CANCELLED = "CANCELLED"
+    CONFIRMED = "CONFIRMED"
+    DELIVERED = "DELIVERED"
+    OTHER = "OTHER"
+    PROCESSED = "PROCESSED"
+
+
 class Order(Base):
     created_at = Column(DateTime(), default=tz_now(), nullable=False)
     user_id = Column(ForeignKey(f"{User.__tablename__}.id"), nullable=False)
@@ -28,7 +38,10 @@ class Order(Base):
         "OrderItem",
     )
     shipment_cost = Column(Float(), default=0, nullable=False)
-    
+    detail = relationship(
+        "OrderDetail",
+        foreign_keys="OrderDetail.order_id",
+    )
     status: OrderStatus = Column(
         String(10), nullable=False, default=OrderStatus.PENDING
     )
@@ -40,6 +53,17 @@ class Order(Base):
 
 class OrderItem(Base):
     product_id = Column(ForeignKey(f"{Product.__tablename__}.id"), nullable=False)
+    product = relationship(
+        f"{Product.__tablename__}",
+    )
     order_id = Column(ForeignKey(f"{Order.__tablename__}.id"), nullable=False)
     quantity = Column(Float(precision=2), nullable=False)
     delivered: bool = Column(Boolean(), nullable=False, default=False)
+
+
+class OrderDetail(Base):
+    order_id = Column(ForeignKey(f"{Order.__tablename__}.id"), nullable=False)
+    message = Column(String(1000), nullable=False)
+    created_at = Column(DateTime(), default=tz_now(), nullable=False)
+    order_item_id = Column(ForeignKey(f"{Order.__tablename__}.id"))
+    event = Column(String(30), nullable=False, default="OTHER")

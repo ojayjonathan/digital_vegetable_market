@@ -25,6 +25,13 @@ class OrdersRepository(
                     quantity=order_item.quantity,
                 )
                 db.add(item)
+            db.add(
+                models.OrderDetail(
+                    order_id=object_in.id,
+                    message="Order created successfuly!",
+                    event="CREATED",
+                ),
+            )
             db.commit()
             db.refresh(object_in)
         except IntegrityError as e:

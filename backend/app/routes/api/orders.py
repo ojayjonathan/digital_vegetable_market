@@ -17,7 +17,7 @@ async def orders(
     return order_repo.filter_by(db, user_id=user.id).all()
 
 
-@router.post("/")
+@router.post("/",response_model=schema.Order)
 async def create_order(
     db: Session = Depends(get_db),
     user: models.User = Depends(current_user),

@@ -35,11 +35,10 @@ def test_add_product(
         address_id=address["id"],
         name=random_string(10),
         category="FRUITS",
-        image=""
-
+        image="",
     )
     data = product.dict()
-    data["category"]="FRUITS"
+    data["category"] = "FRUITS"
     res = client.post(
         f"{settings.BASE_API_URL}/products/",
         headers=test_user_headers,
@@ -73,22 +72,31 @@ def test_update_product(
     test_user_headers: Dict[str, str],
     get_test_db: Session,
 ):
+    product = product_repo.query(get_test_db).first()
+
     product_update_schema = schema.ProductUpdate(
         description=random_string(),
         measurement_unit="Kg",
         expected_available_date=datetime.now(),
         price=18872,
         available_quantity=100,
+        name=random_string(10),
     )
-    product = product_repo.query(get_test_db).first()
+    data = product_update_schema.dict()
 
     res = client.post(
         f"{settings.BASE_API_URL}/products/{product.id}/",
         headers=test_user_headers,
-        json=jsonable_encoder(product_update_schema.dict()),
+        files={
+            "image": (
+                "test.png",
+                open("test_image/test.png", "rb"),
+                "image/jpeg",
+            )
+        },
+        data=data,
     )
 
     product_updated = res.json()
-
     assert res.status_code == 200
     assert product_updated["description"] in product_update_schema.description

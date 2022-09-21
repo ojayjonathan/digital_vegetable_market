@@ -71,8 +71,7 @@ async def add_product(
     available_quantity: float = Form(...),
     address_id: int = Form(...),
     category: schema.ProductCategory = Form(...),
-    name:str = Form(...),
-
+    name: str = Form(...),
 ):
     product = schema.ProductCreate(
         owner_id=owner_id if owner_id else user.id,
@@ -84,10 +83,14 @@ async def add_product(
         measurement_unit=measurement_unit,
         image=image.filename,
         name=name,
-        category=category
+        category=category,
     )
     if product_created := product_repo.create(db, product):
-        upload_image(image, f"{user.id}/{product_created.id}/", settings=settings)
+        upload_image(
+            image,
+            f"{product_created.owner_id}/{product_created.id}/",
+            settings=settings,
+        )
         return product_created
 
 
@@ -95,10 +98,31 @@ async def add_product(
 async def update_product(
     id: int,
     _: schema.User = Depends(current_user),
-    product_update: schema.ProductUpdate = Body(...),
     db: Session = Depends(get_db),
+    image: Optional[UploadFile] = File(None, description="Product thumbnail"),
+    description: Optional[str] = Form(None),
+    expected_available_date: Optional[datetime] = Form(None),
+    measurement_unit: Optional[str] = Form(None),
+    price: Optional[float] = Form(None),
+    available_quantity: Optional[float] = Form(None),
+    category: Optional[schema.ProductCategory] = Form(None),
+    name: Optional[str] = Form(None),
+    settings: Setting = Depends(get_setting),
 ):
+    product_update = schema.ProductUpdate(
+        available_quantity=available_quantity,
+        category=category,
+        description=description,
+        expected_available_date=expected_available_date,
+        measurement_unit=measurement_unit,
+        price=price,
+        name=name,
+    )
+    if image:
+        product_update.image = image.filename
     if product := product_repo.get_object_or_404(db, id=id):
+        if image:
+            upload_image(image, f"{product.owner_id}/{product.id}/", settings=settings)
         return product_repo.update(db, product, product_update)
 
 
