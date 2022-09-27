@@ -6,14 +6,17 @@ class UserProductsState<T extends FormzInput<File?, String>> extends Equatable {
   final RequiredInput<double>? price;
   final RequiredInput<Address>? address;
   final RequiredInput<String>? name;
+  final RequiredInput<String>? category;
+
   final RequiredInput<double>? availableQuantity;
   final TextInput? measurementUnit;
   final T? image;
   final InfoMessage? message;
   final ServiceStatus status;
   final List<Product> products;
-
+  final int? selectedProductId;
   const UserProductsState({
+    this.category = const RequiredInput.pure(value: "VEGETABLES"),
     this.message,
     this.products = const [],
     this.status = ServiceStatus.initial,
@@ -25,6 +28,7 @@ class UserProductsState<T extends FormzInput<File?, String>> extends Equatable {
     this.name,
     this.address,
     this.availableQuantity,
+    this.selectedProductId,
   });
 
   UserProductsState copyWith({
@@ -37,19 +41,24 @@ class UserProductsState<T extends FormzInput<File?, String>> extends Equatable {
     InfoMessage? message,
     T? image,
     RequiredInput<Address>? address,
+    RequiredInput<String>? category,
     ServiceStatus? status,
+    int? selectedProductId,
   }) {
     return UserProductsState(
-        status: status ?? this.status,
-        message: message,
-        availableDate: availableDate ?? this.availableDate,
-        availableQuantity: availableQuantity ?? this.availableQuantity,
-        description: description ?? this.description,
-        measurementUnit: measurementUnit ?? this.measurementUnit,
-        name: name ?? this.name,
-        price: price ?? this.price,
-        image: image ?? this.image,
-        address: address ?? this.address);
+      status: status ?? this.status,
+      message: message,
+      availableDate: availableDate ?? this.availableDate,
+      availableQuantity: availableQuantity ?? this.availableQuantity,
+      description: description ?? this.description,
+      measurementUnit: measurementUnit ?? this.measurementUnit,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      image: image ?? this.image,
+      selectedProductId: selectedProductId ?? this.selectedProductId,
+      address: address ?? this.address,
+      category: category ?? this.category,
+    );
   }
 
   @override
@@ -63,6 +72,8 @@ class UserProductsState<T extends FormzInput<File?, String>> extends Equatable {
         measurementUnit,
         price,
         image,
+        address,
+        category,
       ];
   bool get validate {
     for (var f in <FormzInput?>[
@@ -73,6 +84,7 @@ class UserProductsState<T extends FormzInput<File?, String>> extends Equatable {
       measurementUnit,
       price,
       image,
+      category,
     ]) {
       if (f?.error != null) {
         return false;
@@ -87,7 +99,9 @@ class UserProductsListState extends UserProductsState {
     List<Product> products = const [],
     InfoMessage? message,
     ServiceStatus status = ServiceStatus.initial,
-  }) : super();
+  }) : super(
+    products: products,
+  );
 
   @override
   List<Object?> get props => [products, message, status];
@@ -125,11 +139,13 @@ class UserProductsUpdateState extends UserProductsState<OptionalInput<File>> {
     required RequiredInput<DateTime> availableDate,
     required RequiredInput<double> price,
     required RequiredInput<String> name,
+    required RequiredInput<String> category,
     required RequiredInput<double> availableQuantity,
     required TextInput measurementUnit,
     RequiredInput<Address> address = const RequiredInput.pure(),
     OptionalInput<File> image = const OptionalInput.pure(),
     InfoMessage? message,
+    required int selectedProductId,
     status = ServiceStatus.initial,
   }) : super(
           message: message,
@@ -142,5 +158,7 @@ class UserProductsUpdateState extends UserProductsState<OptionalInput<File>> {
           name: name,
           address: address,
           price: price,
+          selectedProductId: selectedProductId,
+          category: category,
         );
 }

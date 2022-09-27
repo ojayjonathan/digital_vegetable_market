@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 import 'package:market/data/models/product/product.dart';
 import 'package:market/data/services/status.dart';
 import 'package:market/presentation/app/bloc/bloc.dart';
@@ -23,13 +22,12 @@ class UserProductsPage extends StatelessWidget {
     context.read<AppBloc>().add(AddressStarted());
     return Scaffold(
       bottomNavigationBar: const BottomNavigation(3),
-
       appBar: AppBar(
         centerTitle: true,
         title: const Text("My Products"),
       ),
       body: BlocProvider(
-        create: (_) => UserProductsCubit(),
+        create: (_) => UserProductsCubit()..productListStarted(),
         child: const _UserProductsView(),
       ),
     );
@@ -45,24 +43,7 @@ class _UserProductsView extends StatelessWidget {
           previous.runtimeType != current.runtimeType,
       builder: (context, state) {
         if (state is UserProductsListState) {
-          return ListView.separated(
-            shrinkWrap: true,
-            separatorBuilder: (context, index) {
-              return const Divider();
-            },
-            itemCount: state.products.length + 1,
-            itemBuilder: (context, index) {
-              if (index == state.products.length) {
-                return TextButton(
-                  onPressed: () =>
-                      context.read<UserProductsCubit>().createStarted(),
-                  child: const Text("Add new"),
-                );
-              }
-              final item = state.products[index];
-              return _ProductTile(item);
-            },
-          );
+          return const _ProductList();
         }
 
         return const SingleChildScrollView(
@@ -94,24 +75,51 @@ class _ProductTile extends StatelessWidget {
       ),
       title: Text(product.name),
       subtitle: Text("Ksh ${product.price}"),
-      trailing: Row(
-        children: [
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              "Delete",
-              style: TextStyle(color: Colors.red),
-            ),
-          ),
-          TextButton(
-            onPressed: () =>
-                context.read<UserProductsCubit>().updateStarted(product),
-            child: const Text(
-              "Edit",
-            ),
-          )
-        ],
+      trailing: TextButton(
+        onPressed: () =>
+            context.read<UserProductsCubit>().updateStarted(product),
+        child: const Text(
+          "Edit",
+        ),
       ),
     );
+  }
+}
+
+class _ProductList extends StatelessWidget {
+  const _ProductList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UserProductsCubit, UserProductsState>(
+        buildWhen: (previous, current) =>
+            current.products != previous.products ||
+            (current.status != previous.status),
+        builder: (_, state) {
+          if (state.status == ServiceStatus.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView.separated(
+            shrinkWrap: true,
+            separatorBuilder: (context, index) {
+              return const Divider();
+            },
+            itemCount: state.products.length + 1,
+            itemBuilder: (context, index) {
+              if (index == state.products.length) {
+                return TextButton(
+                  onPressed: () =>
+                      context.read<UserProductsCubit>().createStarted(),
+                  child: const Text("Add new"),
+                );
+              }
+              final item = state.products[index];
+              return _ProductTile(item);
+            },
+          );
+        });
   }
 }

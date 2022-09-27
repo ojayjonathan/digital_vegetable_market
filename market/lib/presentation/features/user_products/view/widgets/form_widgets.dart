@@ -115,3 +115,48 @@ class ProductAddress extends StatelessWidget {
     );
   }
 }
+
+class ProductCategory extends StatelessWidget {
+  const ProductCategory({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UserProductsCubit, UserProductsState>(
+      buildWhen: (previous, current) =>
+          current.category?.value != previous.category?.value,
+      builder: (context, state) {
+        return SizedBox(
+          width: MediaQuery.of(context).size.height * .95,
+          
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Category"),
+                  DropdownButton<String>(
+                    value: state.category?.value,
+                    items: const [
+                      DropdownMenuItem(
+                        value: "VEGETABLES",
+                        child: Text("VEGETABLES"),
+                      ),
+                      DropdownMenuItem(
+                        value: "FRUITS",
+                        child: Text("FRUITS"),
+                      )
+                    ],
+                    onChanged: (value) {
+                      context.read<UserProductsCubit>().categoryChanged(value);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

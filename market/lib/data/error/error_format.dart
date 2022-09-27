@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:market/data/error/error_object.dart';
 
 ErrorObject getException(error) {
- 
   if (error is Exception) {
     try {
       if (error is SocketException) {
@@ -19,16 +18,14 @@ ErrorObject getException(error) {
           case DioErrorType.response:
             final status = error.response!.statusCode;
             final response = error.response!.data;
-            print(response);
-            final message = ((response is Map)
-                    ? (response["detail"] ?? response["title"])
-                    : null) ??
-                error.message.toString();
-
-            final extra = (response is Map) ? response : {};
+            final message =
+                ((response is Map) ? (response["message"]) : null) ??
+                    error.message;
+            final detail =
+                (response["details"] is Map) ? response["details"] : {};
             return ErrorObject(
               message,
-              extra: extra,
+              detail: detail,
               statusCode: status,
             );
 

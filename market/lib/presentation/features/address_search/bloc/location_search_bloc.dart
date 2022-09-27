@@ -79,8 +79,10 @@ class SearchBloc extends Cubit<SearchState> {
             query: "",
           ),
         );
+        print(error);
       },
       onSuccess: (data) {
+        print(data.toJson());
         emit(
           state.copyWith(
             status: ServiceStatus.loadingSuccess,

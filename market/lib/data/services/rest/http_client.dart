@@ -52,12 +52,13 @@ class Http {
     try {
       final res =
           await dio.get(url, options: options, queryParameters: queryParams);
-      print(res.data);
 
       return HttpResult.onSuccess(
         data: deserializer != null ? deserializer(res.data) : res.data,
       );
     } catch (error, s) {
+      print(error);
+      print(s);
       return HttpResult.onError(
         error: getException(error),
       );
@@ -78,6 +79,7 @@ class Http {
         data: deserializer != null ? deserializer(res.data) : res.data,
       );
     } catch (error) {
+      print((error as DioError).response?.data);
       return HttpResult.onError(error: getException(error));
     }
   }

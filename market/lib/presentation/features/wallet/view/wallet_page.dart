@@ -22,7 +22,7 @@ class WalletPage extends StatelessWidget {
         child: FutureBuilder<HttpResult<Wallet>>(
           future: service<UserAccount>().wallet(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) return const CircularProgressIndicator();
+            if (!snapshot.hasData) return const Center(child:  CircularProgressIndicator());
             if (snapshot.data is ErrorResponse) {
               return Text((snapshot.data as ErrorResponse).error.message);
             }

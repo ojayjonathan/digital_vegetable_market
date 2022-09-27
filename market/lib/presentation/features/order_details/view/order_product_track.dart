@@ -8,7 +8,6 @@ import 'package:market/data/services/service.dart';
 import 'package:market/utils/utils.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:timeline_tile/timeline_tile.dart';
-import 'package:market/utils/utils.dart';
 
 part 'timeline_widgets.dart';
 

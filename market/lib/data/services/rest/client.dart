@@ -136,8 +136,9 @@ class ProductService {
   Result<List<Product>> productsMe() => Http.get(
         "${ApiEndpoints.products}me/",
         deserializer: (data) => List<Product>.from(
-          data.map((json) => Product.fromJson(data)),
+          data.map((json) => Product.fromJson(json)),
         ),
+        
       );
   Result<ProductsPage> all({int? page, int? count, int? userId}) {
     final queryParams = {"page": page ?? 1};

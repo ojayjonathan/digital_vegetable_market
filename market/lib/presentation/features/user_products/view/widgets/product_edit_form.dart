@@ -72,6 +72,9 @@ class _ProductUpdateForm extends StatelessWidget {
                 label: const Text("Measurement Unit"),
               ),
             ),
+            const SizedBox(height: 10),
+            const ProductCategory(),
+            const SizedBox(height: 10),
             const ProductExpectedAvailableDate(),
             const ProductAddress(),
             Row(

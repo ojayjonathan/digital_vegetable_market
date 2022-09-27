@@ -1,7 +1,6 @@
 import 'package:market/resources/info.dart';
 import 'package:market/presentation/features/register/bloc/bloc.dart';
 import 'package:market/presentation/features/register/view/register_form.dart';
-import 'package:market/presentation/widgets/button.dart';
 import 'package:market/resources/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -14,5 +14,4 @@ class RouteNames {
   static const home = "home";
   static const feedback = "feedback";
   static const wallet = "wallet";
-
 }

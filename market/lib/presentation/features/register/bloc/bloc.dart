@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:market/data/domain/form_input.dart';
-import 'package:market/data/error/error_object.dart';
 import 'package:market/data/services/service.dart';
 import 'package:market/resources/info.dart';
 import 'package:market/data/models/user/user.dart';
@@ -102,7 +101,7 @@ class RegisterCupit extends Cubit<RegisterState> {
           emit(
             state.copyWith(
               status: FormzStatus.submissionFailure,
-              fieldError: error.fieldErrors,
+              // fieldError: error.detail,
               message: InfoMessage.fromError(error),
             ),
           );

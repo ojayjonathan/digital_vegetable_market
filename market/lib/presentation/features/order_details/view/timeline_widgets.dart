@@ -22,8 +22,8 @@ class _RightChild extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Opacity(
-            child: Image.asset(asset, height: 50),
             opacity: disabled ? 0.5 : 1,
+            child: Image.asset(asset, height: 50),
           ),
           const SizedBox(width: 16),
           Column(

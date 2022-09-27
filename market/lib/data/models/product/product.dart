@@ -1,4 +1,3 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:market/data/models/address/address.dart';
 import 'package:market/data/models/user/user.dart';
@@ -21,6 +20,7 @@ class Product with _$Product {
     @JsonKey(name: "expected_available_date") required DateTime availableDate,
     required double price,
     @JsonKey(name: "measurement_unit") required String measurementUnit,
+    required String category,
   }) = _Product;
 
   String get imageUrl => MEDIA_URL + image;
@@ -47,6 +47,7 @@ class ProductCreate with _$ProductCreate {
     @JsonKey(name: "address_id") required int addressId,
     @JsonKey(name: "available_quantity") required double availableQuantity,
     @JsonKey(name: "measurement_unit") required String measurementUnit,
+    required String category,
   }) = _ProductCreate;
 }
 
@@ -58,6 +59,8 @@ class ProductUpdate with _$ProductUpdate {
     double? price,
     String? name,
     @JsonKey(name: "available_quantity") double? availableQuantity,
-    @JsonKey(name: "measurement_unit") String? measurementUnit, 
+    @JsonKey(name: "measurement_unit") String? measurementUnit,
+    required String category,
+
   }) = _ProductUpdate;
 }

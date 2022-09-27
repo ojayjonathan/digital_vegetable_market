@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -184,7 +183,7 @@ class AddressProvider {
         addressData.isEmpty ? [result['formatted_address'] ?? ""] : addressData;
     return Address(
       address: addressData.join(", "),
-      title: name,
+      title: name ?? addressData.join(", "),
       latitude: lat,
       longitude: lng,
     );

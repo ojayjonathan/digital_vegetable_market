@@ -17,6 +17,7 @@ _$_Product _$$_ProductFromJson(Map<String, dynamic> json) => _$_Product(
       availableDate: DateTime.parse(json['expected_available_date'] as String),
       price: (json['price'] as num).toDouble(),
       measurementUnit: json['measurement_unit'] as String,
+      category: json['category'] as String,
     );
 
 Map<String, dynamic> _$$_ProductToJson(_$_Product instance) =>
@@ -31,6 +32,7 @@ Map<String, dynamic> _$$_ProductToJson(_$_Product instance) =>
       'expected_available_date': instance.availableDate.toIso8601String(),
       'price': instance.price,
       'measurement_unit': instance.measurementUnit,
+      'category': instance.category,
     };
 
 _$_ProductsPage _$$_ProductsPageFromJson(Map<String, dynamic> json) =>
@@ -58,6 +60,7 @@ Map<String, dynamic> _$$_ProductCreateToJson(_$_ProductCreate instance) =>
       'address_id': instance.addressId,
       'available_quantity': instance.availableQuantity,
       'measurement_unit': instance.measurementUnit,
+      'category': instance.category,
     };
 
 Map<String, dynamic> _$$_ProductUpdateToJson(_$_ProductUpdate instance) =>
@@ -68,4 +71,5 @@ Map<String, dynamic> _$$_ProductUpdateToJson(_$_ProductUpdate instance) =>
       'name': instance.name,
       'available_quantity': instance.availableQuantity,
       'measurement_unit': instance.measurementUnit,
+      'category': instance.category,
     };

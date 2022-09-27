@@ -88,7 +88,6 @@ class MarketApp extends StatelessWidget {
               path: RouteNames.wallet,
               name: RouteNames.wallet,
               builder: (context, state) =>  WalletPage(),
-              routes: [],
             ),
               ],
             ),
@@ -97,19 +96,16 @@ class MarketApp extends StatelessWidget {
               path: RouteNames.userProducts,
               name: RouteNames.userProducts,
               builder: (context, state) => const UserProductsPage(),
-              routes: [],
             ),
             GoRoute(
               path: RouteNames.checkout,
               name: RouteNames.checkout,
               builder: (context, state) => const CheckoutPage(),
-              routes: [],
             ),
             GoRoute(
               path: RouteNames.cart,
               name: RouteNames.cart,
               builder: (context, state) => const CartPage(),
-              routes: [],
             ),
             GoRoute(
               name: RouteNames.feedback,

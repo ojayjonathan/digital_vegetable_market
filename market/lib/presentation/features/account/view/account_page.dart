@@ -25,7 +25,7 @@ class AccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<AccountBloc>().add(AccountStarted());
     return Scaffold(
-      bottomNavigationBar: const BottomNavigation(4),
+      bottomNavigationBar: const BottomNavigation(3),
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Account Details"),
@@ -109,7 +109,7 @@ class _FavoriteAddressView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Favorite Addresse",
+              "Favorite Addresses",
               style: Theme.of(context).textTheme.headline4,
             ),
           ),
@@ -188,19 +188,51 @@ class _AccountView extends StatelessWidget {
         children: [
           const _ProfileView(),
           const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () => context.pushNamed(RouteNames.wallet),
+                  child: const ListItem(
+                    desc: "Account balance",
+                    imagePath: "assets/wallet.png",
+                    title: "Wallet",
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: InkWell(
+                  onTap: () => context.pushNamed(RouteNames.userProducts),
+                  child: const ListItem(
+                    title: "Products",
+                    imagePath: "assets/list.png",
+                    desc: "My products",
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () => context.pushNamed(RouteNames.orderHistory),
+                  child: const ListItem(
+                    desc: "Order History",
+                    imagePath: "assets/package.png",
+                    title: "Orders",
+                  ),
+                ),
+              ),
+              Expanded(child: Container())
+            ],
+          ),
+          const SizedBox(height: 20),
           const _FavoriteAddressView(),
           const SizedBox(
             height: 20,
-          ),
-          TextButton(
-            onPressed: () => context.goNamed(RouteNames.wallet),
-            child: Row(
-              children: const [
-                Icon(Icons.monetization_on_rounded),
-                SizedBox(width: 10),
-                Text("Wallet")
-              ],
-            ),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).push(
@@ -223,16 +255,6 @@ class _AccountView extends StatelessWidget {
                 Icon(Icons.exit_to_app),
                 SizedBox(width: 10),
                 Text("Logout")
-              ],
-            ),
-          ),
-          TextButton(
-            onPressed: () => context.read<AppRepository>().deleteAccount(),
-            child: Row(
-              children: const [
-                Icon(Icons.delete_outline),
-                SizedBox(width: 10),
-                Text("Delete Account")
               ],
             ),
           ),

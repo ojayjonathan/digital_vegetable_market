@@ -34,6 +34,7 @@ mixin _$Product {
   double get price => throw _privateConstructorUsedError;
   @JsonKey(name: "measurement_unit")
   String get measurementUnit => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -54,7 +55,8 @@ abstract class $ProductCopyWith<$Res> {
       @JsonKey(name: "available_quantity") double availableQuantity,
       @JsonKey(name: "expected_available_date") DateTime availableDate,
       double price,
-      @JsonKey(name: "measurement_unit") String measurementUnit});
+      @JsonKey(name: "measurement_unit") String measurementUnit,
+      String category});
 
   $UserCopyWith<$Res> get owner;
   $AddressCopyWith<$Res> get address;
@@ -80,6 +82,7 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
     Object? availableDate = freezed,
     Object? price = freezed,
     Object? measurementUnit = freezed,
+    Object? category = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -122,6 +125,10 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
           ? _value.measurementUnit
           : measurementUnit // ignore: cast_nullable_to_non_nullable
               as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 
@@ -156,7 +163,8 @@ abstract class _$$_ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
       @JsonKey(name: "available_quantity") double availableQuantity,
       @JsonKey(name: "expected_available_date") DateTime availableDate,
       double price,
-      @JsonKey(name: "measurement_unit") String measurementUnit});
+      @JsonKey(name: "measurement_unit") String measurementUnit,
+      String category});
 
   @override
   $UserCopyWith<$Res> get owner;
@@ -185,6 +193,7 @@ class __$$_ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
     Object? availableDate = freezed,
     Object? price = freezed,
     Object? measurementUnit = freezed,
+    Object? category = freezed,
   }) {
     return _then(_$_Product(
       id: id == freezed
@@ -227,6 +236,10 @@ class __$$_ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
           ? _value.measurementUnit
           : measurementUnit // ignore: cast_nullable_to_non_nullable
               as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -244,7 +257,8 @@ class _$_Product extends _Product {
       @JsonKey(name: "available_quantity") required this.availableQuantity,
       @JsonKey(name: "expected_available_date") required this.availableDate,
       required this.price,
-      @JsonKey(name: "measurement_unit") required this.measurementUnit})
+      @JsonKey(name: "measurement_unit") required this.measurementUnit,
+      required this.category})
       : super._();
 
   factory _$_Product.fromJson(Map<String, dynamic> json) =>
@@ -274,10 +288,12 @@ class _$_Product extends _Product {
   @override
   @JsonKey(name: "measurement_unit")
   final String measurementUnit;
+  @override
+  final String category;
 
   @override
   String toString() {
-    return 'Product(id: $id, image: $image, description: $description, owner: $owner, name: $name, address: $address, availableQuantity: $availableQuantity, availableDate: $availableDate, price: $price, measurementUnit: $measurementUnit)';
+    return 'Product(id: $id, image: $image, description: $description, owner: $owner, name: $name, address: $address, availableQuantity: $availableQuantity, availableDate: $availableDate, price: $price, measurementUnit: $measurementUnit, category: $category)';
   }
 
   @override
@@ -298,7 +314,8 @@ class _$_Product extends _Product {
                 .equals(other.availableDate, availableDate) &&
             const DeepCollectionEquality().equals(other.price, price) &&
             const DeepCollectionEquality()
-                .equals(other.measurementUnit, measurementUnit));
+                .equals(other.measurementUnit, measurementUnit) &&
+            const DeepCollectionEquality().equals(other.category, category));
   }
 
   @JsonKey(ignore: true)
@@ -314,7 +331,8 @@ class _$_Product extends _Product {
       const DeepCollectionEquality().hash(availableQuantity),
       const DeepCollectionEquality().hash(availableDate),
       const DeepCollectionEquality().hash(price),
-      const DeepCollectionEquality().hash(measurementUnit));
+      const DeepCollectionEquality().hash(measurementUnit),
+      const DeepCollectionEquality().hash(category));
 
   @JsonKey(ignore: true)
   @override
@@ -344,7 +362,8 @@ abstract class _Product extends Product {
           required final DateTime availableDate,
       required final double price,
       @JsonKey(name: "measurement_unit")
-          required final String measurementUnit}) = _$_Product;
+          required final String measurementUnit,
+      required final String category}) = _$_Product;
   _Product._() : super._();
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$_Product.fromJson;
@@ -373,6 +392,8 @@ abstract class _Product extends Product {
   @override
   @JsonKey(name: "measurement_unit")
   String get measurementUnit;
+  @override
+  String get category;
   @override
   @JsonKey(ignore: true)
   _$$_ProductCopyWith<_$_Product> get copyWith =>
@@ -583,6 +604,7 @@ mixin _$ProductCreate {
   double get availableQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "measurement_unit")
   String get measurementUnit => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -602,7 +624,8 @@ abstract class $ProductCreateCopyWith<$Res> {
       String name,
       @JsonKey(name: "address_id") int addressId,
       @JsonKey(name: "available_quantity") double availableQuantity,
-      @JsonKey(name: "measurement_unit") String measurementUnit});
+      @JsonKey(name: "measurement_unit") String measurementUnit,
+      String category});
 }
 
 /// @nodoc
@@ -623,6 +646,7 @@ class _$ProductCreateCopyWithImpl<$Res>
     Object? addressId = freezed,
     Object? availableQuantity = freezed,
     Object? measurementUnit = freezed,
+    Object? category = freezed,
   }) {
     return _then(_value.copyWith(
       description: description == freezed
@@ -653,6 +677,10 @@ class _$ProductCreateCopyWithImpl<$Res>
           ? _value.measurementUnit
           : measurementUnit // ignore: cast_nullable_to_non_nullable
               as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -671,7 +699,8 @@ abstract class _$$_ProductCreateCopyWith<$Res>
       String name,
       @JsonKey(name: "address_id") int addressId,
       @JsonKey(name: "available_quantity") double availableQuantity,
-      @JsonKey(name: "measurement_unit") String measurementUnit});
+      @JsonKey(name: "measurement_unit") String measurementUnit,
+      String category});
 }
 
 /// @nodoc
@@ -694,6 +723,7 @@ class __$$_ProductCreateCopyWithImpl<$Res>
     Object? addressId = freezed,
     Object? availableQuantity = freezed,
     Object? measurementUnit = freezed,
+    Object? category = freezed,
   }) {
     return _then(_$_ProductCreate(
       description: description == freezed
@@ -724,6 +754,10 @@ class __$$_ProductCreateCopyWithImpl<$Res>
           ? _value.measurementUnit
           : measurementUnit // ignore: cast_nullable_to_non_nullable
               as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -738,7 +772,8 @@ class _$_ProductCreate implements _ProductCreate {
       required this.name,
       @JsonKey(name: "address_id") required this.addressId,
       @JsonKey(name: "available_quantity") required this.availableQuantity,
-      @JsonKey(name: "measurement_unit") required this.measurementUnit});
+      @JsonKey(name: "measurement_unit") required this.measurementUnit,
+      required this.category});
 
   @override
   @JsonKey()
@@ -759,10 +794,12 @@ class _$_ProductCreate implements _ProductCreate {
   @override
   @JsonKey(name: "measurement_unit")
   final String measurementUnit;
+  @override
+  final String category;
 
   @override
   String toString() {
-    return 'ProductCreate(description: $description, availableDate: $availableDate, price: $price, name: $name, addressId: $addressId, availableQuantity: $availableQuantity, measurementUnit: $measurementUnit)';
+    return 'ProductCreate(description: $description, availableDate: $availableDate, price: $price, name: $name, addressId: $addressId, availableQuantity: $availableQuantity, measurementUnit: $measurementUnit, category: $category)';
   }
 
   @override
@@ -780,7 +817,8 @@ class _$_ProductCreate implements _ProductCreate {
             const DeepCollectionEquality()
                 .equals(other.availableQuantity, availableQuantity) &&
             const DeepCollectionEquality()
-                .equals(other.measurementUnit, measurementUnit));
+                .equals(other.measurementUnit, measurementUnit) &&
+            const DeepCollectionEquality().equals(other.category, category));
   }
 
   @JsonKey(ignore: true)
@@ -793,7 +831,8 @@ class _$_ProductCreate implements _ProductCreate {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(addressId),
       const DeepCollectionEquality().hash(availableQuantity),
-      const DeepCollectionEquality().hash(measurementUnit));
+      const DeepCollectionEquality().hash(measurementUnit),
+      const DeepCollectionEquality().hash(category));
 
   @JsonKey(ignore: true)
   @override
@@ -820,7 +859,8 @@ abstract class _ProductCreate implements ProductCreate {
       @JsonKey(name: "available_quantity")
           required final double availableQuantity,
       @JsonKey(name: "measurement_unit")
-          required final String measurementUnit}) = _$_ProductCreate;
+          required final String measurementUnit,
+      required final String category}) = _$_ProductCreate;
 
   @override
   String get description;
@@ -841,6 +881,8 @@ abstract class _ProductCreate implements ProductCreate {
   @JsonKey(name: "measurement_unit")
   String get measurementUnit;
   @override
+  String get category;
+  @override
   @JsonKey(ignore: true)
   _$$_ProductCreateCopyWith<_$_ProductCreate> get copyWith =>
       throw _privateConstructorUsedError;
@@ -857,6 +899,7 @@ mixin _$ProductUpdate {
   double? get availableQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "measurement_unit")
   String? get measurementUnit => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -875,7 +918,8 @@ abstract class $ProductUpdateCopyWith<$Res> {
       double? price,
       String? name,
       @JsonKey(name: "available_quantity") double? availableQuantity,
-      @JsonKey(name: "measurement_unit") String? measurementUnit});
+      @JsonKey(name: "measurement_unit") String? measurementUnit,
+      String category});
 }
 
 /// @nodoc
@@ -895,6 +939,7 @@ class _$ProductUpdateCopyWithImpl<$Res>
     Object? name = freezed,
     Object? availableQuantity = freezed,
     Object? measurementUnit = freezed,
+    Object? category = freezed,
   }) {
     return _then(_value.copyWith(
       description: description == freezed
@@ -921,6 +966,10 @@ class _$ProductUpdateCopyWithImpl<$Res>
           ? _value.measurementUnit
           : measurementUnit // ignore: cast_nullable_to_non_nullable
               as String?,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -938,7 +987,8 @@ abstract class _$$_ProductUpdateCopyWith<$Res>
       double? price,
       String? name,
       @JsonKey(name: "available_quantity") double? availableQuantity,
-      @JsonKey(name: "measurement_unit") String? measurementUnit});
+      @JsonKey(name: "measurement_unit") String? measurementUnit,
+      String category});
 }
 
 /// @nodoc
@@ -960,6 +1010,7 @@ class __$$_ProductUpdateCopyWithImpl<$Res>
     Object? name = freezed,
     Object? availableQuantity = freezed,
     Object? measurementUnit = freezed,
+    Object? category = freezed,
   }) {
     return _then(_$_ProductUpdate(
       description: description == freezed
@@ -986,6 +1037,10 @@ class __$$_ProductUpdateCopyWithImpl<$Res>
           ? _value.measurementUnit
           : measurementUnit // ignore: cast_nullable_to_non_nullable
               as String?,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -999,7 +1054,8 @@ class _$_ProductUpdate implements _ProductUpdate {
       this.price,
       this.name,
       @JsonKey(name: "available_quantity") this.availableQuantity,
-      @JsonKey(name: "measurement_unit") this.measurementUnit});
+      @JsonKey(name: "measurement_unit") this.measurementUnit,
+      required this.category});
 
   @override
   final String? description;
@@ -1016,10 +1072,12 @@ class _$_ProductUpdate implements _ProductUpdate {
   @override
   @JsonKey(name: "measurement_unit")
   final String? measurementUnit;
+  @override
+  final String category;
 
   @override
   String toString() {
-    return 'ProductUpdate(description: $description, availableDate: $availableDate, price: $price, name: $name, availableQuantity: $availableQuantity, measurementUnit: $measurementUnit)';
+    return 'ProductUpdate(description: $description, availableDate: $availableDate, price: $price, name: $name, availableQuantity: $availableQuantity, measurementUnit: $measurementUnit, category: $category)';
   }
 
   @override
@@ -1036,7 +1094,8 @@ class _$_ProductUpdate implements _ProductUpdate {
             const DeepCollectionEquality()
                 .equals(other.availableQuantity, availableQuantity) &&
             const DeepCollectionEquality()
-                .equals(other.measurementUnit, measurementUnit));
+                .equals(other.measurementUnit, measurementUnit) &&
+            const DeepCollectionEquality().equals(other.category, category));
   }
 
   @JsonKey(ignore: true)
@@ -1048,7 +1107,8 @@ class _$_ProductUpdate implements _ProductUpdate {
       const DeepCollectionEquality().hash(price),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(availableQuantity),
-      const DeepCollectionEquality().hash(measurementUnit));
+      const DeepCollectionEquality().hash(measurementUnit),
+      const DeepCollectionEquality().hash(category));
 
   @JsonKey(ignore: true)
   @override
@@ -1066,14 +1126,12 @@ class _$_ProductUpdate implements _ProductUpdate {
 abstract class _ProductUpdate implements ProductUpdate {
   factory _ProductUpdate(
       {final String? description,
-      @JsonKey(name: "expected_available_date")
-          final DateTime? availableDate,
+      @JsonKey(name: "expected_available_date") final DateTime? availableDate,
       final double? price,
       final String? name,
-      @JsonKey(name: "available_quantity")
-          final double? availableQuantity,
-      @JsonKey(name: "measurement_unit")
-          final String? measurementUnit}) = _$_ProductUpdate;
+      @JsonKey(name: "available_quantity") final double? availableQuantity,
+      @JsonKey(name: "measurement_unit") final String? measurementUnit,
+      required final String category}) = _$_ProductUpdate;
 
   @override
   String? get description;
@@ -1090,6 +1148,8 @@ abstract class _ProductUpdate implements ProductUpdate {
   @override
   @JsonKey(name: "measurement_unit")
   String? get measurementUnit;
+  @override
+  String get category;
   @override
   @JsonKey(ignore: true)
   _$$_ProductUpdateCopyWith<_$_ProductUpdate> get copyWith =>
