@@ -2,3 +2,4 @@ from .user import user_repo, UserRepository, DriverRepository, driver_repo,walle
 from .vehicle import vehicle_repo, VehicleRepository
 from .products import ProductsRepository, product_repo
 from .orders import OrdersRepository, order_repo
+from .feedback import FeedbackRepository

@@ -33,3 +33,21 @@ def current_user(
         if user := user_repo.get_user_by_phone(db=db, phone_number=access_token.sub):
             return user
     raise credentials_exception
+
+
+def admin_user(
+    credentials: HTTPBasicCredentials = Security(auth_token_bearer),
+    db: Session = Depends(get_db),
+    settings: Setting = Depends(get_setting),
+) -> models.User:
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    if access_token := decode_access_token(credentials.credentials, settings=settings):
+        if user := user_repo.get_user_by_phone(
+            db=db, phone_number=access_token.sub, is_admin=True
+        ):
+            return user
+    raise credentials_exception

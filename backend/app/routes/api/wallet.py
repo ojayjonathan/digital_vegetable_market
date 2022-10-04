@@ -21,4 +21,4 @@ async def wallet(
     user: models.User = Depends(current_user),
     amount: float = Body(...),
 ):
-    return wallet_repo.withdraw(db, user_id=user.id)
+    return wallet_repo.withdraw(db, user_id=user.id, amount=amount)

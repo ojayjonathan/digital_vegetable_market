@@ -27,4 +27,4 @@ class Product(Base):
 
     @property
     def image_url(self):
-        return f"/{self.owner_id}/{self.id}/{self.image}"
+        return f"/{self.owner_id}/products/{self.id}/{self.image}"

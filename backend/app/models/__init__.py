@@ -4,3 +4,4 @@ from .wallet import Wallet
 from .product import Product, ProductCategory
 from .order import *
 from .address import Address
+from .feedback import Feedback

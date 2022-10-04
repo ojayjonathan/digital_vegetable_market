@@ -1,9 +1,14 @@
+from datetime import datetime
+import os
 from typing import List
 from fastapi import APIRouter, Depends, Body
 from app import schema, models
+from app.core.config import Setting, get_setting
 from app.routes.deps import get_db, current_user
 from sqlalchemy.orm import Session
 from app.repository.orders import order_repo
+import pdfkit
+from app.utils.utils import date_format, render_template
 
 
 router = APIRouter(prefix="/orders", tags=["orders"])
@@ -17,7 +22,7 @@ async def orders(
     return order_repo.filter_by(db, user_id=user.id).all()
 
 
-@router.post("/",response_model=schema.Order)
+@router.post("/", response_model=schema.Order)
 async def create_order(
     db: Session = Depends(get_db),
     user: models.User = Depends(current_user),
@@ -53,3 +58,28 @@ async def order_details(
     _: models.User = Depends(current_user),
 ):
     return order_repo.get_object_or_404(db, id=id)
+
+
+@router.get("/receipt/{id}")
+async def order_receipt(
+    id: int,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(current_user),
+    settings: Setting = Depends(get_setting),
+):
+    order = order_repo.get_object_or_404(db, id=id)
+    template = render_template(
+        "receipt/index.html",
+        {
+            "user": user,
+            "order": order,
+            "now": date_format(datetime.now()),
+            "address": order.delivery_address,
+        },
+    )
+
+    url = f"{settings.MEDIA_URL}{user.id}/receipt/"
+    if not os.path.exists(url):
+        os.makedirs(url)
+    pdfkit.from_string(template, f"{url}{order.id}.pdf")
+    return {"path": f"media/{user.id}/receipt/{order.id}.pdf"}

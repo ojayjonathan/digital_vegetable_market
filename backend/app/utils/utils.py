@@ -4,6 +4,8 @@ from string import ascii_lowercase
 from fastapi import UploadFile, Depends
 import os
 import shutil
+from mako.template import Template
+from mako.lookup import TemplateLookup
 
 from app.core.config import get_setting
 
@@ -31,3 +33,13 @@ def upload_image(file: UploadFile, media_url="", settings=get_setting()):
     with open(url + file.filename, "wb") as img:
         shutil.copyfileobj(file.file, img)
 
+
+
+def date_format(value:datetime)->str:
+    return value.strftime("%d %b, %Y  %X")
+
+environment = TemplateLookup(directories=["app/templates"])
+
+def render_template(path, context={}):
+    template = environment.get_template(path)
+    return template.render(**context)

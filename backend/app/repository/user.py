@@ -96,6 +96,7 @@ class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserU
             )
         if user := self.get_object_or_404(db=db, id=token["id"]):
             user.password = hash_password(data.new_password)
+            db.commit()
         return schema.MessageResponse(message="Password reset successfuly")
 
 

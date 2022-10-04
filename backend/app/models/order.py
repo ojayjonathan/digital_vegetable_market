@@ -6,7 +6,7 @@ from sqlalchemy import Column, DateTime, Float, ForeignKey, String, Boolean
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 from app.models.address import Address
-from app.utils.utils import tz_now
+from app.utils.utils import date_format, tz_now
 from .user import User
 from .payment import Payment
 from .product import Product
@@ -34,14 +34,9 @@ class Order(Base):
     payment_id = Column(ForeignKey(f"{Payment.__tablename__}.id"))
     user = relationship(User.__tablename__)
     payment = relationship(Payment.__tablename__)
-    order_items = relationship(
-        "OrderItem",
-    )
+    order_items = relationship("OrderItem")
     shipment_cost = Column(Float(), default=0, nullable=False)
-    detail = relationship(
-        "OrderDetail",
-        foreign_keys="OrderDetail.order_id",
-    )
+    detail = relationship("OrderDetail", foreign_keys="OrderDetail.order_id")
     status: OrderStatus = Column(
         String(10), nullable=False, default=OrderStatus.PENDING
     )
@@ -50,19 +45,30 @@ class Order(Base):
     )
     delivery_address = relationship(Address.__tablename__)
 
+    @property
+    def total(self):
+        return sum([item.quantity * item.product.price for item in self.order_items])
+
+    @property
+    def created_at_format(self):
+        return date_format(self.created_at)
+
 
 class OrderItem(Base):
     product_id = Column(ForeignKey(f"{Product.__tablename__}.id"), nullable=False)
     product = relationship(
         f"{Product.__tablename__}",
     )
-    order_id = Column(ForeignKey(f"{Order.__tablename__}.id"), nullable=False)
+    order_id = Column(
+        ForeignKey(f"{Order.__tablename__}.id", ondelete="CASCADE"),
+        nullable=False,
+    )
     quantity = Column(Float(precision=2), nullable=False)
     delivered: bool = Column(Boolean(), nullable=False, default=False)
 
 
 class OrderDetail(Base):
-    order_id = Column(ForeignKey(f"{Order.__tablename__}.id"), nullable=False)
+    order_id = Column(ForeignKey(f"{Order.__tablename__}.id",ondelete="CASCADE"))
     message = Column(String(1000), nullable=False)
     created_at = Column(DateTime(), default=tz_now(), nullable=False)
     order_item_id = Column(ForeignKey(f"{Order.__tablename__}.id"))

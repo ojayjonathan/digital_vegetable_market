@@ -1,4 +1,3 @@
-from ast import For
 from datetime import datetime
 import math
 from typing import List, Optional
@@ -18,6 +17,8 @@ from sqlalchemy.orm import Session
 from app.repository import product_repo
 from app.utils.utils import upload_image
 
+from sqlalchemy import or_
+
 router = APIRouter(prefix="/products", tags=["product"])
 
 
@@ -35,6 +36,7 @@ async def products_me(
 @router.get("/", response_model=schema.ProductList)
 async def products(
     page: int = Query(1, description="Current page", gt=0),
+    q: str = Query("", description="Search query"),
     count: int = Query(10, description="No of products per page", gt=0),
     db: Session = Depends(get_db),
     user_id: Optional[int] = Query(
@@ -45,6 +47,18 @@ async def products(
     pages = 1
     if user_id:
         query = product_repo.filter_by(db, owner_id=user_id).all()
+    elif q:
+        q = q.lower()
+        query = (
+            product_repo.query(db)
+            .filter(
+                or_(
+                    models.Product.description.contains(q),
+                    models.Product.name.contains(q),
+                )
+            )
+            .all()
+        )
     else:
         query = product_repo.get_all(db)
     # pagination
@@ -88,7 +102,7 @@ async def add_product(
     if product_created := product_repo.create(db, product):
         upload_image(
             image,
-            f"{product_created.owner_id}/{product_created.id}/",
+            f"{product_created.owner_id}/products/{product_created.id}/",
             settings=settings,
         )
         return product_created
@@ -122,7 +136,9 @@ async def update_product(
         product_update.image = image.filename
     if product := product_repo.get_object_or_404(db, id=id):
         if image:
-            upload_image(image, f"{product.owner_id}/{product.id}/", settings=settings)
+            upload_image(
+                image, f"{product.owner_id}/products/{product.id}/", settings=settings
+            )
         return product_repo.update(db, product, product_update)
 
 
