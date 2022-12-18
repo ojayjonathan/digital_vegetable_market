@@ -1,5 +1,5 @@
 from enum import Enum
-from sqlalchemy import Column, Float, ForeignKey, Integer, String, Date
+from sqlalchemy import Column, Float, ForeignKey, Integer, String, ARRAY, Date
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 from app.models.address import Address
@@ -13,6 +13,7 @@ class ProductCategory(str, Enum):
 
 class Product(Base):
     image = Column(String(150), nullable=False)
+    product_varieties = Column(ARRAY(String(50)))
     name = Column(String(100), nullable=False)
     category: ProductCategory = Column(String(20), nullable=False)
     description = Column(String(1000))
@@ -28,3 +29,9 @@ class Product(Base):
     @property
     def image_url(self):
         return f"/{self.owner_id}/products/{self.id}/{self.image}"
+
+    @property
+    def varieties(self):
+        if self.product_varieties and len(self.product_varieties) == 1:
+            return self.product_varieties[0].split(",")
+        return self.product_varieties

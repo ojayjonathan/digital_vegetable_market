@@ -18,7 +18,7 @@ from .order import (
     OrderItemUpdate,
     OrderItem,
     OrderUpdate,
-    OrderItemCreate,
+    OrderItemCreate,SalesFreq
 )
 
 from app.models.product import ProductCategory

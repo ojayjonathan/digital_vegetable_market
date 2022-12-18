@@ -1,0 +1,27 @@
+<div  style="width:33.33% ; padding: 10px;">
+  <div class="card" style="width: 100%;">
+    {% if new %}
+    <div class="badge">New</div>
+    {% endif %}
+    <div class="thumb" style="height:300px ; overflow: hidden;">
+      <img src="/media/{{product.image_url}}" alt="Product Image" />
+    </div>
+    <div class="details">
+      <div class="row">
+        <span class="category">{{product.category}}</span>
+        <div class="price">
+          KES {{product.price}}<small>/{{product.measurement_unit}}</small>
+        </div>
+      </div>
+      <h4 class="label">{{product.label}}</h4>
+      <p class="description">{{product.description}}</p>
+      <div class="bottom-details">
+        <div class="links">
+          <a href="/admin/products/{{product.id}}" class="btn"
+            ><i class="bi bi-pencil-square"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

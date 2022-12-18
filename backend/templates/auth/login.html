@@ -1,0 +1,29 @@
+{% extends "auth/base_auth.html"%} {% block auth %}
+<form method="post">
+  <legend>Login Form</legend>
+
+  <div class="form-group">
+    <label for="phone">Phone Number</label>
+    <input type="phone" name="phone" id="phone" placeholder="Phone Number" />
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" />
+  </div>
+  <div class="form-group">
+    <!-- spacer -->
+  </div>
+
+  <div class="form-group">
+    <p>Forgot password? <a href="#">Reset Password</a></p>
+  </div>
+  <div class="form-group">
+    <input type="submit" name="submit" value="Login" />
+  </div>
+  <div class="form-group">
+    <p class="auth-link">
+      Don't have an account? <a href="/admin/auth/register"> Create account </a>
+    </p>
+  </div>
+</form>
+{% endblock auth %}

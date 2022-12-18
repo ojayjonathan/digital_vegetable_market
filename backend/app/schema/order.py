@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from enum import Enum
 from typing import Any, List, Optional
 from pydantic import BaseModel, Field
 from app.schema.address import AddressCreate, Address
@@ -58,6 +59,7 @@ class OrderItemCreate(BaseModel):
 class OrderCreate(BaseModel):
     order_items: List[OrderItemCreate]
     delivery_address_id: int
+    phone_number:Optional[str] = Field(None)
 
 
 class OrderItemUpdate(BaseModel):
@@ -69,3 +71,14 @@ class OrderItemUpdate(BaseModel):
 class OrderUpdate(BaseModel):
     payment_id: Optional[int]
     status: Optional[OrderStatus]
+    order_items: List[OrderItemUpdate] = Field([])
+
+
+class SalesFreq(str):
+    DAILY = "day"
+    WEEKLY = "week"
+    MONTHLY = "month"
+    YEALY = "year"
+
+    def __str__(self) -> str:
+        return self.lower

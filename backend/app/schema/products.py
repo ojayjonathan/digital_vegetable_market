@@ -7,8 +7,6 @@ from app.schema.address import Address
 from .user import User
 
 
-
-
 class Product(BaseModel):
     id: int
     image_url: str
@@ -20,12 +18,16 @@ class Product(BaseModel):
     name: str
     category: ProductCategory
     address: Address
-    available_quantity:float
+    available_quantity: float
+    varieties: Optional[List[str]]
+
+
+
+
 
     class Config:
         orm_mode = True
 
-  
 
 class ProductCreate(BaseModel):
     owner_id: int
@@ -38,6 +40,7 @@ class ProductCreate(BaseModel):
     available_quantity: float
     address_id: int
     category: ProductCategory
+    product_varieties: Optional[List[str]]=None
 
 
 class ProductUpdate(BaseModel):
@@ -49,6 +52,9 @@ class ProductUpdate(BaseModel):
     available_quantity: Optional[float]
     name: Optional[str]
     category: Optional[ProductCategory]
+    product_varieties: Optional[List[str]]
+
+
 
 
 class ProductList(BaseModel):

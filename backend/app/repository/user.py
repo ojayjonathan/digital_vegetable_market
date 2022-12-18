@@ -26,10 +26,10 @@ class UserRepository(BaseRepository[models.User, schema.UserCreate, schema.UserU
             return user
 
     def get_user_by_phone(self, db: Session, phone_number: str) -> models.User:
-        return self.get_object_or_404(
+        return self.filter_by(
             db,
             phone_number=phone_number,
-        )
+        ).first()
 
     def authenticate(self, db: Session, credentials: schema.Login) -> models.User:
         if user := self.filter_by(db, phone_number=credentials.phone_number).first():

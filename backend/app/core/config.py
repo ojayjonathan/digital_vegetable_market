@@ -23,6 +23,18 @@ class Setting(BaseSettings):
     DATABASE_URI: Optional[Union[PostgresDsn, str]] = None
     TIME_ZONE = "UTC+3"
     MEDIA_URL = "./media/"
+    CONSUMER_KEY: str
+    CONSUMER_SECRET: str
+    SHORTCODE: str
+    BASE_URL: str
+    PASSKEY: str
+    BUSINESS_SHORT_CODE: str
+    port:int
+    smtp_server:str
+    sender:str
+    sender_password:str
+
+    NGROK_BASE_URL = "https://6a28-154-159-237-16.eu.ngrok.io"
 
     @validator("DATABASE_URI", pre=True)
     def ensemble_database_connection(cls, v: Optional[str], values: Dict[str, any]):

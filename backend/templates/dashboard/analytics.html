@@ -1,0 +1,161 @@
+{% extends "dashboard/base_dashboard.html"%} {% block main%}
+
+<style>
+  .period {
+    /* width: 200px; */
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+  }
+  .period label {
+    padding: 0;
+    margin: 0 10px 0 0;
+    font-size: 16px;
+  }
+</style>
+<h2>Analytics</h2>
+<!-- info cards -->
+<div class="info_cards">
+  <div class="info_card">
+    <div class="container">
+      <div class="title">Order</div>
+      <div class="body">
+        <i class="bi bi-bag-fill"></i>
+        <p class="value">{{total_orders}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="info_card">
+    <div class="container">
+      <div class="title">Pending orders</div>
+      <div class="body">
+        <i class="bi bi-bag-dash-fill"></i>
+        <p class="value" style="color: #ff324b">{{pending_orders}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="info_card">
+    <div class="container">
+      <div class="title">Users</div>
+      <div class="body">
+        <i class="bi bi-person-fill"></i>
+        <p class="value">{{total_customers}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="info_card">
+    <div class="container">
+      <div class="title">Revenue</div>
+      <div class="body">
+        <i class="bi bi-cash-coin"></i>
+        <p class="value">Ksh {{sales_total}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- graphs -->
+<div class="graphs">
+  <div class="container">
+    <div class="bar-graph">
+      <div class="title">
+        <div>Daily Sales</div>
+      </div>
+
+        <form
+          method="get"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+          "
+        >
+          <div class="period">
+            <label for="from">From</label>
+            <input type="date" name="from_" id="from" value="{{from_}}"/>
+          </div>
+          <div class="period">
+            <label for="to">To</label>
+            <input type="date" name="to" id="to" value="{{to}}"/>
+          </div>
+
+          <div class="period">
+            <label for="freq">Freq</label>
+
+            <select name="freq" id="freq" style="background-color: white">
+              <option value="day" {% if freq =='day'%} selected{%  endif %} >Daily</option>
+              <option value="week" {% if freq =='week'%} selected{%  endif %} >Weekly</option>
+              <option value="month" {% if freq =='month'%} selected{%  endif %} >Monthly</option>
+              <option value="year" {% if freq =='year'%} selected{%  endif %} >Yearly</option>
+            </select>
+          </div>
+          <input type="submit" value="Ok" style="width: inherit;">
+        </form>
+      <div id="barChart"></div>
+    </div>
+    <div class="pie-graph">
+      <div class="title">Order Status</div>
+      <div id="pieChart"></div>
+    </div>
+  </div>
+</div>
+
+<!-- pie graph -->
+<script
+  type="text/javascript"
+  src="https://www.gstatic.com/charts/loader.js"
+></script>
+<script type="text/javascript">
+  google.charts.load('current', { 'packages': ['corechart'] });
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+      const order_data = {{order_stats|tojson}};
+      let data = google.visualization.arrayToDataTable(order_data);
+
+      let options = {
+          // title: '% of status fulfilment',
+          pieHole: 0.2,
+        //   outerWidth: 500,
+          is3D: true,
+          legend: {
+            position:"top"
+          },
+
+      };
+
+      let chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+      chart.draw(data, options);
+  }
+</script>
+
+<script>
+  google.charts.load('current', { packages: ['corechart', 'bar'] });
+  google.charts.setOnLoadCallback(dailySalesBars);
+
+  function dailySalesBars() {
+      const sales_data = {{daily_totals|tojson}};
+      let data = google.visualization.arrayToDataTable(sales_data);
+
+      let materialOptions = {
+          chart: {
+              title: 'Summation of {{freq}} sales totals',
+              // subtitle: 'Based on order fulfilment'
+          },
+          hAxis: {
+              title: 'Sales Totals',
+              minValue: 0,
+          },
+          vAxis: {
+              title: 'Date'
+          },
+          bars: 'vertical'
+      };
+      let materialChart = new google.charts.Bar(document.getElementById('barChart'));
+      materialChart.draw(data, materialOptions);
+  }
+</script>
+
+{% endblock main%}

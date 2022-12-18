@@ -36,6 +36,7 @@ class BaseRepository(Generic[Model, CreateSchema, UpdateSchema]):
         )
 
     def filter_by(self, db: Session, **kwargs) -> Query:
+        kwargs = {k: v for k, v in kwargs.items() if v != None}
         return db.query(self.model).filter_by(**kwargs)
 
     def get_all(self, db: Session) -> List[Model]:
@@ -63,5 +64,5 @@ class BaseRepository(Generic[Model, CreateSchema, UpdateSchema]):
             db.commit()
         except IntegrityError as e:
             db.rollback()
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=e.args)
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=e.args)
         return current_item

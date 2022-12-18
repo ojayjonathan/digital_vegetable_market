@@ -66,8 +66,7 @@ async def products(
         pages = math.ceil(len(query) / count)
         if page * count <= len(query):
             query = query[count * page : count * page + count]
-        else:
-            query = query[len(query) - count : len(query)]
+    [print(p) for p in query]        
     return schema.ProductList(products=query, current_page=page, pages=pages)
 
 
@@ -86,6 +85,7 @@ async def add_product(
     address_id: int = Form(...),
     category: schema.ProductCategory = Form(...),
     name: str = Form(...),
+    varieties:Optional[List[str]] = Form(None)
 ):
     product = schema.ProductCreate(
         owner_id=owner_id if owner_id else user.id,
@@ -98,6 +98,7 @@ async def add_product(
         image=image.filename,
         name=name,
         category=category,
+        product_varieties=varieties
     )
     if product_created := product_repo.create(db, product):
         upload_image(
@@ -108,7 +109,7 @@ async def add_product(
         return product_created
 
 
-@router.post("/{id}/", response_model=schema.Product)
+@router.post("/{id}", response_model=schema.Product)
 async def update_product(
     id: int,
     _: schema.User = Depends(current_user),
@@ -122,6 +123,7 @@ async def update_product(
     category: Optional[schema.ProductCategory] = Form(None),
     name: Optional[str] = Form(None),
     settings: Setting = Depends(get_setting),
+    varieties:Optional[List[str]] = Form(None)
 ):
     product_update = schema.ProductUpdate(
         available_quantity=available_quantity,
@@ -131,6 +133,7 @@ async def update_product(
         measurement_unit=measurement_unit,
         price=price,
         name=name,
+        product_varieties=varieties
     )
     if image:
         product_update.image = image.filename
@@ -142,7 +145,7 @@ async def update_product(
         return product_repo.update(db, product, product_update)
 
 
-@router.delete("/{id}/", response_model=schema.Product)
+@router.delete("/{id}", response_model=schema.Product)
 async def delete_product(
     id: int,
     _: schema.User = Depends(current_user),

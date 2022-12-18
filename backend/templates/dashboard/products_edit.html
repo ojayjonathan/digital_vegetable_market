@@ -1,0 +1,63 @@
+{% extends "dashboard/base_dashboard.html"%}
+
+{% block main %}
+<div class="dash-form">
+    <form method="post" enctype="multipart/form-data">
+       
+        <legend>
+            Update Product
+        </legend>
+
+        <div class="form-group">
+
+        </div>
+        <!-- prefilled details -->
+        <div class="image-logo">
+            <img src="/media/{{product.image_url}}" alt="product Image">
+        </div>
+
+        <div class="form-group">
+            <label for="label">Name</label>
+            <input type="text" name="name" id="label" value="{{product.name}}">
+        </div>
+        <div class="form-group">
+            <label for="unit_price">Price per unit</label>
+            <input type="number" name="price" id="unit_price" value="{{product.price}}">
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity Available</label>
+            <input type="number" name="available_quantity" id="quantity" value="{{product.available_quantity}}">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea type="text" name="description" id="description" value="{{product.description}}"
+                rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="category">Product category</label>
+            <select name="category" id="category">
+                <option value="{{product.category}}" selected="selected">
+                    {{product.category}}
+                </option>
+                {% for category in categories %}
+                <option value="{{category}}" {% if category == current_category %} selected="selected" {% endif %}>
+                    {{category}}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="product_image" class="upload-image" name="product_image">
+                Upload Image
+            </label>
+            <input type="file" name="image" id="product_image" style="display: none" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" name="submit" value="Update product">
+        </div>
+    </form>
+
+
+</div>
+{% endblock main %}
