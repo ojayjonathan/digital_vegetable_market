@@ -27,6 +27,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
                 product: event.product,
                 quantity: event.quantity,
                 delivered: false,
+                variety: event.variety
               ),
             ),
           ),
@@ -42,7 +43,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
     on<CartItemUpdated>((event, emit) => emit(
           state.copyWith(
-            cart: _repository.updateCartItem(event.product, event.quantity),
+            cart: _repository.updateCartItem(event.product, event.quantity, event.variety),
           ),
         ));
     on<AddressSelected>(

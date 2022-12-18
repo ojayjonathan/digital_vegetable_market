@@ -2,11 +2,11 @@ part of 'bloc.dart';
 
 class AccountUpdateState extends Equatable {
   final Email email;
-  final TextInput firstName;
+  final NameTextInput firstName;
   final FormzStatus status;
   final InfoMessage? message;
   final Map<String, String> fieldErrors;
-  final TextInput lastName;
+  final NameTextInput lastName;
 
   const AccountUpdateState({
     required this.email,
@@ -27,12 +27,12 @@ class AccountUpdateState extends Equatable {
       ];
 
   AccountUpdateState copyWith({
-    TextInput? firstName,
+    NameTextInput? firstName,
     Email? email,
     FormzStatus? status,
     InfoMessage? message,
     Map<String, String> fieldErrors = const {},
-    TextInput? lastName,
+    NameTextInput? lastName,
   }) {
     return AccountUpdateState(
       email: email ?? this.email,

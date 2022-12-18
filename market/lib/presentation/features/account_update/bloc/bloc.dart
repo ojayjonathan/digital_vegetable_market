@@ -4,7 +4,6 @@ import 'package:market/data/domain/form_input.dart';
 import 'package:market/presentation/features/account/bloc/bloc.dart';
 import 'package:market/resources/info.dart';
 import 'package:formz/formz.dart';
-
 part "state.dart";
 
 class AccountUpdateCupit extends Cubit<AccountUpdateState> {
@@ -13,8 +12,10 @@ class AccountUpdateCupit extends Cubit<AccountUpdateState> {
       : super(
           AccountUpdateState(
             email: Email.pure(accountBloc.state.user?.email ?? ""),
-            firstName: TextInput.pure(accountBloc.state.user?.firstName ?? ""),
-            lastName: TextInput.pure(accountBloc.state.user?.lastName ?? ""),
+            firstName:
+                NameTextInput.pure(accountBloc.state.user?.firstName ?? ""),
+            lastName:
+                NameTextInput.pure(accountBloc.state.user?.lastName ?? ""),
           ),
         );
 
@@ -29,7 +30,7 @@ class AccountUpdateCupit extends Cubit<AccountUpdateState> {
   }
 
   void firstNameChanged(String value) {
-    final name = TextInput.dirty(value);
+    final name = NameTextInput.dirty(value);
     emit(
       state.copyWith(
         status: Formz.validate([name, state.lastName, state.email]),
@@ -39,7 +40,7 @@ class AccountUpdateCupit extends Cubit<AccountUpdateState> {
   }
 
   void lastNameChanged(String value) {
-    final name = TextInput.dirty(value);
+    final name = NameTextInput.dirty(value);
     emit(
       state.copyWith(
         status: Formz.validate([name, state.firstName, state.email]),

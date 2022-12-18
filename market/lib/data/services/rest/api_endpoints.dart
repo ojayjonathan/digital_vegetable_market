@@ -13,7 +13,7 @@ class ApiEndpoints {
   static String profile = "/account/profile/";
   static String changePassword = "/account/update-password/";
   static String products = "/products/";
-  static String wallet = "/products/";
+  static String wallet = "/wallet/";
   static String resetPasswordInit = "/auth/password-reset-init";
   static String passwordResetComplete = "/auth/password-reset-complete";
   static String orders = "/orders/";

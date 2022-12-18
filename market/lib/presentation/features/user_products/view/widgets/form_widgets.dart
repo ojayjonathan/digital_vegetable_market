@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market/data/services/status.dart';
 import 'package:market/presentation/features/checkout/view/checkout_page.dart';
 import 'package:market/presentation/features/user_products/bloc/bloc.dart';
+import 'package:market/resources/theme.dart';
 
 class ProductExpectedAvailableDate extends StatelessWidget {
   const ProductExpectedAvailableDate({Key? key}) : super(key: key);
@@ -126,8 +127,7 @@ class ProductCategory extends StatelessWidget {
           current.category?.value != previous.category?.value,
       builder: (context, state) {
         return SizedBox(
-          width: MediaQuery.of(context).size.height * .95,
-          
+          width: MediaQuery.of(context).size.width * .95,
           child: Card(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -157,6 +157,64 @@ class ProductCategory extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class ProductVarietiesCreate extends StatelessWidget {
+  ProductVarietiesCreate({Key? key}) : super(key: key);
+  final TextEditingController _controller = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UserProductsCubit, UserProductsState>(
+      buildWhen: (previous, current) => previous.varieties != current.varieties,
+      builder: (context, state) => SizedBox(
+        width: MediaQuery.of(context).size.width * .95,
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                const Text("Varieties"),
+                ListTile(
+                  title: TextField(
+                    controller: _controller,
+                    decoration: AppTheme.inputDecoration,
+                  ),
+                  trailing: TextButton(
+                    child: const Text("Add"),
+                    onPressed: () {
+                      if (_controller.text.isEmpty) return;
+                      context
+                          .read<UserProductsCubit>()
+                          .addVariety(_controller.text);
+                      _controller.clear();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                  ),
+                ),
+                ...state.varieties.map(
+                  (v) => ListTile(
+                    title: Text(v),
+                    trailing: TextButton(
+                      child: Text(
+                        "Remove",
+                        style: TextStyle(
+                          color: Theme.of(context).errorColor,
+                        ),
+                      ),
+                      onPressed: () {
+                        context.read<UserProductsCubit>().removeVariety(v);
+                        _controller.clear();
+                      },
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

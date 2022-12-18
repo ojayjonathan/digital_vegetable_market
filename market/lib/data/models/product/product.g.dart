@@ -18,6 +18,9 @@ _$_Product _$$_ProductFromJson(Map<String, dynamic> json) => _$_Product(
       price: (json['price'] as num).toDouble(),
       measurementUnit: json['measurement_unit'] as String,
       category: json['category'] as String,
+      varieties: (json['varieties'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$_ProductToJson(_$_Product instance) =>
@@ -33,6 +36,7 @@ Map<String, dynamic> _$$_ProductToJson(_$_Product instance) =>
       'price': instance.price,
       'measurement_unit': instance.measurementUnit,
       'category': instance.category,
+      'varieties': instance.varieties,
     };
 
 _$_ProductsPage _$$_ProductsPageFromJson(Map<String, dynamic> json) =>
@@ -61,6 +65,7 @@ Map<String, dynamic> _$$_ProductCreateToJson(_$_ProductCreate instance) =>
       'available_quantity': instance.availableQuantity,
       'measurement_unit': instance.measurementUnit,
       'category': instance.category,
+      'varieties': instance.varieties,
     };
 
 Map<String, dynamic> _$$_ProductUpdateToJson(_$_ProductUpdate instance) =>
@@ -72,4 +77,5 @@ Map<String, dynamic> _$$_ProductUpdateToJson(_$_ProductUpdate instance) =>
       'available_quantity': instance.availableQuantity,
       'measurement_unit': instance.measurementUnit,
       'category': instance.category,
+      'varieties': instance.varieties,
     };

@@ -15,6 +15,13 @@ class Cart extends Equatable {
     return false;
   }
 
+  OrderItem? getItem(Product product) {
+    for (var item in items) {
+      if (item.product.id == product.id) return item;
+    }
+    return null;
+  }
+
   int get count => items.length;
   double get cost => items.fold(
         0,

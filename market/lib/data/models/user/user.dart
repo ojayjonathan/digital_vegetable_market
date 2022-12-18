@@ -32,7 +32,6 @@ class UserCreate with _$UserCreate {
 @freezed
 class Wallet with _$Wallet {
   factory Wallet({
-    required int id,
     required double balance,
   }) = _Wallet;
   factory Wallet.fromJson(json) => _$$_WalletFromJson(json);

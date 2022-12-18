@@ -77,6 +77,7 @@ class _ProductUpdateForm extends StatelessWidget {
             const SizedBox(height: 10),
             const ProductExpectedAvailableDate(),
             const ProductAddress(),
+            ProductVarietiesCreate(),
             Row(
               children: [
                 const Expanded(child: _SubmitButton()),

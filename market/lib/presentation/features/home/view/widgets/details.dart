@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market/data/models/product/product.dart';
@@ -14,9 +16,18 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   double itemCount = 1;
+  String? variety;
+  late AppBloc bloc;
+
+  @override
+  void initState() {
+    bloc = context.read<AppBloc>();
+    variety = bloc.state.cart.getItem(widget.product)?.variety;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<AppBloc>();
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -58,7 +69,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           InkWell(
                             onTap: (() => setState(() {
-                                  if (itemCount > 2) itemCount--;
+                                  if (itemCount > 1) itemCount--;
                                 })),
                             child: Image.asset(
                               "assets/images/remove_icon.png",
@@ -84,6 +95,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             onTap: () {
                               setState(() {
                                 itemCount++;
+                                itemCount = min(itemCount, widget.product.availableQuantity);
                               });
                             },
                             child: Image.asset(
@@ -104,9 +116,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       const SizedBox(
                         height: 12,
                       ),
+                        Text(
+                        "Available Quantit ${widget.product.availableQuantity}",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
                       Text(
                         widget.product.description ?? "",
                       ),
+                      const SizedBox(height: 10),
+                      if (widget.product.varieties?.isNotEmpty == true)
+                        _VarietyRadioButton(
+                            onChanged: (val) => setState(() {
+                                  variety = val;
+                                }),
+                            options: widget.product.varieties ?? [],
+                            selected: variety),
                       const SizedBox(
                         height: 20,
                       ),
@@ -117,14 +144,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             if (bloc.state.cart.hasProduct(widget.product)) {
                               bloc.add(
                                 CartItemUpdated(
-                                    product: widget.product,
-                                    quantity: itemCount),
+                                  product: widget.product,
+                                  quantity: itemCount,
+                                  variety: variety,
+                                ),
                               );
                             } else {
                               bloc.add(
                                 CartItemAdded(
                                   product: widget.product,
                                   quantity: itemCount,
+                                  variety: variety,
                                 ),
                               );
                             }
@@ -145,6 +175,37 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class _VarietyRadioButton extends StatelessWidget {
+  final Function(String? value) onChanged;
+  final List<String> options;
+  final String? selected;
+  const _VarietyRadioButton({
+    Key? key,
+    this.selected,
+    required this.onChanged,
+    required this.options,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Text("Varieties:"),
+        ...options.map(
+          (variety) => ListTile(
+            title: Text(variety),
+            leading: Radio(
+              value: variety,
+              groupValue: selected,
+              onChanged: onChanged,
+            ),
+          ),
+        )
       ],
     );
   }

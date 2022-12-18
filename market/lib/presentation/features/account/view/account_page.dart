@@ -226,7 +226,16 @@ class _AccountView extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(child: Container())
+              Expanded(
+                child: InkWell(
+                  onTap: () => context.pushNamed(RouteNames.manual),
+                  child: const ListItem(
+                    desc: "Contact & Help",
+                    imagePath: "assets/package.png",
+                    title: "Help",
+                  ),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 20),

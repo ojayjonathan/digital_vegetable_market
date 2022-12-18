@@ -39,17 +39,21 @@ class CartItemRemoved extends AppEvent {
 class CartItemUpdated extends AppEvent {
   final Product product;
   final double quantity;
-  const CartItemUpdated({required this.product, required this.quantity});
+  final String? variety;
+
+  const CartItemUpdated({required this.product, required this.quantity, this.variety});
   @override
-  List<Object?> get props => [product, quantity];
+  List<Object?> get props => [product, quantity, variety];
 }
 
 class CartItemAdded extends AppEvent {
   final Product product;
   final double quantity;
-  const CartItemAdded({required this.product, required this.quantity});
+  final String? variety;
+  const CartItemAdded(
+      {required this.product, required this.quantity, this.variety});
   @override
-  List<Object?> get props => [product, quantity];
+  List<Object?> get props => [product, quantity, variety];
 }
 
-class OrderPlaced extends AppEvent{}
+class OrderPlaced extends AppEvent {}

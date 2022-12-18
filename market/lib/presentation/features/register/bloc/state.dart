@@ -5,8 +5,8 @@ class RegisterState extends Equatable {
     this.password = const Password.pure(),
     this.email = const Email.pure(),
     this.status = FormzStatus.pure,
-    this.firstName = const TextInput.pure(),
-    this.lastName = const TextInput.pure(),
+    this.firstName = const NameTextInput.pure(),
+    this.lastName = const NameTextInput.pure(),
     this.phone = const PhoneNumber.pure(),
     this.fieldError = const {},
     this.message,
@@ -15,8 +15,8 @@ class RegisterState extends Equatable {
   final Email email;
   final PhoneNumber phone;
 
-  final TextInput firstName;
-  final TextInput lastName;
+  final NameTextInput firstName;
+  final NameTextInput lastName;
   final InfoMessage? message;
   final FormzStatus status;
   final Map<String, String> fieldError;
@@ -36,8 +36,8 @@ class RegisterState extends Equatable {
     Password? password,
     Email? email,
     FormzStatus? status,
-    TextInput? firstName,
-    TextInput? lastName,
+    NameTextInput? firstName,
+    NameTextInput? lastName,
     InfoMessage? message,
     PhoneNumber? phone,
     Map<String, String> fieldError = const {},

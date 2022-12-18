@@ -52,7 +52,7 @@ class RegisterCupit extends Cubit<RegisterState> {
   }
 
   void firstNameChanged(String value) {
-    final name = TextInput.dirty(value);
+    final name = NameTextInput.dirty(value);
     emit(
       state.copyWith(
         status: Formz.validate(
@@ -64,7 +64,7 @@ class RegisterCupit extends Cubit<RegisterState> {
   }
 
   void lastNameChanged(String value) {
-    final name = TextInput.dirty(value);
+    final name = NameTextInput.dirty(value);
     emit(
       state.copyWith(
         status: Formz.validate(

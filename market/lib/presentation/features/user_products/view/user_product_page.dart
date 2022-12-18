@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market/data/models/product/product.dart';
@@ -67,21 +65,41 @@ class _ProductTile extends StatelessWidget {
   final Product product;
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Image.network(
-        product.imageUrl,
-        width: 80,
-        height: 80,
-      ),
-      title: Text(product.name),
-      subtitle: Text("Ksh ${product.price}"),
-      trailing: TextButton(
-        onPressed: () =>
-            context.read<UserProductsCubit>().updateStarted(product),
-        child: const Text(
-          "Edit",
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Row(children: [
+        Image.network(
+          product.imageUrl,
+          width: 80,
+          height: 80,
         ),
-      ),
+        Expanded(
+          child: Column(
+            children: [
+              Text(
+                product.name,
+              ),
+              Text("Ksh ${product.price}",
+                  style: Theme.of(context).textTheme.subtitle1),
+            ],
+          ),
+        ),
+        TextButton(
+          onPressed: () =>
+              context.read<UserProductsCubit>().updateStarted(product),
+          child: const Text(
+            "Edit",
+          ),
+        ),
+        TextButton(
+          onPressed: () =>
+              context.read<UserProductsCubit>().deleteProduct(product.id),
+          child: Text(
+            "Delete",
+            style: TextStyle(color: Theme.of(context).errorColor),
+          ),
+        ),
+      ]),
     );
   }
 }

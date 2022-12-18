@@ -23,49 +23,56 @@ class CartPage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          BlocBuilder<AppBloc, AppState>(
-            buildWhen: (previous, current) => current.cart != previous.cart,
-            builder: (context, state) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    if (state.cart.items.isEmpty)
+          Expanded(
+            child: BlocBuilder<AppBloc, AppState>(
+              buildWhen: (previous, current) => current.cart != previous.cart,
+              builder: (context, state) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      if (state.cart.items.isEmpty)
+                        Card(
+                          elevation: 5,
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 10),
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 10),
+                            child: const Text("Your cart is Empty"),
+                          ),
+                        ),
                       Card(
                         elevation: 5,
                         margin: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 10),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 10),
-                          child: const Text("Your cart is Empty"),
+                        child: ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) {
+                            return const Divider();
+                          },
+                          itemCount: state.cart.count,
+                          itemBuilder: (context, index) {
+                            return _CartItemWidget(
+                              item: state.cart.items[index],
+                            );
+                          },
                         ),
                       ),
-                    Card(
-                      elevation: 5,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 10),
-                      child: ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) {
-                          return const Divider();
-                        },
-                        itemCount: state.cart.count,
-                        itemBuilder: (context, index) {
-                          return _CartItemWidget(
-                            item: state.cart.items[index],
-                          );
-                        },
+                      const SizedBox(height: 20),
+                      _CartSummary(state.cart),
+                      if(state.cart.items.isNotEmpty)
+                      const Padding(
+                        padding: EdgeInsets.only(top: 30),
+                        child: Text("*You have items in your cart. \n*Press the button bellow to proceed and complete your order."),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    _CartSummary(state.cart),
-                    const SizedBox(height: 50),
-                  ],
-                ),
-              );
-            },
+                      const SizedBox(height: 80),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(

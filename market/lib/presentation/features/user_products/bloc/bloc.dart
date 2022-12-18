@@ -55,7 +55,7 @@ class UserProductsCubit extends Cubit<UserProductsState> {
   }
 
   createStarted() {
-    emit(const UserProductsCreate());
+    emit(const UserProductsCreate(varieties: []));
   }
 
   dateChanged(DateTime date) {
@@ -147,6 +147,20 @@ class UserProductsCubit extends Cubit<UserProductsState> {
     );
   }
 
+  addVariety(String value) {
+    emit(
+      state.copyWith(varieties: [...state.varieties, value]),
+    );
+  }
+
+  removeVariety(String value) {
+    final varieties = [...state.varieties];
+    varieties.remove(value);
+    emit(
+      state.copyWith(varieties: varieties),
+    );
+  }
+
   submit() async {
     if (state.validate) {
       emit(
@@ -182,7 +196,8 @@ class UserProductsCubit extends Cubit<UserProductsState> {
           addressId: state.address!.value!.id!,
           availableQuantity: state.availableQuantity!.value!,
           measurementUnit: state.measurementUnit!.value,
-          description: state.description!.value!),
+          description: state.description!.value!,
+          varieties: state.varieties),
       state.image!.value!,
     );
     res.when(
@@ -203,6 +218,37 @@ class UserProductsCubit extends Cubit<UserProductsState> {
     );
   }
 
+  deleteProduct(int id) async {
+    emit(
+      UserProductsListState(
+        products: state.products,
+        message: const InfoMessage(
+          message: "Deleting product please wait",
+          type: MessageType.success,
+        ),
+      ),
+    );
+    final res = await service<ProductService>().delete(id);
+    res.when(
+        onError: (error) => emit(
+              UserProductsListState(
+                products: state.products,
+                message: InfoMessage.fromError(error),
+              ),
+            ),
+        onSuccess: (data) {
+          emit(
+            UserProductsListState(
+              products: state.products.where((p) => p.id != id).toList(),
+              message: const InfoMessage(
+                message: "Product Deleted successfuly",
+                type: MessageType.success,
+              ),
+            ),
+          );
+        });
+  }
+
   updateProduct(UserProductsState state) async {
     final res = await service<ProductService>().update(
       state.selectedProductId!,
@@ -214,6 +260,7 @@ class UserProductsCubit extends Cubit<UserProductsState> {
         name: state.name!.value!,
         availableQuantity: state.availableQuantity!.value!,
         measurementUnit: state.measurementUnit!.value,
+        varieties: state.varieties,
       ),
       image: state.image!.value,
     );

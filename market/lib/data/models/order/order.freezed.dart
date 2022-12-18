@@ -403,6 +403,7 @@ mixin _$OrderItem {
   @JsonKey(defaultValue: false)
   bool get delivered => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
+  String? get variety => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -418,7 +419,8 @@ abstract class $OrderItemCopyWith<$Res> {
       {Product product,
       double quantity,
       @JsonKey(defaultValue: false) bool delivered,
-      int? id});
+      int? id,
+      String? variety});
 
   $ProductCopyWith<$Res> get product;
 }
@@ -437,6 +439,7 @@ class _$OrderItemCopyWithImpl<$Res> implements $OrderItemCopyWith<$Res> {
     Object? quantity = freezed,
     Object? delivered = freezed,
     Object? id = freezed,
+    Object? variety = freezed,
   }) {
     return _then(_value.copyWith(
       product: product == freezed
@@ -455,6 +458,10 @@ class _$OrderItemCopyWithImpl<$Res> implements $OrderItemCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      variety: variety == freezed
+          ? _value.variety
+          : variety // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 
@@ -476,7 +483,8 @@ abstract class _$$_OrderItemCopyWith<$Res> implements $OrderItemCopyWith<$Res> {
       {Product product,
       double quantity,
       @JsonKey(defaultValue: false) bool delivered,
-      int? id});
+      int? id,
+      String? variety});
 
   @override
   $ProductCopyWith<$Res> get product;
@@ -498,6 +506,7 @@ class __$$_OrderItemCopyWithImpl<$Res> extends _$OrderItemCopyWithImpl<$Res>
     Object? quantity = freezed,
     Object? delivered = freezed,
     Object? id = freezed,
+    Object? variety = freezed,
   }) {
     return _then(_$_OrderItem(
       product: product == freezed
@@ -516,6 +525,10 @@ class __$$_OrderItemCopyWithImpl<$Res> extends _$OrderItemCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      variety: variety == freezed
+          ? _value.variety
+          : variety // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -527,7 +540,8 @@ class _$_OrderItem implements _OrderItem {
       {required this.product,
       required this.quantity,
       @JsonKey(defaultValue: false) required this.delivered,
-      this.id});
+      this.id,
+      this.variety});
 
   factory _$_OrderItem.fromJson(Map<String, dynamic> json) =>
       _$$_OrderItemFromJson(json);
@@ -541,10 +555,12 @@ class _$_OrderItem implements _OrderItem {
   final bool delivered;
   @override
   final int? id;
+  @override
+  final String? variety;
 
   @override
   String toString() {
-    return 'OrderItem(product: $product, quantity: $quantity, delivered: $delivered, id: $id)';
+    return 'OrderItem(product: $product, quantity: $quantity, delivered: $delivered, id: $id, variety: $variety)';
   }
 
   @override
@@ -555,7 +571,8 @@ class _$_OrderItem implements _OrderItem {
             const DeepCollectionEquality().equals(other.product, product) &&
             const DeepCollectionEquality().equals(other.quantity, quantity) &&
             const DeepCollectionEquality().equals(other.delivered, delivered) &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.variety, variety));
   }
 
   @JsonKey(ignore: true)
@@ -565,7 +582,8 @@ class _$_OrderItem implements _OrderItem {
       const DeepCollectionEquality().hash(product),
       const DeepCollectionEquality().hash(quantity),
       const DeepCollectionEquality().hash(delivered),
-      const DeepCollectionEquality().hash(id));
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(variety));
 
   @JsonKey(ignore: true)
   @override
@@ -585,7 +603,8 @@ abstract class _OrderItem implements OrderItem {
       {required final Product product,
       required final double quantity,
       @JsonKey(defaultValue: false) required final bool delivered,
-      final int? id}) = _$_OrderItem;
+      final int? id,
+      final String? variety}) = _$_OrderItem;
 
   factory _OrderItem.fromJson(Map<String, dynamic> json) =
       _$_OrderItem.fromJson;
@@ -600,6 +619,8 @@ abstract class _OrderItem implements OrderItem {
   @override
   int? get id;
   @override
+  String? get variety;
+  @override
   @JsonKey(ignore: true)
   _$$_OrderItemCopyWith<_$_OrderItem> get copyWith =>
       throw _privateConstructorUsedError;
@@ -609,6 +630,7 @@ abstract class _OrderItem implements OrderItem {
 mixin _$OrderItemCreate {
   int get productId => throw _privateConstructorUsedError;
   double get quantity => throw _privateConstructorUsedError;
+  String? get variety => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OrderItemCreateCopyWith<OrderItemCreate> get copyWith =>
@@ -620,7 +642,7 @@ abstract class $OrderItemCreateCopyWith<$Res> {
   factory $OrderItemCreateCopyWith(
           OrderItemCreate value, $Res Function(OrderItemCreate) then) =
       _$OrderItemCreateCopyWithImpl<$Res>;
-  $Res call({int productId, double quantity});
+  $Res call({int productId, double quantity, String? variety});
 }
 
 /// @nodoc
@@ -636,6 +658,7 @@ class _$OrderItemCreateCopyWithImpl<$Res>
   $Res call({
     Object? productId = freezed,
     Object? quantity = freezed,
+    Object? variety = freezed,
   }) {
     return _then(_value.copyWith(
       productId: productId == freezed
@@ -646,6 +669,10 @@ class _$OrderItemCreateCopyWithImpl<$Res>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as double,
+      variety: variety == freezed
+          ? _value.variety
+          : variety // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -657,7 +684,7 @@ abstract class _$$_OrderItemCreateCopyWith<$Res>
           _$_OrderItemCreate value, $Res Function(_$_OrderItemCreate) then) =
       __$$_OrderItemCreateCopyWithImpl<$Res>;
   @override
-  $Res call({int productId, double quantity});
+  $Res call({int productId, double quantity, String? variety});
 }
 
 /// @nodoc
@@ -675,6 +702,7 @@ class __$$_OrderItemCreateCopyWithImpl<$Res>
   $Res call({
     Object? productId = freezed,
     Object? quantity = freezed,
+    Object? variety = freezed,
   }) {
     return _then(_$_OrderItemCreate(
       productId: productId == freezed
@@ -685,6 +713,10 @@ class __$$_OrderItemCreateCopyWithImpl<$Res>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as double,
+      variety: variety == freezed
+          ? _value.variety
+          : variety // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -692,17 +724,20 @@ class __$$_OrderItemCreateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_OrderItemCreate extends _OrderItemCreate {
-  _$_OrderItemCreate({required this.productId, required this.quantity})
+  _$_OrderItemCreate(
+      {required this.productId, required this.quantity, this.variety})
       : super._();
 
   @override
   final int productId;
   @override
   final double quantity;
+  @override
+  final String? variety;
 
   @override
   String toString() {
-    return 'OrderItemCreate(productId: $productId, quantity: $quantity)';
+    return 'OrderItemCreate(productId: $productId, quantity: $quantity, variety: $variety)';
   }
 
   @override
@@ -711,14 +746,16 @@ class _$_OrderItemCreate extends _OrderItemCreate {
         (other.runtimeType == runtimeType &&
             other is _$_OrderItemCreate &&
             const DeepCollectionEquality().equals(other.productId, productId) &&
-            const DeepCollectionEquality().equals(other.quantity, quantity));
+            const DeepCollectionEquality().equals(other.quantity, quantity) &&
+            const DeepCollectionEquality().equals(other.variety, variety));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(productId),
-      const DeepCollectionEquality().hash(quantity));
+      const DeepCollectionEquality().hash(quantity),
+      const DeepCollectionEquality().hash(variety));
 
   @JsonKey(ignore: true)
   @override
@@ -729,13 +766,16 @@ class _$_OrderItemCreate extends _OrderItemCreate {
 abstract class _OrderItemCreate extends OrderItemCreate {
   factory _OrderItemCreate(
       {required final int productId,
-      required final double quantity}) = _$_OrderItemCreate;
+      required final double quantity,
+      final String? variety}) = _$_OrderItemCreate;
   _OrderItemCreate._() : super._();
 
   @override
   int get productId;
   @override
   double get quantity;
+  @override
+  String? get variety;
   @override
   @JsonKey(ignore: true)
   _$$_OrderItemCreateCopyWith<_$_OrderItemCreate> get copyWith =>

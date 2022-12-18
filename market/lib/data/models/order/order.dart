@@ -64,6 +64,7 @@ class OrderItem with _$OrderItem {
     required double quantity,
     @JsonKey(defaultValue: false) required bool delivered,
     int? id,
+    String? variety,
   }) = _OrderItem;
   factory OrderItem.fromJson(json) => _$$_OrderItemFromJson(json);
 }
@@ -74,10 +75,12 @@ class OrderItemCreate with _$OrderItemCreate {
   factory OrderItemCreate({
     required int productId,
     required double quantity,
+    String? variety,
   }) = _OrderItemCreate;
   Map toJson() => {
         "product_id": productId,
         "quantity": quantity,
+        "variety":variety,
       };
 }
 

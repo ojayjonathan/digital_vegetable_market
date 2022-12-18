@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:market/data/models/cart.dart';
 import 'package:market/data/models/http/http.dart';
 import 'package:market/data/models/order/order.dart';
@@ -44,10 +46,15 @@ class ShoppingRepository {
     return cart;
   }
 
-  Cart updateCartItem(Product product, double quantity) {
+  Cart updateCartItem(Product product, double quantity, String? variety) {
     cart = cart.copyWith(
       items: cart.items.map((item) {
-        if (item.product == product) return item.copyWith(quantity: quantity);
+        if (item.product == product) {
+          return item.copyWith(
+            quantity: min(product.availableQuantity, max(0, quantity)),
+            variety: variety,
+          );
+        }
         return item;
       }).toList(),
     );

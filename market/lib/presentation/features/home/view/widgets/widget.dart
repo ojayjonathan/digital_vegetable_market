@@ -32,7 +32,7 @@ class _Search extends StatelessWidget {
                     ProductSearched(_controller.text),
                   );
                   _controller.clear();
-                  FocusScope.of(context).unfocus();
+                  FocusScope.of(context).requestFocus(FocusNode());
                 },
               ),
             ),
@@ -43,7 +43,7 @@ class _Search extends StatelessWidget {
                 ProductSearched(_controller.text),
               );
               _controller.clear();
-              FocusScope.of(context).unfocus();
+              FocusScope.of(context).requestFocus(FocusNode());
             },
             icon: Icon(
               Icons.search,

@@ -45,7 +45,12 @@ class SubmitButton extends StatelessWidget {
 class AppButton extends StatelessWidget {
   final void Function() handlePress;
   final String text;
-  const AppButton({Key? key, required this.handlePress, required this.text})
+  final bool disabled;
+  const AppButton(
+      {Key? key,
+      required this.handlePress,
+      required this.text,
+      this.disabled = false})
       : super(key: key);
 
   @override
@@ -53,7 +58,7 @@ class AppButton extends StatelessWidget {
     return SizedBox(
       height: 50,
       child: ElevatedButton(
-        onPressed: handlePress,
+        onPressed: disabled ? () => {} : handlePress,
         child: Text(
           text,
           style: Theme.of(context)

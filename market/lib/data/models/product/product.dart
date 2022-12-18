@@ -21,6 +21,8 @@ class Product with _$Product {
     required double price,
     @JsonKey(name: "measurement_unit") required String measurementUnit,
     required String category,
+    List<String>? varieties,
+
   }) = _Product;
 
   String get imageUrl => MEDIA_URL + image;
@@ -48,6 +50,8 @@ class ProductCreate with _$ProductCreate {
     @JsonKey(name: "available_quantity") required double availableQuantity,
     @JsonKey(name: "measurement_unit") required String measurementUnit,
     required String category,
+    List<String>? varieties,
+
   }) = _ProductCreate;
 }
 
@@ -61,6 +65,7 @@ class ProductUpdate with _$ProductUpdate {
     @JsonKey(name: "available_quantity") double? availableQuantity,
     @JsonKey(name: "measurement_unit") String? measurementUnit,
     required String category,
+    List<String>? varieties,
 
   }) = _ProductUpdate;
 }

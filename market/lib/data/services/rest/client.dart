@@ -19,11 +19,13 @@ class UserAccount {
         data,
         deserializer: (data) => User.fromJson(data),
       );
+
   Result<MessageResponse> register(UserCreate data) => Http.post(
         ApiEndpoints.register,
         data.toJson(),
         deserializer: (data) => MessageResponse.fromJson(data),
       );
+
   Result<String> login({required String phone, required String password}) =>
       Http.post(
         ApiEndpoints.login,
@@ -138,7 +140,6 @@ class ProductService {
         deserializer: (data) => List<Product>.from(
           data.map((json) => Product.fromJson(json)),
         ),
-        
       );
   Result<ProductsPage> all({int? page, int? count, int? userId}) {
     final queryParams = {"page": page ?? 1};
@@ -166,6 +167,7 @@ class ProductService {
 
   Result<Product> create(ProductCreate product, File image) async {
     final data = product.toJson();
+    print(data);
     data["image"] = await MultipartFile.fromFile(
       image.path,
       filename: image.path.split("/").last,
@@ -184,6 +186,7 @@ class ProductService {
 
   Result<Product> update(int id, {ProductUpdate? product, File? image}) async {
     final data = product?.toJson() ?? {};
+    print(data);
     if (image != null) {
       data["image"] = await MultipartFile.fromFile(
         image.path,

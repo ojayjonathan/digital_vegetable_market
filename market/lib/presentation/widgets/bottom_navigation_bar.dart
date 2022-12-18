@@ -31,7 +31,7 @@ class BottomNavigation extends StatelessWidget {
           label: "Cart",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart_outlined),
+          icon: Icon(Icons.history),
           label: "Orders",
         ),
         BottomNavigationBarItem(

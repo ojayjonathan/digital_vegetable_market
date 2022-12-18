@@ -570,7 +570,6 @@ Wallet _$WalletFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Wallet {
-  int get id => throw _privateConstructorUsedError;
   double get balance => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -582,7 +581,7 @@ mixin _$Wallet {
 abstract class $WalletCopyWith<$Res> {
   factory $WalletCopyWith(Wallet value, $Res Function(Wallet) then) =
       _$WalletCopyWithImpl<$Res>;
-  $Res call({int id, double balance});
+  $Res call({double balance});
 }
 
 /// @nodoc
@@ -595,14 +594,9 @@ class _$WalletCopyWithImpl<$Res> implements $WalletCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? balance = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
@@ -616,7 +610,7 @@ abstract class _$$_WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
   factory _$$_WalletCopyWith(_$_Wallet value, $Res Function(_$_Wallet) then) =
       __$$_WalletCopyWithImpl<$Res>;
   @override
-  $Res call({int id, double balance});
+  $Res call({double balance});
 }
 
 /// @nodoc
@@ -630,14 +624,9 @@ class __$$_WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? balance = freezed,
   }) {
     return _then(_$_Wallet(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
@@ -649,19 +638,17 @@ class __$$_WalletCopyWithImpl<$Res> extends _$WalletCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Wallet implements _Wallet {
-  _$_Wallet({required this.id, required this.balance});
+  _$_Wallet({required this.balance});
 
   factory _$_Wallet.fromJson(Map<String, dynamic> json) =>
       _$$_WalletFromJson(json);
 
   @override
-  final int id;
-  @override
   final double balance;
 
   @override
   String toString() {
-    return 'Wallet(id: $id, balance: $balance)';
+    return 'Wallet(balance: $balance)';
   }
 
   @override
@@ -669,16 +656,13 @@ class _$_Wallet implements _Wallet {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Wallet &&
-            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.balance, balance));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(balance));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(balance));
 
   @JsonKey(ignore: true)
   @override
@@ -694,13 +678,10 @@ class _$_Wallet implements _Wallet {
 }
 
 abstract class _Wallet implements Wallet {
-  factory _Wallet({required final int id, required final double balance}) =
-      _$_Wallet;
+  factory _Wallet({required final double balance}) = _$_Wallet;
 
   factory _Wallet.fromJson(Map<String, dynamic> json) = _$_Wallet.fromJson;
 
-  @override
-  int get id;
   @override
   double get balance;
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market/data/models/address/address.dart';
 import 'package:market/data/models/cart.dart';
+import 'package:market/data/repository/app.dart';
 import 'package:market/presentation/app/bloc/bloc.dart';
 import 'package:market/presentation/features/address_search/view/map_location_picker.dart';
 import 'package:market/resources/info.dart';
@@ -31,9 +32,27 @@ class CheckoutPage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 child: Column(
-                  children: const [
-                    _ShipmentAddress(),
-                    _OrderSummary(),
+                  children: [
+                    const _ShipmentAddress(),
+                    const _OrderSummary(),
+                    const SizedBox(height: 10),
+                    const Text("Payment Mpesa Number"),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        label: Text("Phone Number"),
+                        prefixIcon: Icon(Icons.call),
+                      ),
+                      keyboardType: TextInputType.number,
+                      initialValue:
+                          context.read<AppRepository>().user?.phoneNumber,
+                    ),
+                    const SizedBox(height: 50),
+                    const Text(
+                      "To place your an order: \n\n"
+                      "\t1. Select Shippment Address (press edit button above).\n"
+                      "\t2. Press Place Order button on the bottom of the screen\n"
+                      "\t3. Your will receive a payment prompt",
+                    ),
                   ],
                 ),
               ),

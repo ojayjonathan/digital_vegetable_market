@@ -39,7 +39,7 @@ class WalletPage extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                                text: "Balance",
+                                text: "Balance: ",
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColorLight,
                                     fontWeight: FontWeight.bold)),
@@ -58,18 +58,21 @@ class WalletPage extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
+                              enabled: false,
                               decoration: AppTheme.inputDecoration.copyWith(
                                 label: const Text("Amount"),
                                 prefixIcon: const Icon(Icons.phone),
                               ),
                               keyboardType: TextInputType.number,
                               controller: controler,
+                              
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8),
                           child: AppButton(
+                            disabled:true,
                             handlePress: () async {
                               final amount = double.tryParse(controler.text);
                               if (amount != null) {

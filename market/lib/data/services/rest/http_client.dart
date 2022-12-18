@@ -73,6 +73,7 @@ class Http {
     Map<String, dynamic>? queryParams,
   }) async {
     try {
+      print(data);
       final res = await dio.post(url,
           data: data, options: options, queryParameters: queryParams);
       return HttpResult.onSuccess(

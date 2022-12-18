@@ -40,7 +40,9 @@ class AdminRouterHandler(APIRoute):
         return authentication_error_hander
 
 
-admin_router = APIRouter(prefix="/admin", route_class=AdminRouterHandler)
+admin_router = APIRouter(
+    prefix="/admin", route_class=AdminRouterHandler, tags=["Admin"]
+)
 admin_router.include_router(router)
 
 

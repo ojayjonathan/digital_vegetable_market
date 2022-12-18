@@ -7,6 +7,7 @@ import 'package:market/presentation/features/account_update/view/profile_page.da
 import 'package:market/presentation/features/cart/view/cart_page.dart';
 import 'package:market/presentation/features/checkout/view/checkout_page.dart';
 import 'package:market/presentation/features/feedback/feedback.dart';
+import 'package:market/presentation/features/help/support.dart';
 import 'package:market/presentation/features/home/view/home_page.dart';
 import 'package:market/presentation/features/login/view/login_page.dart';
 import 'package:market/presentation/features/order_history/view/order_history_page.dart';
@@ -96,6 +97,11 @@ class MarketApp extends StatelessWidget {
               path: RouteNames.userProducts,
               name: RouteNames.userProducts,
               builder: (context, state) => const UserProductsPage(),
+            ),
+               GoRoute(
+              path: RouteNames.manual,
+              name: RouteNames.manual,
+              builder: (context, state) => const ContactUs(),
             ),
             GoRoute(
               path: RouteNames.checkout,

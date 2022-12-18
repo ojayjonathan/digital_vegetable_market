@@ -50,6 +50,7 @@ _$_OrderItem _$$_OrderItemFromJson(Map<String, dynamic> json) => _$_OrderItem(
       quantity: (json['quantity'] as num).toDouble(),
       delivered: json['delivered'] as bool? ?? false,
       id: json['id'] as int?,
+      variety: json['variety'] as String?,
     );
 
 Map<String, dynamic> _$$_OrderItemToJson(_$_OrderItem instance) =>
@@ -58,6 +59,7 @@ Map<String, dynamic> _$$_OrderItemToJson(_$_OrderItem instance) =>
       'quantity': instance.quantity,
       'delivered': instance.delivered,
       'id': instance.id,
+      'variety': instance.variety,
     };
 
 _$_OrderDetail _$$_OrderDetailFromJson(Map<String, dynamic> json) =>

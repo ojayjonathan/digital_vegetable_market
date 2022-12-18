@@ -15,21 +15,22 @@ class UserProductsState<T extends FormzInput<File?, String>> extends Equatable {
   final ServiceStatus status;
   final List<Product> products;
   final int? selectedProductId;
-  const UserProductsState({
-    this.category = const RequiredInput.pure(value: "VEGETABLES"),
-    this.message,
-    this.products = const [],
-    this.status = ServiceStatus.initial,
-    this.image,
-    this.measurementUnit,
-    this.description,
-    this.availableDate,
-    this.price,
-    this.name,
-    this.address,
-    this.availableQuantity,
-    this.selectedProductId,
-  });
+  final List<String> varieties;
+  const UserProductsState(
+      {this.category = const RequiredInput.pure(value: "VEGETABLES"),
+      this.message,
+      this.products = const [],
+      this.status = ServiceStatus.initial,
+      this.image,
+      this.measurementUnit,
+      this.description,
+      this.availableDate,
+      this.price,
+      this.name,
+      this.address,
+      this.availableQuantity,
+      this.selectedProductId,
+      this.varieties = const []});
 
   UserProductsState copyWith({
     RequiredInput<String>? description,
@@ -44,6 +45,7 @@ class UserProductsState<T extends FormzInput<File?, String>> extends Equatable {
     RequiredInput<String>? category,
     ServiceStatus? status,
     int? selectedProductId,
+    List<String>? varieties,
   }) {
     return UserProductsState(
       status: status ?? this.status,
@@ -58,6 +60,7 @@ class UserProductsState<T extends FormzInput<File?, String>> extends Equatable {
       selectedProductId: selectedProductId ?? this.selectedProductId,
       address: address ?? this.address,
       category: category ?? this.category,
+      varieties: varieties ?? this.varieties,
     );
   }
 
@@ -74,6 +77,7 @@ class UserProductsState<T extends FormzInput<File?, String>> extends Equatable {
         image,
         address,
         category,
+        varieties,
       ];
   bool get validate {
     for (var f in <FormzInput?>[
@@ -100,8 +104,8 @@ class UserProductsListState extends UserProductsState {
     InfoMessage? message,
     ServiceStatus status = ServiceStatus.initial,
   }) : super(
-    products: products,
-  );
+          products: products,
+        );
 
   @override
   List<Object?> get props => [products, message, status];
@@ -118,6 +122,7 @@ class UserProductsCreate extends UserProductsState<RequiredInput<File>> {
     RequiredInput<File> image = const RequiredInput.pure(),
     InfoMessage? message,
     ServiceStatus status = ServiceStatus.initial,
+    required List<String> varieties,
     RequiredInput<Address> address = const RequiredInput.pure(),
   }) : super(
           image: const RequiredInput.pure(),
@@ -129,6 +134,7 @@ class UserProductsCreate extends UserProductsState<RequiredInput<File>> {
           measurementUnit: measurementUnit,
           name: name,
           price: price,
+          varieties: varieties,
           address: address,
         );
 }
@@ -146,6 +152,7 @@ class UserProductsUpdateState extends UserProductsState<OptionalInput<File>> {
     OptionalInput<File> image = const OptionalInput.pure(),
     InfoMessage? message,
     required int selectedProductId,
+    List<String> varieties = const [],
     status = ServiceStatus.initial,
   }) : super(
           message: message,
@@ -160,5 +167,6 @@ class UserProductsUpdateState extends UserProductsState<OptionalInput<File>> {
           price: price,
           selectedProductId: selectedProductId,
           category: category,
+          varieties: varieties,
         );
 }

@@ -50,19 +50,41 @@ class _HomeView extends StatelessWidget {
             )
           ],
         ),
-        BlocConsumer<ProductBloc, ProductState>(
-          listener: (context, state) {
-            if (state.message != null) {
-              context.snackBar(state.message!);
-            }
+        RefreshIndicator(
+          onRefresh: () {
+            context.read<ProductBloc>().add(ProductStated());
+            return Future.delayed(const Duration(seconds: 3));
           },
-          buildWhen: (previous, current) =>
-              previous.productsPage != current.productsPage ||
-              current.status != previous.status,
-          builder: (context, state) {
-            if (state.status == ServiceStatus.loading) {
-              return Shimmer(
-                child: GridView.count(
+          child: Expanded(
+            child: BlocConsumer<ProductBloc, ProductState>(
+              listener: (context, state) {
+                if (state.message != null) {
+                  context.snackBar(state.message!);
+                }
+              },
+              buildWhen: (previous, current) =>
+                  previous.productsPage != current.productsPage ||
+                  current.status != previous.status,
+              builder: (context, state) {
+                if (state.status == ServiceStatus.loading) {
+                  return Shimmer(
+                    child: GridView.count(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      childAspectRatio: .8,
+                      children: List.generate(
+                        4,
+                        (index) => const _ProductCardLoading(),
+                      ),
+                    ),
+                  );
+                }
+
+                return GridView.count(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                   crossAxisCount: 2,
                   mainAxisSpacing: 10,
@@ -70,29 +92,15 @@ class _HomeView extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const AlwaysScrollableScrollPhysics(),
                   childAspectRatio: .8,
-                  children: List.generate(
-                    4,
-                    (index) => const _ProductCardLoading(),
-                  ),
-                ),
-              );
-            }
-
-            return GridView.count(
-              padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              shrinkWrap: true,
-              physics: const AlwaysScrollableScrollPhysics(),
-              childAspectRatio: .8,
-              children: state.productsPage.products
-                  .map(
-                    (product) => _ProductCard(product: product),
-                  )
-                  .toList(),
-            );
-          },
+                  children: state.productsPage.products
+                      .map(
+                        (product) => _ProductCard(product: product),
+                      )
+                      .toList(),
+                );
+              },
+            ),
+          ),
         )
       ],
     );

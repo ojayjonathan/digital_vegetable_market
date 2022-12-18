@@ -39,11 +39,9 @@ Map<String, dynamic> _$$_UserCreateToJson(_$_UserCreate instance) =>
     };
 
 _$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
-      id: json['id'] as int,
       balance: (json['balance'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$_WalletToJson(_$_Wallet instance) => <String, dynamic>{
-      'id': instance.id,
       'balance': instance.balance,
     };

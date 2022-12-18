@@ -58,6 +58,22 @@ class Email extends FormzInput<String, String> {
   }
 }
 
+class NameTextInput extends TextInput {
+  const NameTextInput.dirty([value = ""]) : super.dirty(value);
+  const NameTextInput.pure([value = ""]) : super.pure(value);
+  @override
+  String? validator(String? value) {
+    int minLength = 2;
+    if (value == null || value.isEmpty) {
+      return "Required";
+    }
+    if (value.length < minLength) {
+      return "Value length must be>$minLength";
+    }
+    return null;
+  }
+}
+
 class TextInput extends FormzInput<String, String> {
   const TextInput.dirty([value = ""]) : super.dirty(value);
   const TextInput.pure([value = ""]) : super.pure(value);
