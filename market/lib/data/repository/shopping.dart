@@ -19,11 +19,11 @@ class ShoppingRepository {
     page = 1,
     count = 10,
   }) async {
-    for (var p in _productPages) {
-      if (p.currentPage == page) {
-        return HttpResult.onSuccess(data: p);
-      }
-    }
+    // for (var p in _productPages) {
+    //   if (p.currentPage == page && p.) {
+    //     return HttpResult.onSuccess(data: p);
+    //   }
+    // }
     final res = await service<ProductService>().all(count: count, page: page);
     res.when(onError: (err) {}, onSuccess: (data) => _productPages.add(data));
     return res;

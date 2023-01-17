@@ -48,7 +48,7 @@ body {
 .orders_table table thead{
     background: var(--primary);
     color: var(--light);
-    text-transform: uppercase;
+    
 }
 .orders_table table th{
     border: 1px solid var(--light);

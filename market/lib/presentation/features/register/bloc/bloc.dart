@@ -11,7 +11,7 @@ part "state.dart";
 
 class RegisterCupit extends Cubit<RegisterState> {
   RegisterCupit() : super(const RegisterState());
-  
+
   void passwordChanged(String value) {
     final password = Password.dirty(value);
     emit(
@@ -75,6 +75,12 @@ class RegisterCupit extends Cubit<RegisterState> {
     );
   }
 
+  void isFarmerChanged(bool? value) {
+    emit(
+      state.copyWith(isFarmer: value),
+    );
+  }
+
   void passwordRegister() async {
     if (state.status.isValidated) {
       emit(
@@ -88,7 +94,7 @@ class RegisterCupit extends Cubit<RegisterState> {
       );
       final res = await service<UserAccount>().register(
         UserCreate(
-          isFarmer: false,
+          isFarmer: state.isFarmer,
           phoneNumber: state.phone.value,
           firstName: state.firstName.value,
           lastName: state.lastName.value,

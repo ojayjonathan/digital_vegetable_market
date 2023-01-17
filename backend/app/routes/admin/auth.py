@@ -25,13 +25,15 @@ async def login(
 ):
     credentials = schema.Login(phone_number=phone, password=password)
     if user := user_repo.authenticate(db, credentials):
+        print(user)
+        token = create_access_token(user.phone_number).access_token
         response.set_cookie(
             "session",
-            create_access_token(user.phone_number).access_token,
+            token,
             expires=30 * 24 * 60 * 10000,
         )
-        # return RedirectResponse("/admin/", status_code=303)
-        return "Login Sucessfull"
+
+        return "<h1>Login Success Visit<a href='/admin'>Home</a></h1>"
     else:
         return template.TemplateResponse("auth/login.html", {"request": request})
 
@@ -39,6 +41,10 @@ async def login(
 @router.get("/register/", response_class=HTMLResponse)
 def login(request: Request):
     return template.TemplateResponse("auth/register.html", {"request": request})
+
+@router.get("/logout/", response_class=HTMLResponse)
+def logout(request: Request):
+    return RedirectResponse("/admin/auth/login",status_code=303)
 
 
 @router.post("/register/", response_class=HTMLResponse)
@@ -61,6 +67,6 @@ async def register(
     )
     if user := user_repo.create(db, data):
         response.set_cookie("session", create_access_token(user.phone_number))
-        return "Login sucessfull"
+        return RedirectResponse("/admin/auth/login",status_code=303)
     else:
         return template.TemplateResponse("auth/register.html", {"request": request})

@@ -61,27 +61,27 @@ class _LoginView extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't  have an account? ",
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  InkWell(
+           InkWell(
                     onTap: () => context.goNamed(RouteNames.register),
-                    child: Text(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't  have an account? ",
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                    Text(
                       'Sign up',
                       style: TextStyle(
                           color: Theme.of(context).primaryColorDark,
                           fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           )

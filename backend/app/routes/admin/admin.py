@@ -47,6 +47,7 @@ admin_router.include_router(router)
 
 
 @admin_router.get("/", response_class=HTMLResponse)
+@admin_router.post("/", response_class=HTMLResponse)
 def admin(
     request: Request,
     user: schema.User = Depends(admin_user),

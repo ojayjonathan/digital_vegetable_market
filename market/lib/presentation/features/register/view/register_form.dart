@@ -18,6 +18,24 @@ class RegisterForm extends StatelessWidget {
           _LastName(),
           _Email(),
           _Password(),
+          const SizedBox(height: 5),
+          BlocBuilder<RegisterCupit, RegisterState>(
+            buildWhen: (previous, current) =>
+                current.isFarmer != previous.isFarmer,
+            builder: (context, state) {
+              return Row(
+                children: [
+                  Checkbox(
+                    value: state.isFarmer,
+                    onChanged: (value) =>
+                        context.read<RegisterCupit>().isFarmerChanged(value),
+                  ),
+                  const SizedBox(width: 10),
+                  const Text("Is Farmer"),
+                ],
+              );
+            },
+          ),
           const SizedBox(height: 20),
           BlocBuilder<RegisterCupit, RegisterState>(
             buildWhen: (previous, current) => previous.status != current.status,

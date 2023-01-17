@@ -63,8 +63,8 @@ async def create_order(
         "TransactionDesc": "Payment for shipment",
     }
 
-    # response = requests.post(api_url, json=request, headers=headers)
-    # print(response.content, response.status_code)
+    response = requests.post(api_url, json=request, headers=headers)
+    print(response.content, response.status_code)
 
     receipt = gen_receipt(order, user, settings)
     with open(receipt, "rb") as file:

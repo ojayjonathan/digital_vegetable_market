@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:market/data/models/address/address.dart';
 import 'package:market/data/models/cart.dart';
 import 'package:market/data/repository/app.dart';
 import 'package:market/presentation/app/bloc/bloc.dart';
 import 'package:market/presentation/features/address_search/view/map_location_picker.dart';
+import 'package:market/resources/app_routes.dart';
 import 'package:market/resources/info.dart';
+import 'package:market/data/services/status.dart' as s;
 
 class CheckoutPage extends StatelessWidget {
   const CheckoutPage({Key? key}) : super(key: key);
@@ -23,6 +26,9 @@ class CheckoutPage extends StatelessWidget {
         listener: (context, state) {
           if (state.message != null) {
             context.snackBar(state.message!);
+          }
+          if (state.status == s.ServiceStatus.submissionSuccess) {
+            context.pushNamed(RouteNames.orderHistory);
           }
         },
         child: Stack(
@@ -51,7 +57,8 @@ class CheckoutPage extends StatelessWidget {
                       "To place your an order: \n\n"
                       "\t1. Select Shippment Address (press edit button above).\n"
                       "\t2. Press Place Order button on the bottom of the screen\n"
-                      "\t3. Your will receive a payment prompt",
+                      "\t3. Your will receive a payment prompt\n"
+                      "\t4. Once Payment has been confirmed, You will receive an email with the invoice",
                     ),
                   ],
                 ),

@@ -13,7 +13,7 @@ class ProductCategory(str, Enum):
 
 class Product(Base):
     image = Column(String(150), nullable=False)
-    product_varieties = Column(ARRAY(String(50)))
+    product_varieties = Column(String(100))
     name = Column(String(100), nullable=False)
     category: ProductCategory = Column(String(20), nullable=False)
     description = Column(String(1000))
@@ -32,6 +32,6 @@ class Product(Base):
 
     @property
     def varieties(self):
-        if self.product_varieties and len(self.product_varieties) == 1:
-            return self.product_varieties[0].split(",")
-        return self.product_varieties
+        if self.product_varieties:
+            return self.product_varieties.split(",")
+        return None

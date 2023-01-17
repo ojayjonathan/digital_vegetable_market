@@ -40,7 +40,7 @@ class ProductCreate(BaseModel):
     available_quantity: float
     address_id: int
     category: ProductCategory
-    product_varieties: Optional[List[str]]=None
+    product_varieties: Optional[List[str]]=[]
 
 
 class ProductUpdate(BaseModel):

@@ -10,6 +10,7 @@ class RegisterState extends Equatable {
     this.phone = const PhoneNumber.pure(),
     this.fieldError = const {},
     this.message,
+    this.isFarmer =false
   });
   final Password password;
   final Email email;
@@ -20,6 +21,7 @@ class RegisterState extends Equatable {
   final InfoMessage? message;
   final FormzStatus status;
   final Map<String, String> fieldError;
+  final bool isFarmer;
 
   @override
   List<Object?> get props => [
@@ -30,7 +32,8 @@ class RegisterState extends Equatable {
         firstName,
         lastName,
         message,
-        fieldError
+        fieldError,
+        isFarmer
       ];
   RegisterState copyWith({
     Password? password,
@@ -41,6 +44,7 @@ class RegisterState extends Equatable {
     InfoMessage? message,
     PhoneNumber? phone,
     Map<String, String> fieldError = const {},
+    bool? isFarmer,
   }) {
     return RegisterState(
       password: password ?? this.password,
@@ -51,6 +55,7 @@ class RegisterState extends Equatable {
       fieldError: fieldError,
       message: message,
       phone: phone ?? this.phone,
+      isFarmer: isFarmer??this.isFarmer
     );
   }
 }

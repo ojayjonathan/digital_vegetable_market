@@ -116,10 +116,9 @@ class OrdersRepository(
             # func.sum(models.Order.total).label("total_sales"),
         )
 
-        orders: Query = self.filter_by(db=db, **kwags)
         if from_:
             from_ = datetime.strptime(from_, "%Y-%m-%d")
-            orders = orders.filter(models.Order.created_at >= from_)
+
         else:
             if freq.upper() == "week":
                 from_ = datetime.now() - timedelta(weeks=10)
@@ -135,13 +134,13 @@ class OrdersRepository(
         else:
             to = tz_now()
         query = query.filter(
-            models.Order.created_at >= from_, models.Order.created_at < to
+            models.Order.created_at >= from_,
+            models.Order.created_at < to
         )
 
         date_totals = {}
-
         for order in query:
-            sale_date = format_date(freq,order.date)
+            sale_date = format_date(freq, order.date)
 
             total = self.get(db, order.id).total
 
@@ -156,10 +155,12 @@ class OrdersRepository(
         if len(x) < 10:
             x += [
                 [
-                    format_date(freq, datetime.now() - timedelta(days=(i+1) * get_days(freq))),
+                    format_date(
+                        freq, datetime.now() - timedelta(days=(i + 1) * get_days(freq))
+                    ),
                     0,
                 ]
-                for i in range(( 10 -len(x)))
+                for i in range((10 - len(x)))
             ]
 
         x.sort(key=lambda n: n[0])
@@ -176,7 +177,8 @@ def get_days(freq):
     else:
         return 1
 
-def format_date(freq,date:datetime):
+
+def format_date(freq, date: datetime):
     if freq == "year":
         return date.strftime("%Y")
     if freq == "month":

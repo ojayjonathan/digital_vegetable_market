@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:market/data/services/rest/client.dart';
+import 'package:market/presentation/widgets/button.dart';
+import 'package:market/resources/info.dart';
+import 'package:market/resources/theme.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ContactUs extends StatelessWidget {
@@ -27,7 +30,6 @@ class ContactUs extends StatelessWidget {
                 child: Hero(tag: "page_paint", child: Container())),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 15),
@@ -82,36 +84,51 @@ class ContactUs extends StatelessWidget {
                       ],
                     ),
                   ),
-
                 ),
-                 InkWell(
-              onTap: () => _call("$BASE_URL/user-manual"),
-              child: Card(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                elevation: 2,
-                shadowColor: Colors.grey[250],
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Icon(
-                          Icons.link,
-                          size: 20,
-                          color: Theme.of(context).primaryColorDark,
-                        ),
+                InkWell(
+                  onTap: () => _call("https://0a7b-154-159-237-17.eu.ngrok.io/user-manual"),
+                  child: Card(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    elevation: 2,
+                    shadowColor: Colors.grey[250],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Icon(
+                              Icons.link,
+                              size: 20,
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                          ),
+                          const Text("Online User Manual")
+                        ],
                       ),
-                      const Text("Online User Manual")
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    decoration: AppTheme.inputDecoration.copyWith(
+                      label: const Text("Write something...."),
+                    ),
+                    minLines: 5,
+                    maxLines: 10,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                AppButton(
+                    handlePress: () {
+                      context.snackBar(const InfoMessage(message: "Sending feedback...", type: MessageType.success));
+                    },
+                    text: "Submit")
               ],
             ),
-           
           ],
         ),
       ),

@@ -60,25 +60,25 @@ class _RegisterView extends StatelessWidget {
           ),
           const RegisterForm(),
           // const Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Already have an account? ",
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
-                InkWell(
-                  onTap: () => context.goNamed(RouteNames.login),
-                  child: Text(
+          InkWell(
+            onTap: () => context.goNamed(RouteNames.login),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Already have an account? ",
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                  Text(
                     'Sign in',
                     style: TextStyle(
                         color: Theme.of(context).primaryColorDark,
                         fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           )
         ],

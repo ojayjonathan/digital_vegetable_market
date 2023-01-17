@@ -87,6 +87,7 @@ class AddressProvider {
           '&key=$googleMapsApiKey';
 
       final response = await client.get(url);
+      print(response);
       if (response.data["results"].length > 0) {
         return HttpResult.onSuccess(
           data: formatedAddress(response.data["results"][0]).copyWith(
@@ -165,8 +166,9 @@ class AddressProvider {
     //set place name
     String? name = result['name'];
     //longitude latitude
-    double lat = result['geometry']["Address"]["lat"];
-    double lng = result['geometry']["Address"]["lng"];
+    print(result['geometry']);
+    double lat = result['geometry']["location"]["lat"];
+    double lng = result['geometry']["location"]["lng"];
     List<String> addressData = [
       floor,
       room,
