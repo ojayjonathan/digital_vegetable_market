@@ -1,3 +1,18 @@
-Digital Vegetable Market, an e-commerce solution for farmers and wholesale market traders. This project consists of a web server with a REST API, a mobile application, and an admin management dashboard.
+# Digital Vegetable Market 
+A comprehensive e-commerce solution for farmers and wholesale market traders. 
 
-With Digital Vegetable Market, farmers can easily list and market their products, and wholesale market traders can order fresh farm produce with just a few clicks on their mobile devices. The mobile application allows users to manage their accounts, products, and payments, as well as view and make orders. The admin dashboard gives the system administrator the tools to manage the system and view user feedback and order details.
+## Components
+- Web server with REST API
+- Mobile application
+- Admin management dashboard
+
+## Features 
+- List and market products for farmers
+- Order fresh farm produce for wholesale market traders
+- Manage accounts, products, and payments on the mobile application
+- View and make orders on the mobile application
+- Admin dashboard provides tools to manage the system and view user feedback and order details
+
+## Technologies 
+- Fast API (Web server)
+- Flutter (Mobile application)
